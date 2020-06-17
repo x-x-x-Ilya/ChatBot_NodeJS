@@ -16,7 +16,6 @@ const token = '1190153622:AAH7cRaOu4zbiTR_LEfQ5fL3riXr8EU_4hY';
 export const bot = new TelegramBot(token, {polling: true});
 new API.API(bot);
 
-
 /*
 // Matches "/echo [whatever]"
 bot.onText(/\/echo (.+)/, (msg, match) => {

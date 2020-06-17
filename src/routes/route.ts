@@ -1,5 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+//import { AppService } from '../service/app.service';
+import { AppController } from '../controller/app.controller';
+
 export class API {
-  constructor(TelegramBot) {
+  constructor(TelegramBot, private readonly appController: AppController) {
     TelegramBot.onText(/\/start/, function onStart(msg) {
       const opts = {
         reply_markup: JSON.stringify({
@@ -32,6 +36,7 @@ export class API {
           ]
         })
       };
+      //const list = appController.ShowPriceList().toString(); // error: [polling_error] {}
       TelegramBot.sendMessage(msg.chat.id, 'Price list:', opts);
     });
 
