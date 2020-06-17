@@ -7,6 +7,15 @@ async function bootstrap() {
 bootstrap();
 */
 
+
+import * as admin from 'firebase-admin';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const serviceAccount = require("C:/Users/Lenovo/Desktop/serviceAccountKey.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://barber-shop-80244.firebaseio.com"
+});
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const API = require('./routes/route');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
