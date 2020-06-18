@@ -1,8 +1,6 @@
 DROP DATABASE barbershop;
 CREATE DATABASE barbershop;
 
-\c barbershop --USE barber-shop;
-
 CREATE TABLE barbers (
 	id         serial           NOT NULL PRIMARY KEY, -- serial == AUTO_INCREMENT,
 	email      VARCHAR(255) NOT NULL UNIQUE,

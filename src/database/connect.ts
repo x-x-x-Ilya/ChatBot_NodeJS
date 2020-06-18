@@ -1,8 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { Client } = require('pg');
+const { client } = require('pg');
 
-
-export const client = new Client({
+export const database = new client({
   user: process.env.USER_NAME,
   host: process.env.HOST,
   database: process.env.DB_NAME,
@@ -11,8 +10,7 @@ export const client = new Client({
 });
 
 try {
-  client.connect();
-  module.exports = client;
+  database.connect();
 } catch (e) {
   console.log("ERROR: " + e);
 }

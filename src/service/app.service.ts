@@ -1,7 +1,9 @@
+import {Repository} from '../repositories/Repository';
+const repository = new Repository();
 export class AppService {
 
   showPriceList(): string {
-    return 'service message';
+    return repository.showPriceList();
   }
 
   setService(): string {
