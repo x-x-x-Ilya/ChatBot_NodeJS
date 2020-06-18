@@ -1,9 +1,9 @@
-import {Repository} from '../repositories/Repository';
-const repository = new Repository();
+import {BarberRepository} from '../repositories/BarberRepository';
+const repository = new BarberRepository();
 export class AppService {
 
-  showPriceList(): string {
-    return repository.showPriceList();
+  showPriceList() {
+    return repository.showBarberList();
   }
 
   setService(): string {

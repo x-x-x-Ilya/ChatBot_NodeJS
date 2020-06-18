@@ -26,7 +26,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter Repository.
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter AppointmentRepository.
 
 ## Installation
 
