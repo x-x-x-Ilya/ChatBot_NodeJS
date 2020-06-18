@@ -7,6 +7,8 @@ async function bootstrap() {
 bootstrap();
 */
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const API = require('./route/route');
 
 import * as admin from 'firebase-admin';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -16,8 +18,7 @@ admin.initializeApp({
   databaseURL: "https://barber-shop-80244.firebaseio.com"
 });
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const API = require('./routes/route');
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TOKEN;

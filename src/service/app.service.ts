@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+
+  showPriceList(): string {
+    return 'service message';
   }
 
-  ShowPriceList(): string {
-    return '12345';
+  setService(): string {
+    return 'service message';
   }
+
+  enterEmail(): string {
+    return 'service message';
+  }
+
 }
