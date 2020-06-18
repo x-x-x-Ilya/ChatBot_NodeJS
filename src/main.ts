@@ -24,6 +24,12 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TOKEN;
 // Create a bot that uses 'polling' to fetch new updates
 export const bot = new TelegramBot(token, {polling: true});
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const connect = require('./database/synchronization');
+connect.authentication();
+connect.ModelsSynchronization();
+
 new API.API(bot);
 
 /*

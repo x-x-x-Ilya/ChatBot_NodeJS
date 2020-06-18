@@ -1,4 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+/*
 const Sequelize = require('sequelize');
 import {database} from '../connect';
 
@@ -14,3 +15,5 @@ Appointment.associate = (models) => {
   Appointment.belongsTo(models.Client, { foreignKey: 'id' });
 };
 module.exports = Appointment;
+
+ */

@@ -14,7 +14,8 @@ export class API {
     });
 
     TelegramBot.onText(/Show price list/, function (msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Price list:' + appController.showPriceList(), back);
+      console.log(appController.showPriceList());
+      TelegramBot.sendMessage(msg.chat.id, 'Price list:', back);
     });
 
     TelegramBot.onText(/Enter email address - for mailing/, function onEmail(msg) {
