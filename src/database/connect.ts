@@ -1,12 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { Client } = require('pg');
 
-export const client = new Client({ // подключение к серверной бд
-  user: 'postgres',
-  host: 'localhost',
-  database: 'barbershop',
-  password: 'root',
-  port: 5432,
+
+export const client = new Client({
+  user: process.env.USER_NAME,
+  host: process.env.HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: process.env.PORT
 });
 
 try {

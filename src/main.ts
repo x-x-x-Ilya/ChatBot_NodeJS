@@ -10,7 +10,7 @@ bootstrap();
 
 import * as admin from 'firebase-admin';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const serviceAccount = require("C:/Users/Lenovo/Desktop/serviceAccountKey.json");
+const serviceAccount = require(process.env.KEY_PATH);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://barber-shop-80244.firebaseio.com"
@@ -20,7 +20,7 @@ admin.initializeApp({
 const API = require('./routes/route');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const TelegramBot = require('node-telegram-bot-api');
-const token = '1190153622:AAH7cRaOu4zbiTR_LEfQ5fL3riXr8EU_4hY';
+const token = process.env.TOKEN;
 // Create a bot that uses 'polling' to fetch new updates
 export const bot = new TelegramBot(token, {polling: true});
 new API.API(bot);
