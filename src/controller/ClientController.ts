@@ -1,11 +1,10 @@
 import {AppService} from '../service/app.service';
-
 const appService = new AppService();
 
-export class AppController {
+export class ClientController {
 
-  showPriceList() {
-    return appService.showPriceList();
+  enterEmail(): string {
+    return appService.enterEmail();
   }
 
 }

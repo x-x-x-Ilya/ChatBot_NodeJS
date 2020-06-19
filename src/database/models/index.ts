@@ -1,14 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const barber = require('./barber');
+const barber = require('./barbers');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Appointment = require('./appointment');
+const appointment = require('./appointments');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Client = require('./client');
+const client = require('./clients');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const service = require('./services');
 
-const db = {
-  barber//, Appointment, Client
-};
-
+const db = { barber, appointment, client, service };
 exports.init = () => {
   Object.keys(db).forEach((modelName) => {
     db[modelName].associate && db[modelName].associate(db);

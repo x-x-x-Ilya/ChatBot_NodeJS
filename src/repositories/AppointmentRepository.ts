@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Appointment = require('../database/models/appointment');
+const Appointment = require('../database/models/appointments');
 
 export class AppointmentRepository {
 

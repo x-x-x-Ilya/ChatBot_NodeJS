@@ -1,5 +1,12 @@
 DROP DATABASE barbershop;
-CREATE DATABASE barbershop;
+CREATE DATABASE barbershop
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Russian_Russia.1251'
+    LC_CTYPE = 'Russian_Russia.1251'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
 
 CREATE TABLE barbers (
 	id         serial           NOT NULL PRIMARY KEY, -- serial == AUTO_INCREMENT,
@@ -12,23 +19,26 @@ CREATE TABLE barbers (
 CREATE TABLE appointments (
     id 	 serial  PRIMARY KEY,
 	date  DATE NOT NULL,
-	time TIME NOT NULL,
+	_begin TIME NOT NULL,
+	_end TIME NOT NULL,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE services (
+    id 	 serial  PRIMARY KEY,
+	name VARCHAR(255)  NOT NULL,
+	time TIME NOT NULL,
+    deleted  BOOLEAN  NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE clients (
 	id         INT          NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
 	last_name  VARCHAR(255) NOT NULL,
-    email      VARCHAR(255) NOT NULL UNIQUE
+    email      VARCHAR(255) NOT NULL UNIQUE,
+    deleted    BOOLEAN  NOT NULL DEFAULT FALSE
 );
 
-
-ALTER TABLE appointments ADD CONSTRAINT client_id_idx FOREIGN KEY (id) REFERENCES clients(id);--ON DELETE CASCADE;
-ALTER TABLE appointments ADD CONSTRAINT barbers_id_idx FOREIGN KEY (id) REFERENCES barbers(id);-- ON DELETE CASCADE;
---ALTER TABLE `posts_tags`  ADD CONSTRAINT `posts_tags_post_id_idx`  FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) ON DELETE CASCADE;
---ALTER TABLE `posts_tags`  ADD CONSTRAINT `posts_tags_tag_id_idx`   FOREIGN KEY (`tag_id`)  REFERENCES `tags`(`id`)  ON DELETE CASCADE;
-
---ALTER TABLE `likes`       ADD CONSTRAINT `likes_user_id`           FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE;
---ALTER TABLE `posts`       ADD CONSTRAINT `posts`                   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE;
---ALTER TABLE `likes`       ADD CONSTRAINT `likes_post_id`           FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) ON DELETE CASCADE;
+ALTER TABLE appointments ADD CONSTRAINT client_id_idx FOREIGN KEY (id) REFERENCES clients(id);
+ALTER TABLE appointments ADD CONSTRAINT barbers_id_idx FOREIGN KEY (id) REFERENCES barbers(id);
+ALTER TABLE appointments ADD CONSTRAINT services_id_idx FOREIGN KEY (id) REFERENCES services(id);

@@ -3,6 +3,10 @@ const repository = new BarberRepository();
 export class AppService {
 
   showPriceList() {
+    return 'no code here now';//repository.showPriceList();
+  }
+
+  showBarberList() {
     return repository.showBarberList();
   }
 
