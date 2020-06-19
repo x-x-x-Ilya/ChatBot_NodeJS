@@ -4,7 +4,7 @@ const serviceService = new ServiceService();
 export class ServiceController {
 
   showPriceList() {
-    return 'h';//serviceService.showPriceList();
+    return serviceService.showPriceList();
   }
 
 }

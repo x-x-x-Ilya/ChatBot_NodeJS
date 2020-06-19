@@ -3,7 +3,8 @@ export const menu = {
     keyboard: [
       ['Show price list'],
       ['Show barber list'],
-      ['Sign up for a service'],
+      ['Sign up for an appointment'],
+      ['Show my appointments'],
       ['Enter email address - for mailing']
     ]
   })

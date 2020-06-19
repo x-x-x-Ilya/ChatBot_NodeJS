@@ -12,8 +12,7 @@ export class BarberRepository {
       attributes: ['email', 'first_name', 'last_name']
     }).then((barber) => {
       console.log(barber.map(barber => barber.toJSON()));
+      return barber.map(barber => barber.toJSON());
     });
-    return 'bla';
-
   }
 }

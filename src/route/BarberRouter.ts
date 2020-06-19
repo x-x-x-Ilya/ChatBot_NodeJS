@@ -7,9 +7,7 @@ export class BarberRouter {
     TelegramBot.onText(/Show barber list/, async function (msg) {
       try {
         const r = await barberController.showBarberList();
-      const R = JSON.parse(r);
-      console.log(R);
-      TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + R, back);
+      TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + JSON.stringify(r), back);
       } catch (e) {
         console.log(e);
       }

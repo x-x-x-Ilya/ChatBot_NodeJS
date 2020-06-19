@@ -35,8 +35,8 @@ CREATE TABLE clients (
 	id         INT          NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
 	last_name  VARCHAR(255) NOT NULL,
-    email      VARCHAR(255) NOT NULL UNIQUE,
-    deleted    BOOLEAN  NOT NULL DEFAULT FALSE
+    email      VARCHAR(255) NULL UNIQUE,
+    deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
 ALTER TABLE appointments ADD CONSTRAINT client_id_idx FOREIGN KEY (id) REFERENCES clients(id);

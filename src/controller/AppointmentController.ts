@@ -3,8 +3,12 @@ const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
-  setService(): string {
-    return appointmentService.setService();
+  setAppointment(): string {
+    return appointmentService.setAppointment();
   }
+  showMyAppointments(): string {
+    return appointmentService.showMyAppointments();
+  }
+
 
 }

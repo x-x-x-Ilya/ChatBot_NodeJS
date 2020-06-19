@@ -12,10 +12,6 @@ export class API {
     const clientRouter = new ClientRouter(TelegramBot);
     const barberRouter = new BarberRouter(TelegramBot);
 
-    TelegramBot.onText(/\/start/, function (msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
-    });
-
     TelegramBot.onText(/Back/, function onBack(msg) {
       TelegramBot.sendMessage(msg.chat.id,'menu:', menu);
     });
