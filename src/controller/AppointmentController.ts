@@ -1,10 +1,10 @@
-import {AppService} from '../service/app.service';
-const appService = new AppService();
+import {AppointmentService} from '../service/AppointmentService';
+const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
   setService(): string {
-    return appService.setService();
+    return appointmentService.setService();
   }
 
 }

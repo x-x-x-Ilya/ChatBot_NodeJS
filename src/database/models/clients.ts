@@ -8,5 +8,5 @@ export const clients = ClientDatabase.define('clients', {
   first_name: { type: ClientSequelize.STRING, allowNull: false },
   last_name: { type: ClientSequelize.STRING, allowNull: false },
   email: { type: ClientSequelize.STRING, allowNull: false },
-  deleted: { type: BarberSequelize.BOOLEAN, allowNull: false}
+  deleted: { type: ClientSequelize.BOOLEAN, allowNull: false}
 });

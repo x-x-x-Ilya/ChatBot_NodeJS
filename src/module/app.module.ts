@@ -1,4 +1,4 @@
-import { AppController } from '../controller/app.controller';
+/*import { AppController } from '../controller/app.controller';
 import { AppService } from '../service/app.service';
 //import { client } from '../database/connect';
 
@@ -7,3 +7,4 @@ export class AppModule {
   AppController;
   AppService;
 }
+*/

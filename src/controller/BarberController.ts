@@ -1,10 +1,11 @@
-import {AppService} from '../service/app.service';
-const appService = new AppService();
+import {BarberService} from '../service/BarberService';
+const barberService = new BarberService();
 
 export class BarberController {
 
-  showBarberList() {
-    return appService.showBarberList();
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+   showBarberList() {
+    return  barberService.showBarberList();
   }
 
 }

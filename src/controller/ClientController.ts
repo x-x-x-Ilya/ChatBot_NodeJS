@@ -1,10 +1,10 @@
-import {AppService} from '../service/app.service';
-const appService = new AppService();
+import {ClientService} from '../service/ClientService';
+const clientService = new ClientService();
 
 export class ClientController {
 
   enterEmail(): string {
-    return appService.enterEmail();
+    return clientService.enterEmail();
   }
 
 }

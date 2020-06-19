@@ -1,10 +1,10 @@
-import {AppService} from '../service/app.service';
-const appService = new AppService();
+import {ServiceService} from '../service/ServiceService';
+const serviceService = new ServiceService();
 
 export class ServiceController {
 
   showPriceList() {
-    return appService.showPriceList();
+    return 'h';//serviceService.showPriceList();
   }
 
 }
