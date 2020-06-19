@@ -6,7 +6,6 @@ async function bootstrap() {
 }
 bootstrap();
 */
-
 //------------------------------------------------------------------
 import * as admin from 'firebase-admin';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -18,16 +17,13 @@ admin.initializeApp({
 //------------------------------------------------------------------
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const connect = require('./database/synchronization');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const API = require('./route/route');
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const TelegramBot = require('node-telegram-bot-api');
+const database = require('./database/synchronization');
+import {API} from './route/route';
+import * as TelegramBot from 'node-telegram-bot-api';
 const token = process.env.TOKEN;
 // Create a bot that uses 'polling' to fetch new updates
 export const bot = new TelegramBot(token, {polling: true});
 
-connect.authentication();
-connect.ModelsSynchronization();
-new API.API(bot);
+database.authentication();
+database.ModelsSynchronization();
+new API(bot);

@@ -1,4 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+import { split } from 'ts-node';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const Barber = require('../database/models/barbers');
 
 export class BarberRepository {

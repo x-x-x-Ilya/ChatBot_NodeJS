@@ -15,4 +15,5 @@ appointments.associate = (models) => {
   appointments.belongsTo(models.barbers, { foreignKey: 'id' });
   appointments.belongsTo(models.clients, { foreignKey: 'id' });
 };
+
 module.exports = appointments;
