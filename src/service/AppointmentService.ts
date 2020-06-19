@@ -9,4 +9,12 @@ export class AppointmentService {
   showMyAppointments(): string {
     return appointmentRepository.showMyAppointments();
   }
+
+  showMyHistory(): string {
+    return appointmentRepository.showMyHistory();
+  }
+
+  deleteApointment(): string {
+    return appointmentRepository.deleteApointment();
+  }
 }

@@ -13,5 +13,9 @@ export class BarberRouter {
       }
     });
 
+    TelegramBot.onText(/Select barber/, async function (msg) {
+        const r = await barberController.selectBarber();
+        TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + JSON.stringify(r), back);
+    });
   }
 }

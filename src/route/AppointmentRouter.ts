@@ -9,7 +9,7 @@ export class AppointmentRouter {
       TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
     });
 
-    TelegramBot.onText(/Show my appointments/, function (msg) {
+    TelegramBot.onText(/Scheduled appointments/, function (msg) {
       const back = {
         reply_markup: JSON.stringify({
           keyboard: [
@@ -21,8 +21,19 @@ export class AppointmentRouter {
       TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyAppointments(), back);
     });
 
+    TelegramBot.onText(/Appointments history/, function (msg) {
+      const back = {
+        reply_markup: JSON.stringify({
+          keyboard: [
+            ['Back']
+          ]
+        })
+      };
+      TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyHistory(), back);
+    });
+
     TelegramBot.onText(/Remove my appointment/, function (msg) {
-      TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyAppointments(), back);
+      TelegramBot.sendMessage(msg.chat.id, appointmentController.deleteApointment(), back);
     });
 
   }

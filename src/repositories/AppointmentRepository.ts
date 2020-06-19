@@ -22,4 +22,12 @@ export class AppointmentRepository {
     return Appointment.findAll({where:{}});
   }
 
+  showMyHistory() {
+    return Appointment.findAll({where:{}});
+  }
+
+  deleteApointment(){
+    const appointment = Appointment.findOne({where:{}});
+    return appointment.destroy();
+  }
 }

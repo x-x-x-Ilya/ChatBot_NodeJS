@@ -15,4 +15,9 @@ export class BarberRepository {
       return barber.map(barber => barber.toJSON());
     });
   }
+
+  async selectBarber() {
+    await Barber.findOne({});
+  }
+
 }

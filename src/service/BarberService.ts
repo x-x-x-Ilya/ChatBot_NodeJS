@@ -6,4 +6,8 @@ export class BarberService {
     return repository.showBarberList();
   }
 
+  selectBarber() {
+    return repository.selectBarber();
+  }
+
 }

@@ -8,4 +8,10 @@ export class BarberController {
     return  barberService.showBarberList();
   }
 
+  selectBarber(){
+    return  barberService.selectBarber();
+  }
+
+
+
 }

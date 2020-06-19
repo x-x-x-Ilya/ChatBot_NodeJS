@@ -5,7 +5,6 @@ const clientController = new ClientController();
 export class ClientRouter {
   constructor(TelegramBot) {
 
-
     TelegramBot.onText(/Enter email address - for mailing/, function (msg) {
       TelegramBot.sendMessage(msg.chat.id, "Enter your email", back);
       TelegramBot.on('message', function (msg) {
