@@ -1,5 +1,5 @@
+import { menu, back } from '../view/view';
 import { BarberController } from '../controller/BarberController';
-import { back, menu } from '../view/view';
 const barberController = new BarberController();
 
 export class BarberRouter {

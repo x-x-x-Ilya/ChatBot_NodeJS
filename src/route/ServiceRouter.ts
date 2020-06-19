@@ -1,5 +1,5 @@
+import { menu, back } from '../view/view';
 import { ServiceController } from '../controller/ServiceController';
-import { back, menu } from '../view/view';
 const serviceController = new ServiceController();
 
 export class ServiceRouter {

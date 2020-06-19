@@ -1,10 +1,8 @@
 export const menu = {
   reply_markup: JSON.stringify({
     keyboard: [
-      ['Show price list'],
-      ['Show barber list'],
-      ['Sign up for an appointment'],
-      ['Show my appointments'],
+      ['Show price list', 'Show barber list'],
+      ['Show scheduled appointments', 'Show appointments history', 'Sign up for an appointment'],
       ['Enter email address - for mailing']
     ]
   })

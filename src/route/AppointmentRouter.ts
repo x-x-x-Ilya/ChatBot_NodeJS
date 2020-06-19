@@ -1,5 +1,5 @@
+import { menu, back } from '../view/view';
 import { AppointmentController } from '../controller/AppointmentController';
-import { back, menu } from '../view/view';
 const appointmentController = new AppointmentController();
 
 export class AppointmentRouter {
@@ -13,7 +13,8 @@ export class AppointmentRouter {
       const back = {
         reply_markup: JSON.stringify({
           keyboard: [
-            ['Back', 'Remove my appointment']
+            ['Back'],
+            ['Remove my appointment']
           ]
         })
       };
@@ -21,13 +22,6 @@ export class AppointmentRouter {
     });
 
     TelegramBot.onText(/Remove my appointment/, function (msg) {
-      const back = {
-        reply_markup: JSON.stringify({
-          keyboard: [
-            ['Back']
-          ]
-        })
-      };
       TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyAppointments(), back);
     });
 

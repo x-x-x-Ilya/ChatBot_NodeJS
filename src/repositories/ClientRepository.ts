@@ -24,7 +24,6 @@ export class ClientRepository {
           email: email,
           id: id,
           first_name: first_name,
-          last_name: "last_name deaf",
           deleted: false
         });
         console.log(client)

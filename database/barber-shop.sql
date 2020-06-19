@@ -7,12 +7,14 @@ CREATE DATABASE barbershop
     LC_CTYPE = 'Russian_Russia.1251'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
-
+DROP TABLE barbers CASCADE;
+DROP TABLE appointments CASCADE;
+DROP TABLE clients CASCADE;
+DROP TABLE services CASCADE;
 CREATE TABLE barbers (
-	id         serial           NOT NULL PRIMARY KEY, -- serial == AUTO_INCREMENT,
+	id         serial       NOT NULL PRIMARY KEY, -- serial == AUTO_INCREMENT,
 	email      VARCHAR(255) NOT NULL UNIQUE,
 	first_name VARCHAR(255) NOT NULL,
-	last_name  VARCHAR(255) NOT NULL,
 	deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
@@ -34,7 +36,6 @@ CREATE TABLE services (
 CREATE TABLE clients (
 	id         INT          NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
-	last_name  VARCHAR(255) NOT NULL,
     email      VARCHAR(255) NULL UNIQUE,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
