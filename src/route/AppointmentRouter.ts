@@ -29,11 +29,11 @@ export class AppointmentRouter {
           ]
         })
       };
-      TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyHistory(), back);
+      TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyHistory(msg.chat.id), back);
     });
 
     TelegramBot.onText(/Remove my appointment/, function (msg) {
-      TelegramBot.sendMessage(msg.chat.id, appointmentController.deleteApointment(), back);
+      TelegramBot.sendMessage(msg.chat.id, appointmentController.deleteAnointment(), back);
     });
 
   }

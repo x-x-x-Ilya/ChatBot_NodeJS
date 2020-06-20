@@ -7,6 +7,7 @@ const appointments = AppointmentDatabase.define('appointments', {
   id: { type: AppointmentSequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
   date: { type: AppointmentSequelize.DATE, allowNull: false},
   _begin: { type: AppointmentSequelize.TIME, allowNull: false},
+  client_id:{ type: AppointmentSequelize.INTEGER, allowNull: false},
   _end: { type: AppointmentSequelize.TIME, allowNull: false},
   deleted: { type: AppointmentSequelize.BOOLEAN, allowNull: false}
 });

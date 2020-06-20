@@ -10,11 +10,11 @@ export class AppointmentService {
     return appointmentRepository.showMyAppointments();
   }
 
-  showMyHistory(): string {
-    return appointmentRepository.showMyHistory();
+  showMyHistory(id): string {
+    return appointmentRepository.showMyHistory(id);
   }
 
-  deleteApointment(): string {
-    return appointmentRepository.deleteApointment();
+  deleteAppointment(): string {
+    return appointmentRepository.deleteAppointment();
   }
 }

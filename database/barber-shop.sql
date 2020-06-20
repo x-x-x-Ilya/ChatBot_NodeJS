@@ -20,6 +20,7 @@ CREATE TABLE barbers (
 
 CREATE TABLE appointments (
     id 	 serial  PRIMARY KEY,
+    client_id INT NOT NULL,
 	date  DATE NOT NULL,
 	_begin TIME NOT NULL,
 	_end TIME NOT NULL,
@@ -40,6 +41,6 @@ CREATE TABLE clients (
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
-ALTER TABLE appointments ADD CONSTRAINT client_id_idx FOREIGN KEY (id) REFERENCES clients(id);
+ALTER TABLE appointments ADD CONSTRAINT client_id_idx FOREIGN KEY (client_id) REFERENCES clients(id);
 ALTER TABLE appointments ADD CONSTRAINT barbers_id_idx FOREIGN KEY (id) REFERENCES barbers(id);
 ALTER TABLE appointments ADD CONSTRAINT services_id_idx FOREIGN KEY (id) REFERENCES services(id);

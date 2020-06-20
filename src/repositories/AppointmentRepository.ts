@@ -22,11 +22,15 @@ export class AppointmentRepository {
     return Appointment.findAll({where:{}});
   }
 
-  showMyHistory() {
-    return Appointment.findAll({where:{}});
+  showMyHistory(id) {
+    return Appointment.findAll(
+      {
+        where:{ client_id: id }
+      });
   }
 
-  deleteApointment(){
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  deleteAppointment(){
     const appointment = Appointment.findOne({where:{}});
     return appointment.destroy();
   }

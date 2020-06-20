@@ -11,12 +11,12 @@ export class AppointmentController {
     return appointmentService.showMyAppointments();
   }
 
-  showMyHistory(): string {
-    return appointmentService.showMyHistory();
+  showMyHistory(id): string {
+    return appointmentService.showMyHistory(id);
   }
 
-  deleteApointment(): string {
-    return appointmentService.deleteApointment();
+  deleteAnointment(): string {
+    return appointmentService.deleteAppointment();
   }
 
 }
