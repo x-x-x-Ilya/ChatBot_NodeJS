@@ -5,18 +5,27 @@ export class ServiceRepository {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async showPriceList() {
-    await Service.findAll({
+    const service = await Service.findAll({
       where:{deleted:false},
       attributes: ['id', 'name', 'time']
-    }).then((service) => {
-      console.log(service.map(service => service.toJSON()));
-      return service.map(service => service.toJSON());
     });
+    console.log(service.map(service => service.toJSON()));
+    return service.map(service => service.toJSON());
   }
 
-  selectPrice(msg_should_be_id) {
-    const r = Service.findOne({where:{id:msg_should_be_id}});
-    return r;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async selectPrice(msg_should_be_id) {
+    try {
+    const service = await Service.findOne({
+      where:{
+        id: msg_should_be_id
+      },
+      attributes: ['id', 'name', 'time']});
+      console.log(service);
+      return service;
+  } catch (e) {
+      console.log(e);
+    }
   }
 
 }
