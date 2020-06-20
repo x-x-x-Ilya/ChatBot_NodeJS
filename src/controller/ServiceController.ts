@@ -7,4 +7,8 @@ export class ServiceController {
     return serviceService.showPriceList();
   }
 
+  selectPrice(msg_should_be_id){
+    return serviceService.selectPrice(msg_should_be_id);
+  }
+
 }

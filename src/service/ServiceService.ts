@@ -7,6 +7,8 @@ export class ServiceService {
     return serviceRepository.showPriceList();
   }
 
-
+  selectPrice(msg_should_be_id){
+    return serviceRepository.selectPrice(msg_should_be_id);
+  }
 
 }

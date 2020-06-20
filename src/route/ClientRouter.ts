@@ -9,13 +9,11 @@ export class ClientRouter {
       TelegramBot.sendMessage(msg.chat.id, "Enter your email", back);
       TelegramBot.on('message', function (msg) {
         try {
-          console.log(msg);
-
           clientController.enterEmail(msg.text, msg.chat.id, msg.chat.first_name);
+          TelegramBot.sendMessage(msg.chat.id,"your email added to our client base", back);
         } catch (e) {
           console.log(e);
         }
-        TelegramBot.sendMessage(msg.chat.id,"your email added to our client base", back);
       });
 
     });

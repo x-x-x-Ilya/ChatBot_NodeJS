@@ -6,11 +6,17 @@ export class ServiceRepository {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async showPriceList() {
     await Service.findAll({
-      attributes: ['name', 'time']
-    }).then((barber) => {
-      console.log(barber.map(barber => barber.toJSON()));
+      where:{deleted:false},
+      attributes: ['id', 'name', 'time']
+    }).then((service) => {
+      console.log(service.map(service => service.toJSON()));
+      return service.map(service => service.toJSON());
     });
-    return 'bla';
+  }
+
+  selectPrice(msg_should_be_id) {
+    const r = Service.findOne({where:{id:msg_should_be_id}});
+    return r;
   }
 
 }
