@@ -3,7 +3,6 @@ const Client = require('../database/models/clients');
 
 export class ClientRepository {
 
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async enterEmail(email, id, first_name) {
     try {
@@ -32,4 +31,18 @@ export class ClientRepository {
       console.log(e);
     }
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async addClient(id, first_name){
+    const client = await Client.findOne({
+      where:{id:id}
+    });
+    if(client == null)
+    return await Client.create({
+      id: id,
+      first_name: first_name,
+      deleted: false
+    });
+  }
+
 }

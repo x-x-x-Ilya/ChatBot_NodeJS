@@ -13,6 +13,7 @@ export class API {
 
     TelegramBot.onText(/\/start/, function (msg) {
       TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
+
     });
 
     TelegramBot.onText(/Back/, function onBack(msg) {

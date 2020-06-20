@@ -6,7 +6,6 @@ const ClientDatabase = require('../sequelize');
 const clients = ClientDatabase.define('clients', {
   id: { type: ClientSequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
   first_name: { type: ClientSequelize.STRING, allowNull: false },
-  last_name: { type: ClientSequelize.STRING, allowNull: false },
   email: { type: ClientSequelize.STRING, allowNull: false },
   deleted: { type: ClientSequelize.BOOLEAN, allowNull: false}
 });

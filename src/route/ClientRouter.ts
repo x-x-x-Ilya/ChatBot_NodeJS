@@ -5,11 +5,15 @@ const clientController = new ClientController();
 export class ClientRouter {
   constructor(TelegramBot) {
 
-    TelegramBot.onText(/Enter email address - for mailing/, function (msg) {
+    TelegramBot.onText(/\/start/, function (msg) {
+       clientController.addClient(msg.chat.id, msg.chat.first_name);
+    });
+
+    TelegramBot.onText(/Enter email address/, function (msg) {
       TelegramBot.sendMessage(msg.chat.id, "Enter your email", back);
-      TelegramBot.on('message', function (msg) {
+        TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
         try {
-          clientController.enterEmail(msg.text, msg.chat.id, msg.chat.first_name);
+          await clientController.enterEmail(msg.text, msg.chat.id, msg.chat.first_name);
           TelegramBot.sendMessage(msg.chat.id,"your email added to our client base", back);
         } catch (e) {
           console.log(e);
@@ -17,6 +21,7 @@ export class ClientRouter {
       });
 
     });
+
 
   }
 }
