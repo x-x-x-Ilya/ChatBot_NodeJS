@@ -15,7 +15,7 @@ export class AppointmentController {
     return await appointmentService.showMyHistory(id);
   }
 
-  deleteAnointment(should_be_appointment_id): string {
+  deleteAppointment(should_be_appointment_id): string {
     return appointmentService.deleteAppointment(should_be_appointment_id);
   }
 

@@ -29,3 +29,21 @@ export const help = {
   })
 };
 
+export const appointment = {
+  reply_markup:{
+    inline_keyboard:[
+      [
+        {
+          text: 'Appointments history',
+          callback_data: 'appointmentsHistory'
+        }
+      ],
+      [
+        {
+          text: 'Booked appointments',
+          callback_data: 'bookedAppointments'
+        }
+      ]
+    ]
+  }
+};

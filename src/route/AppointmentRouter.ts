@@ -1,4 +1,5 @@
 import { menu, back } from '../keyboards/keyboards';
+import { menuButtons } from '../keyboards/key-board-buttons';
 import { AppointmentController } from '../controller/AppointmentController';
 const appointmentController = new AppointmentController();
 
@@ -12,7 +13,7 @@ export class AppointmentRouter {
     const back = {
       reply_markup: JSON.stringify({
         keyboard: [
-          ['Back'],
+          [menuButtons.Back],
           ['Remove my appointment']
         ]
       })
@@ -20,25 +21,23 @@ export class AppointmentRouter {
     TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + await appointmentController.showMyAppointments(/*msg.chat.id*/2), back);
   }
 
-  /*constructor(TelegramBot) {
-
-    TelegramBot.onText(/Sign up for an appointment/, function (msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Enter date you want');
+  async SignUpForAnAppointment(TelegramBot, msg) {
+      TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us');
       TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
         appointmentController.checkDateAppointment(msg.text);
       });
       TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
-    });
+    };
 
-    TelegramBot.onText(/Remove my appointment/, function (msg) {
+  async RemoveMyAppointment(TelegramBot, msg) {
       TelegramBot.sendMessage(msg.chat.id, 'send me id of your appointment', back);
       TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
-        appointmentController.deleteAnointment(msg.text);
+        appointmentController.deleteAppointment(msg.text);
         TelegramBot.sendMessage(msg.chat.id, 'check console result', back);
       });
 
-    });
+    };
 
-  }*/
+
 }
 

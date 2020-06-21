@@ -1,4 +1,4 @@
-import { menu, back, help } from '../keyboards/keyboards';
+import { menu, back, help, appointment } from '../keyboards/keyboards';
 import { menuButtons } from '../keyboards/key-board-buttons';
 import { AppointmentRouter } from './AppointmentRouter';
 import { ClientRouter } from './ClientRouter';
@@ -6,14 +6,13 @@ import { BarberRouter } from './BarberRouter';
 import { ServiceRouter } from './ServiceRouter';
 
 export class API {      //{parse_mode: JSON/HTML}
-
-
   constructor(TelegramBot) {
     console.log("constructor started...");
     TelegramBot.on('message', async msg => {
-      let isCommand = false;
-      switch (msg.text) {
 
+      let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
+
+      switch (msg.text) {
         case menuButtons.Back:
           TelegramBot.sendMessage(msg.chat.id, 'menu:', menu);
           isCommand = true;
@@ -24,37 +23,24 @@ export class API {      //{parse_mode: JSON/HTML}
           isCommand = true;
           break;
 
-          case menuButtons.Appointments:
-            TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', {
-              reply_markup:{
-                inline_keyboard:[
-                  [
-                    {
-                      text: 'Appointments history',
-                      callback_data: 'appointmentsHistory'
-                    }
-                  ],
-                  [
-                    {
-                      text: 'Booked appointments',
-                      callback_data: 'bookedAppointments'
-                    }
-                  ]
-                ]
-              }
-            });
-
-          //await AppointmentRouter.prototype.showMyAppointments(TelegramBot, msg);
+        case menuButtons.RemoveMyAppointment:
+          await AppointmentRouter.prototype.RemoveMyAppointment(TelegramBot, msg);
           isCommand = true;
           break;
-/*
-        case menuButtons.AppointmentsHistory:
-          await AppointmentRouter.prototype.AppointmentsHistory(TelegramBot, msg);
+
+
+          case menuButtons.Appointments:
+            TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', appointment);
           isCommand = true;
-          break;*/
+          break;
 
         case menuButtons.PriceList:
           await ServiceRouter.prototype.PriceList(TelegramBot, msg);
+          isCommand = true;
+          break;
+
+        case menuButtons.SignUpForAnAppointment:
+          await AppointmentRouter.prototype.SignUpForAnAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
@@ -76,11 +62,12 @@ export class API {      //{parse_mode: JSON/HTML}
       }
 
       if(!isCommand){
-        TelegramBot.sendMessage(msg.chat.id, 'Use /help to see my commands', help);
+        TelegramBot.sendMessage(msg.chat.id, '/help text must be', help);
       }
 
     });
 
+    // для инлайн клавиатуры
     TelegramBot.on('callback_query', async query => {
       if(query.data === 'bookedAppointments'){
         await AppointmentRouter.prototype.showMyAppointments(TelegramBot, query.message)
