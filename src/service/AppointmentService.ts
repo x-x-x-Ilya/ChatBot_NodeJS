@@ -6,15 +6,20 @@ export class AppointmentService {
     return appointmentRepository.setAppointment();
   }
 
-  showMyAppointments(): string {
-    return appointmentRepository.showMyAppointments();
+  showMyAppointments(id): string {
+    return appointmentRepository.showMyAppointments(id);
   }
 
   showMyHistory(id): string {
     return appointmentRepository.showMyHistory(id);
   }
 
-  deleteAppointment(): string {
-    return appointmentRepository.deleteAppointment();
+  deleteAppointment(should_be_appointment_id): string {
+    return appointmentRepository.deleteAppointment(should_be_appointment_id);
+  }
+
+
+  checkDateAppointment(should_be_appointment_date): void {
+    return appointmentRepository.checkDateAppointment(should_be_appointment_date);
   }
 }

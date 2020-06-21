@@ -4,7 +4,7 @@ const barberService = new BarberService();
 export class BarberController {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-   showBarberList() {
+   showBarberList() : Promise<string>{
     return  barberService.showBarberList();
   }
 

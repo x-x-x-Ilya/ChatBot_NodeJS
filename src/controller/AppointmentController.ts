@@ -7,16 +7,19 @@ export class AppointmentController {
     return appointmentService.setAppointment();
   }
 
-  showMyAppointments(): string {
-    return appointmentService.showMyAppointments();
+  showMyAppointments(id): string {
+    return appointmentService.showMyAppointments(id);
   }
 
   showMyHistory(id): string {
     return appointmentService.showMyHistory(id);
   }
 
-  deleteAnointment(): string {
-    return appointmentService.deleteAppointment();
+  deleteAnointment(should_be_appointment_id): string {
+    return appointmentService.deleteAppointment(should_be_appointment_id);
   }
 
+  checkDateAppointment(should_be_appointment_date){
+    return appointmentService.checkDateAppointment(should_be_appointment_date);
+  }
 }

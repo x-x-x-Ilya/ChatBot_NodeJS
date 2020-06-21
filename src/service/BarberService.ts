@@ -2,7 +2,7 @@ import {BarberRepository} from '../repositories/BarberRepository';
 const repository = new BarberRepository();
 export class BarberService {
 
-  showBarberList() {
+  showBarberList() : Promise<string>{
     return repository.showBarberList();
   }
 
