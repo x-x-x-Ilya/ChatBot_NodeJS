@@ -1,4 +1,5 @@
 import {AppointmentRepository} from '../repositories/AppointmentRepository';
+
 const appointmentRepository = new AppointmentRepository();
 export class AppointmentService {
 
@@ -10,8 +11,9 @@ export class AppointmentService {
     return appointmentRepository.showMyAppointments(id);
   }
 
-  showMyHistory(id): string {
-    return appointmentRepository.showMyHistory(id);
+  async showMyHistory(id): Promise<string>{
+    return await appointmentRepository.showMyHistory(id);
+
   }
 
   deleteAppointment(should_be_appointment_id): string {

@@ -25,15 +25,8 @@ export class AppointmentRouter {
       TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyAppointments(msg.chat.id), back);
     });
 
-    TelegramBot.onText(/Appointments history/, function (msg) {
-      const back = {
-        reply_markup: JSON.stringify({
-          keyboard: [
-            ['Back']
-          ]
-        })
-      };
-      TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyHistory(msg.chat.id), back);
+    TelegramBot.onText(/Appointments history/, async function (msg) {
+      TelegramBot.sendMessage(msg.chat.id,'Your history:' + await appointmentController.showMyHistory(/*msg.chat.id*/2), back);
     });
 
     TelegramBot.onText(/Remove my appointment/, function (msg) {

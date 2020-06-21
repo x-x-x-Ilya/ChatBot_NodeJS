@@ -22,11 +22,6 @@ export class ServiceRepository {
     });}
 
 
-    /*;
-    console.log(service.map(service => service.toJSON()));
-    return service.map(service => service.toJSON());
-  }
-*/
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async selectPrice(msg_should_be_id) {
     try {

@@ -11,8 +11,8 @@ export class AppointmentController {
     return appointmentService.showMyAppointments(id);
   }
 
-  showMyHistory(id): string {
-    return appointmentService.showMyHistory(id);
+  async showMyHistory(id): Promise<string> {
+    return await appointmentService.showMyHistory(id);
   }
 
   deleteAnointment(should_be_appointment_id): string {

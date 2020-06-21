@@ -2,6 +2,8 @@
 const Appointment = require('../database/models/appointments');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Service = require('../database/models/services');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Sequelize = require('sequelize-values')();
 export class AppointmentRepository {
 
   setAppointment() {
@@ -28,15 +30,26 @@ export class AppointmentRepository {
     });
   }
 
-  showMyHistory(id) {
-    return Appointment.findAll( // или добавить условие поиска или убрать лишнее в сервисах
-      {
-        where:{
+  async showMyHistory(id): Promise<string> {
+    return await Appointment.findAll( // или добавить условие поиска или убрать лишнее в сервисах
+      { where: {
           client_id: id,
-          deleted: false
-          //, date < cur_date
-        }
-      });
+          deleted: false },
+        attributes: ['date', '_begin', '_end'],
+        raw: true
+      }).then(function(allAppointments) {
+      let Response = '\r\n';
+      //const curDate = new Date();
+      for (let i = 0; i < allAppointments.length; i++) {
+        //if(Sequelize.getValues(allAppointments[i].date) < curDate){ // не проходит проверка
+        Response += Sequelize.getValues(allAppointments[i].date) + ' ';
+        Response += Sequelize.getValues(allAppointments[i]._begin) + ' ';
+        Response += Sequelize.getValues(allAppointments[i]._end) + '\r\n';
+        //}
+      }
+      //console.log(Response);
+      return Response;
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
