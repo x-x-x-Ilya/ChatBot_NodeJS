@@ -11,6 +11,16 @@ export const menu = {
 
 export const back = {
   reply_markup: JSON.stringify({
+    resize_keyboard: true,
+    keyboard: [
+      ['Back']
+    ]
+  })
+};
+
+export const help = {
+  reply_markup: JSON.stringify({
+    resize_keyboard: true,
     keyboard: [
       ['Back']
     ]

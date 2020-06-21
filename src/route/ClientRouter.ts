@@ -10,6 +10,15 @@ export class ClientRouter {
     });
 
     TelegramBot.onText(/Enter email address/, function (msg) {
+       const back = {
+        reply_markup: JSON.stringify({
+          resize_keyboard: true,
+          remove_keyboard: true,
+          keyboard: [
+            ['Back']
+          ]
+        })
+      };
       TelegramBot.sendMessage(msg.chat.id, "Enter your email", back);
         TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
         try {

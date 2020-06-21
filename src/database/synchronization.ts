@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const database = require('./connect');
+const database = require('./sequelize');
 
 exports.authentication = async () => {
   try {

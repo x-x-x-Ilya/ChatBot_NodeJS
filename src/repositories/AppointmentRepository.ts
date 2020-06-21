@@ -31,14 +31,14 @@ export class AppointmentRepository {
   }
 
   async showMyHistory(id): Promise<string> {
-    return await Appointment.findAll( // или добавить условие поиска или убрать лишнее в сервисах
+    return await Appointment.findAll(
       { where: {
           client_id: id,
           deleted: false },
         attributes: ['date', '_begin', '_end'],
         raw: true
       }).then(function(allAppointments) {
-      let Response = '\r\n';
+        let Response = '\r\n';
       //const curDate = new Date();
       for (let i = 0; i < allAppointments.length; i++) {
         //if(Sequelize.getValues(allAppointments[i].date) < curDate){ // не проходит проверка
@@ -47,7 +47,6 @@ export class AppointmentRepository {
         Response += Sequelize.getValues(allAppointments[i]._end) + '\r\n';
         //}
       }
-      //console.log(Response);
       return Response;
     });
   }

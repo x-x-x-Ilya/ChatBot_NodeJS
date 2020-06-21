@@ -13,7 +13,6 @@ export class AppointmentService {
 
   async showMyHistory(id): Promise<string>{
     return await appointmentRepository.showMyHistory(id);
-
   }
 
   deleteAppointment(should_be_appointment_id): string {

@@ -1,3 +1,4 @@
+//"nest start",
 //------------------------------------------------------------------
 import * as admin from 'firebase-admin';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -20,3 +21,6 @@ export const bot = new TelegramBot(token, {polling: true});
 database.authentication();
 database.ModelsSynchronization();
 new API(bot);
+
+//bot.on('message', msg => {});
+
