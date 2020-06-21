@@ -3,7 +3,7 @@ const serviceRepository = new ServiceRepository();
 
 export class ServiceService {
 
-  showPriceList() {
+  showPriceList() : Promise<string>{
     return serviceRepository.showPriceList();
   }
 

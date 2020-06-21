@@ -6,9 +6,9 @@ export class ServiceRouter {
   constructor(TelegramBot) {
 
     TelegramBot.onText(/Price list/, async function (msg) {
-      await serviceController.showPriceList();
+      const r = await serviceController.showPriceList();
       // how to send response
-      TelegramBot.sendMessage(msg.chat.id, 'Price list: in console', back);
+      TelegramBot.sendMessage(msg.chat.id, 'Price list:' + r, back);
     });
 
     TelegramBot.onText(/Select price/, function (msg) {

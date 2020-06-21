@@ -11,20 +11,21 @@ export class BarberRepository {
     return await Barber.findAll({
       attributes: ['email', 'first_name', 'id'],
       raw: true,
-    }).then(function(tasks) {
+    }).then(function(barbers) {
       let Response = '\r\n';
-      for (let i = 0; i < tasks.length; i++) {
-        Response += Sequelize.getValues(tasks[i].id) + ' ';
-        Response += Sequelize.getValues(tasks[i].first_name) + ' ';
-        Response += Sequelize.getValues(tasks[i].email) + '\r\n';
+      for (let i = 0; i < barbers.length; i++) {
+        Response += Sequelize.getValues(barbers[i].id) + ' ';
+        Response += Sequelize.getValues(barbers[i].first_name) + ' ';
+        Response += Sequelize.getValues(barbers[i].email) + '\r\n';
       }
       return Response;
     });}
 
 
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async selectBarber() {
-    await Barber.findOne({});
+    return await Barber.findOne({});
   }
 
 }
