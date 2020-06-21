@@ -10,7 +10,7 @@ export class ServiceRouter {
   }
 
 
-  constructor(TelegramBot) {
+/*  constructor(TelegramBot) {
 
     TelegramBot.onText(/Select price/, function (msg) {
       TelegramBot.sendMessage(msg.chat.id, 'Enter price id', back);
@@ -20,6 +20,5 @@ export class ServiceRouter {
         TelegramBot.sendMessage(msg.chat.id, 'Price info: in console', back);
       });
     });
-
-  }
+  }*/
 }

@@ -3,7 +3,24 @@ import { AppointmentController } from '../controller/AppointmentController';
 const appointmentController = new AppointmentController();
 
 export class AppointmentRouter {
-  constructor(TelegramBot) {
+  // вместо двух кнопок сделать одну с inline клавиатурой  (Scheduled appointments, Appointments history)
+  async AppointmentsHistory(TelegramBot, msg) {
+    TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyHistory(/*msg.chat.id*/2), back);
+  }
+
+  async showMyAppointments(TelegramBot, msg) {
+    const back = {
+      reply_markup: JSON.stringify({
+        keyboard: [
+          ['Back'],
+          ['Remove my appointment']
+        ]
+      })
+    };
+    TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyAppointments(/*msg.chat.id*/2), back);
+  }
+
+  /*constructor(TelegramBot) {
 
     TelegramBot.onText(/Sign up for an appointment/, function (msg) {
       TelegramBot.sendMessage(msg.chat.id, 'Enter date you want');
@@ -11,24 +28,6 @@ export class AppointmentRouter {
         appointmentController.checkDateAppointment(msg.text);
       });
       TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
-    });
-
-
-    // вместо двух кнопок сделать одну с inline клавиатурой  (Scheduled appointments, Appointments history)
-    TelegramBot.onText(/Scheduled appointments/, function (msg) {
-      const back = {
-        reply_markup: JSON.stringify({
-          keyboard: [
-            ['Back'],
-            ['Remove my appointment']
-          ]
-        })
-      };
-      TelegramBot.sendMessage(msg.chat.id, appointmentController.showMyAppointments(msg.chat.id), back);
-    });
-
-    TelegramBot.onText(/Appointments history/, async function (msg) {
-      TelegramBot.sendMessage(msg.chat.id,'Your history:' + await appointmentController.showMyHistory(/*msg.chat.id*/2), back);
     });
 
     TelegramBot.onText(/Remove my appointment/, function (msg) {
@@ -40,6 +39,6 @@ export class AppointmentRouter {
 
     });
 
-  }
+  }*/
 }
 

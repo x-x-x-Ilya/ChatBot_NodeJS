@@ -13,6 +13,7 @@ import * as TelegramBot from 'node-telegram-bot-api';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const database = require('./database/synchronization');
 import {API} from './route/API';
+// сделать последовательное выполнение так как функции асинхронные
 database.authentication();
 database.ModelsSynchronization();
 const token = process.env.TOKEN;
