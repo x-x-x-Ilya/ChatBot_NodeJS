@@ -4,7 +4,7 @@ export const menu = {
   reply_markup: JSON.stringify({
     keyboard: [
       [menuButtons.PriceList, menuButtons.BarberList],
-      [menuButtons.ScheduledAppointments, menuButtons.AppointmentsHistory],
+      [menuButtons.Appointments],
       [menuButtons.SignUpForAnAppointment],
       [menuButtons.EnterEmailAddress]
     ]
@@ -28,3 +28,4 @@ export const help = {
     ]
   })
 };
+

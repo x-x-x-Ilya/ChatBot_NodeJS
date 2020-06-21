@@ -6,6 +6,8 @@ import { BarberRouter } from './BarberRouter';
 import { ServiceRouter } from './ServiceRouter';
 
 export class API {      //{parse_mode: JSON/HTML}
+
+
   constructor(TelegramBot) {
     console.log("constructor started...");
     TelegramBot.on('message', async msg => {
@@ -22,15 +24,34 @@ export class API {      //{parse_mode: JSON/HTML}
           isCommand = true;
           break;
 
-          case menuButtons.ScheduledAppointments:
-          await AppointmentRouter.prototype.showMyAppointments(TelegramBot, msg);
+          case menuButtons.Appointments:
+            TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', {
+              reply_markup:{
+                inline_keyboard:[
+                  [
+                    {
+                      text: 'Appointments history',
+                      callback_data: 'appointmentsHistory'
+                    }
+                  ],
+                  [
+                    {
+                      text: 'Booked appointments',
+                      callback_data: 'bookedAppointments'
+                    }
+                  ]
+                ]
+              }
+            });
+
+          //await AppointmentRouter.prototype.showMyAppointments(TelegramBot, msg);
           isCommand = true;
           break;
-
+/*
         case menuButtons.AppointmentsHistory:
           await AppointmentRouter.prototype.AppointmentsHistory(TelegramBot, msg);
           isCommand = true;
-          break;
+          break;*/
 
         case menuButtons.PriceList:
           await ServiceRouter.prototype.PriceList(TelegramBot, msg);
@@ -57,6 +78,16 @@ export class API {      //{parse_mode: JSON/HTML}
       if(!isCommand){
         TelegramBot.sendMessage(msg.chat.id, 'Use /help to see my commands', help);
       }
+
     });
+
+    TelegramBot.on('callback_query', async query => {
+      if(query.data === 'bookedAppointments'){
+        await AppointmentRouter.prototype.showMyAppointments(TelegramBot, query.message)
+      }
+      else if(query.data === 'appointmentsHistory'){
+        await AppointmentRouter.prototype.AppointmentsHistory(TelegramBot, query.message);
+      }
+    })
   }
 }
