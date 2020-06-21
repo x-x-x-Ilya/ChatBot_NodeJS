@@ -1,4 +1,4 @@
-import { menu, back } from '../view/view';
+import { menu, back } from '../keyboards/keyboards';
 import { AppointmentController } from '../controller/AppointmentController';
 const appointmentController = new AppointmentController();
 
@@ -13,6 +13,8 @@ export class AppointmentRouter {
       TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
     });
 
+
+    // вместо двух кнопок сделать одну с inline клавиатурой  (Scheduled appointments, Appointments history)
     TelegramBot.onText(/Scheduled appointments/, function (msg) {
       const back = {
         reply_markup: JSON.stringify({

@@ -1,4 +1,4 @@
-import { menu, back } from '../view/view';
+import { menu, back } from '../keyboards/keyboards';
 import { ClientController } from '../controller/ClientController';
 const clientController = new ClientController();
 
