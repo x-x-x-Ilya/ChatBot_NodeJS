@@ -3,9 +3,15 @@ import { BarberController } from '../controller/BarberController';
 const barberController = new BarberController();
 
 export class BarberRouter {
+
+  async BarberList(TelegramBot, msg) {
+    //const r = await barberController.showBarberList();
+    TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + await barberController.showBarberList(), back);
+  }
+
   constructor(TelegramBot) {
 
-    TelegramBot.onText(/Barber list/, async function (msg) {
+    /*TelegramBot.onText(/Barber list/, async function (msg) {
       try {
         const r = await barberController.showBarberList();
       TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + r, back);
@@ -13,7 +19,7 @@ export class BarberRouter {
         console.log(e);
       }
     });
-
+*/
     TelegramBot.onText(/Select barber/, async function (msg) {
       TelegramBot.sendMessage(msg.chat.id, 'Enter barber id', back);
         TelegramBot.on('message', function (msg) {

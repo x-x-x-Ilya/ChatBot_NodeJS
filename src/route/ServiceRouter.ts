@@ -3,13 +3,14 @@ import { ServiceController } from '../controller/ServiceController';
 const serviceController = new ServiceController();
 
 export class ServiceRouter {
-  constructor(TelegramBot) {
 
-    TelegramBot.onText(/Price list/, async function (msg) {
-      const r = await serviceController.showPriceList();
-      // how to send response
-      TelegramBot.sendMessage(msg.chat.id, 'Price list:' + r, back);
-    });
+
+  async PriceList(TelegramBot, msg) {
+    TelegramBot.sendMessage(msg.chat.id, 'Price list:' + await serviceController.showPriceList(), back);
+  }
+
+
+  constructor(TelegramBot) {
 
     TelegramBot.onText(/Select price/, function (msg) {
       TelegramBot.sendMessage(msg.chat.id, 'Enter price id', back);
