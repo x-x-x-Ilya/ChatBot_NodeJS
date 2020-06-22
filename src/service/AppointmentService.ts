@@ -19,7 +19,6 @@ export class AppointmentService {
     return appointmentRepository.deleteAppointment(should_be_appointment_id);
   }
 
-
   checkDateAppointment(should_be_appointment_date): void {
     return appointmentRepository.checkDateAppointment(should_be_appointment_date);
   }
