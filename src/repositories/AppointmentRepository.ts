@@ -25,9 +25,21 @@ export class AppointmentRepository {
       where:{
         client_id: id,
         deleted: false
-        //, date > cur_date
+      },
+      attributes: ['date'], // include barber && service
+      raw: true
+    }).then(function(allAppointments) {
+      let Response = '\r\n';
+      //const curDate = new Date();
+      for (let i = 0; i < allAppointments.length; i++) {
+        //if(Sequelize.getValues(allAppointments[i].date) > curDate){ // не проходит проверка
+        Response += Sequelize.getValues(allAppointments[i].date) + ' ';
+        Response += Sequelize.getValues(allAppointments[i]._begin) + ' ';
+        Response += Sequelize.getValues(allAppointments[i]._end) + '\r\n';
+        //}
       }
-    });
+      return Response;
+  });
   }
 
   async showMyHistory(id): Promise<string> {
@@ -35,7 +47,7 @@ export class AppointmentRepository {
       { where: {
           client_id: id,
           deleted: false },
-        attributes: ['date', '_begin', '_end'],
+        attributes: ['date'], // include barber && service
         raw: true
       }).then(function(allAppointments) {
         let Response = '\r\n';

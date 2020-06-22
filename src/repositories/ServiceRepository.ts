@@ -9,14 +9,14 @@ export class ServiceRepository {
   async showPriceList() : Promise<string>{
     return await Service.findAll({
       where: { deleted: false },
-      attributes: ['id', 'name', 'time'],
+      attributes: ['name', 'time', 'price'],
       raw: true,
     }).then(function(services) {
       let Response = '\r\n';
       for (let i = 0; i < services.length; i++) {
-        Response += Sequelize.getValues(services[i].id) + ' ';
         Response += Sequelize.getValues(services[i].name) + ' ';
-        Response += Sequelize.getValues(services[i].time) + '\r\n';
+        Response += Sequelize.getValues(services[i].time) + ' ';
+        Response += Sequelize.getValues(services[i].price) + '\r\n';
       }
       return Response;
     });}
@@ -29,7 +29,7 @@ export class ServiceRepository {
       where:{
         id: msg_should_be_id
       },
-      attributes: ['id', 'name', 'time']});
+      attributes: ['price', 'name', 'time']});
       console.log(service);
       return service;
   } catch (e) {
