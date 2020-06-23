@@ -19,7 +19,13 @@ export class AppointmentService {
     return appointmentRepository.deleteAppointment(should_be_appointment_id);
   }
 
-  checkDateAppointment(should_be_appointment_date): void {
-    return appointmentRepository.checkDateAppointment(should_be_appointment_date);
+  async checkDateAppointment(should_be_appointment_date): Promise<string>{
+    const t = should_be_appointment_date.split ('.'),
+      Year = t[2],
+      Month = parseInt (t[1]) - 1,
+      date =  parseInt (t[0]) + 1;
+    const check_date : Date = new Date (Year, Month, date);
+
+    return await appointmentRepository.checkDateAppointment(check_date);
   }
 }

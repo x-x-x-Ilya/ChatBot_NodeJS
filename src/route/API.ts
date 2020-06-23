@@ -4,9 +4,10 @@ import { AppointmentRouter } from './AppointmentRouter';
 import { ClientRouter } from './ClientRouter';
 import { BarberRouter } from './BarberRouter';
 import { ServiceRouter } from './ServiceRouter';
+import * as Bot from 'node-telegram-bot-api';
 
 export class API {      //{parse_mode: JSON/HTML}
-  constructor(TelegramBot) {
+  constructor(TelegramBot : Bot) {
     console.log("constructor started...");
     TelegramBot.on('message', async msg => {
 
@@ -27,7 +28,6 @@ export class API {      //{parse_mode: JSON/HTML}
           await AppointmentRouter.prototype.RemoveMyAppointment(TelegramBot, msg);
           isCommand = true;
           break;
-
 
           case menuButtons.Appointments:
             TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', appointment);

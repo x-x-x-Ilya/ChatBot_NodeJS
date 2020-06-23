@@ -3,6 +3,7 @@ const AppointmentSequelize = require('sequelize');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const AppointmentDatabase = require('../sequelize');
 
+
 const appointments = AppointmentDatabase.define('appointments', {
   id: { type: AppointmentSequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
   date: { type: AppointmentSequelize.DATE, allowNull: false},

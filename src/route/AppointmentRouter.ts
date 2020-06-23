@@ -22,14 +22,15 @@ export class AppointmentRouter {
   }
 
   async SignUpForAnAppointment(TelegramBot, msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us');
-      TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
-        appointmentController.checkDateAppointment(msg.text);
+      TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (as example 06.05.2020)');
+      await TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
+        await appointmentController.checkDateAppointment(msg.text);
       });
-      TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
+      //TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
     };
 
   async RemoveMyAppointment(TelegramBot, msg) {
+    TelegramBot.sendMessage(msg.chat.id, await appointmentController.showMyAppointments(/*msg.chat.id*/2));
       TelegramBot.sendMessage(msg.chat.id, 'send me id of your appointment', back);
       TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
         appointmentController.deleteAppointment(msg.text);

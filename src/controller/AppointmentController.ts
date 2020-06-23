@@ -15,11 +15,12 @@ export class AppointmentController {
     return await appointmentService.showMyHistory(id);
   }
 
+  async checkDateAppointment(should_be_appointment_date): Promise<string> {
+    return await appointmentService.checkDateAppointment(should_be_appointment_date);
+  }
+
   deleteAppointment(should_be_appointment_id): string {
     return appointmentService.deleteAppointment(should_be_appointment_id);
   }
 
-  checkDateAppointment(should_be_appointment_date){
-    return appointmentService.checkDateAppointment(should_be_appointment_date);
-  }
 }
