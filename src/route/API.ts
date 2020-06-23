@@ -6,6 +6,11 @@ import { BarberRouter } from './BarberRouter';
 import { ServiceRouter } from './ServiceRouter';
 import * as Bot from 'node-telegram-bot-api';
 
+const appointmentRouter = new AppointmentRouter();
+const serviceRouter = new ServiceRouter();
+const barberRouter = new BarberRouter();
+const clientRouter = new ClientRouter();
+
 export class API {      //{parse_mode: JSON/HTML}
   constructor(TelegramBot : Bot) {
     console.log("constructor started...");
@@ -20,12 +25,12 @@ export class API {      //{parse_mode: JSON/HTML}
           break;
 
           case menuButtons.BarberList:
-          await BarberRouter.prototype.BarberList(TelegramBot, msg);
+          await barberRouter.BarberList(TelegramBot, msg);
           isCommand = true;
           break;
 
         case menuButtons.RemoveMyAppointment:
-          await AppointmentRouter.prototype.RemoveMyAppointment(TelegramBot, msg);
+          await appointmentRouter.RemoveMyAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
@@ -35,12 +40,12 @@ export class API {      //{parse_mode: JSON/HTML}
           break;
 
         case menuButtons.PriceList:
-          await ServiceRouter.prototype.PriceList(TelegramBot, msg);
+          await serviceRouter.PriceList(TelegramBot, msg);
           isCommand = true;
           break;
 
         case menuButtons.SignUpForAnAppointment:
-          await AppointmentRouter.prototype.SignUpForAnAppointment(TelegramBot, msg);
+          await appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
@@ -50,20 +55,20 @@ export class API {      //{parse_mode: JSON/HTML}
           break;
 
         case menuButtons.EnterEmailAddress:
-          await ClientRouter.prototype.EnterEmailAddress(TelegramBot, msg);
+          await clientRouter.EnterEmailAddress(TelegramBot, msg);
           isCommand = true;
           break;
 
         case menuButtons.Start:
-          await ClientRouter.prototype.addClient(TelegramBot, msg);
+          await clientRouter.addClient(TelegramBot, msg);
           TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
           isCommand = true;
           break;
       }
 
       if(!isCommand){
-        if(msg.text.indexOf('/\/date') != -1)
-        TelegramBot.sendMessage(msg.chat.id, '/help text must be', help);
+        if(msg.text.indexOf('/\/date') != -1 && msg.text.indexOf('/\/email') != -1)
+        TelegramBot.sendMessage(msg.chat.id, 'I do not understand you, please, try again', help);
       }
 
     });
@@ -71,10 +76,10 @@ export class API {      //{parse_mode: JSON/HTML}
     // для инлайн клавиатуры
     TelegramBot.on('callback_query', async query => {
       if(query.data === 'bookedAppointments'){
-        await AppointmentRouter.prototype.showMyAppointments(TelegramBot, query.message)
+        await appointmentRouter.showMyAppointments(TelegramBot, query.message)
       }
       else if(query.data === 'appointmentsHistory'){
-        await AppointmentRouter.prototype.AppointmentsHistory(TelegramBot, query.message);
+        await appointmentRouter.AppointmentsHistory(TelegramBot, query.message);
       }
     })
   }

@@ -6,20 +6,18 @@ export class ClientRepository {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async enterEmail(email, id, first_name, last_name) {
     try {
-      /*const client = Client.findOne({
+      if(!last_name) last_name = "";
+
+      const client = await Client.findOne({
         where: { id: id }
       });
       if (client != null) {
         await client.update({
           email: email,
-          id: id,
-          first_name: first_name,
-          last_name: "last_name deaf",
-          deleted: false
         });
-        return 'updated';
-      } else {*/
-      const client = await Client.create({
+        return 'your email updated';
+      } else {
+        const client = await Client.create({
           email: email,
           id: id,
           first_name: first_name,
@@ -28,6 +26,7 @@ export class ClientRepository {
         });
         console.log(client)
         return client;
+      }
       } catch (e) {
       console.log(e);
     }
