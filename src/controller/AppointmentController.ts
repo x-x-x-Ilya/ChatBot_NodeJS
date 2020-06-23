@@ -15,7 +15,10 @@ export class AppointmentController {
     return await appointmentService.showMyHistory(id);
   }
 
-  async checkDateAppointment(should_be_appointment_date): Promise<string> {
+  async checkDateAppointment(should_be_appointment_date : string): Promise<string> {
+    console.log("before: " + should_be_appointment_date);
+    should_be_appointment_date = should_be_appointment_date.substring(6, should_be_appointment_date.length);
+    console.log("after: " + should_be_appointment_date);
     return await appointmentService.checkDateAppointment(should_be_appointment_date);
   }
 

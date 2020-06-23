@@ -22,11 +22,20 @@ export class AppointmentRouter {
   }
 
   async SignUpForAnAppointment(TelegramBot, msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (as example 06.05.2020)');
-      await TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
-        await appointmentController.checkDateAppointment(msg.text);
+      TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")');
+      TelegramBot.onText(/\/date (.+)/, async (msg) => {
+        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text));
       });
-      //TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
+      /*await TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
+        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text));
+      });*/
+    //TelegramBot.sendMessage(msg.chat.id, "send me time you want");
+    //  await TelegramBot.on('message', async function (msg) { check next message}
+    //  set barber
+    //  set service
+    //  all info together and accept
+    //  saving
+    //  TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
     };
 
   async RemoveMyAppointment(TelegramBot, msg) {

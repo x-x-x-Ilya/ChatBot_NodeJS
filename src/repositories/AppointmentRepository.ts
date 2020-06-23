@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-import { Runtime } from 'inspector';
+const { Op } = require("sequelize");
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Appointment = require('../database/models/appointments');
@@ -61,39 +61,53 @@ export class AppointmentRepository {
     });
   }
 
+  // перенести формирование вывода на другой уровень
   async checkDateAppointment(check_date: Date) : Promise<string>{
-      //console.log("check_date:" + check_date);
-      return await Appointment.findAll({
+    const nextDay = new Date(check_date.getTime());
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    return await Appointment.findAll({
       where:{
-        date: check_date,
+        date: {
+         [Op.between]: [Date.parse(check_date.toString() + " GMT") / 1000, Date.parse(nextDay.toString()+ " GMT") / 1000]
+        },
         deleted: false
       },
       raw: true
-    }).then(function (appointments) {
-      let today_appointmetns = [22, 10];
-        console.log("\r\n");
+    }).then(function (appointments : Array<any>) {
+        let found_in_sec = [];
         for (let i = 0; i < appointments.length; i++) {
-          console.log("curHour: " + Sequelize.getValues(appointments[i].date.getHours()));
-          today_appointmetns.push(Sequelize.getValues(appointments[i].date.getHours()));
+          found_in_sec.push(new Date(Sequelize.getValues(appointments[i].date * 1000)).getHours() * 3600+
+            new Date(Sequelize.getValues(appointments[i].date * 1000)).getMinutes() * 60);
       }
-        console.log("before sort:\r\n");
-        for (let i = 0; i < today_appointmetns.length; i++) {
-          console.log(today_appointmetns + " ");
+      found_in_sec = found_in_sec.sort();
+        let zero;
+        let R = "We are have no work:\r\n";
+        if(found_in_sec[0] != 36000)
+          R += "from 10:00 to " + found_in_sec[0]/3600 + ":" +(found_in_sec[0]%3600)/60 + "\r\n";
+          for(let i = 0; i < found_in_sec.length - 1; i++){
+            if(((found_in_sec[i + 1] + 3600)%3600)/60 == 0) zero = "0";
+            else zero = "";
+          R += "from " + (found_in_sec[i] + 3600)/3600 + ":" + ((found_in_sec[i] + 3600)%3600)/60 + " to " + found_in_sec[i + 1]/3600 + ":" + (found_in_sec[i + 1]%3600)/60 + zero+ "\r\n";
         }
-        today_appointmetns = today_appointmetns.sort();
-        console.log("\r\nafter sort:\r\n");
-        for (let i = 0; i < today_appointmetns.length; i++) {
-          console.log(today_appointmetns + " ");
+      if(found_in_sec[found_in_sec.length - 1] != 79200) {
+        R += "from " + found_in_sec[found_in_sec.length - 1]/3600 + ":" + (found_in_sec[found_in_sec.length - 1]%3600)/60 + " to 22:00\r\n";
+      }
+        /*let start = 36000;
+        let response = "We can work ";
+      for(let i = 0; i < today_appointmetns_in_seconds.length; i++) {
+        if (today_appointmetns_in_seconds[0] >=  start + 3600){
+          //response += "from " + start/3600 + ":" + start/60 + " to " + today_appointmetns_in_seconds[0]/3600 + ":" + today_appointmetns_in_seconds[0]/60;
         }
+          }*/
 
-        today_appointmetns.sort((a: number, b:number) => {
-          if(a > b)
-          return b;
-          else
-            return a;
-        })
-
-        return "hello worlds";
+      found_in_sec.sort((a: number, b:number) => {
+            if(a > b)
+              return b;
+            else
+              return a;
+          });
+        return R;
     });
   }
 

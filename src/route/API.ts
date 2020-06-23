@@ -62,6 +62,7 @@ export class API {      //{parse_mode: JSON/HTML}
       }
 
       if(!isCommand){
+        if(msg.text.indexOf('/\/date') != -1)
         TelegramBot.sendMessage(msg.chat.id, '/help text must be', help);
       }
 

@@ -6,7 +6,7 @@ const AppointmentDatabase = require('../sequelize');
 
 const appointments = AppointmentDatabase.define('appointments', {
   id: { type: AppointmentSequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
-  date: { type: AppointmentSequelize.DATE, allowNull: false},
+  date: { type: AppointmentSequelize.INTEGER, allowNull: false},
   client_id:{ type: AppointmentSequelize.INTEGER, allowNull: false},
   service_id:{ type: AppointmentSequelize.INTEGER, allowNull: false},
   barber_id:{ type: AppointmentSequelize.INTEGER, allowNull: false},
