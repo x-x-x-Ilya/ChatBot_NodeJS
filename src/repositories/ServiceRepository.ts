@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Service = require('../database/models/services');
+import {services} from '../database/models/services';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize-values')();
 
@@ -7,7 +6,7 @@ export class ServiceRepository {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async showPriceList() : Promise<string>{
-    return await Service.findAll({
+    return await services.findAll({
       where: { deleted: false },
       attributes: ['name', 'time', 'price'],
       raw: true,
@@ -25,7 +24,7 @@ export class ServiceRepository {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async selectPrice(msg_should_be_id) {
     try {
-    const service = await Service.findOne({
+    const service = await services.findOne({
       where:{
         id: msg_should_be_id
       },

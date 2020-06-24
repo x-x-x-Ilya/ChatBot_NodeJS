@@ -10,12 +10,17 @@ admin.initializeApp({
  */
 
 import * as TelegramBot from 'node-telegram-bot-api';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const database = require('./database/synchronization');
+import {connect} from './database/synchronization';
+
 import {API} from './route/API';
 // сделать последовательное выполнение так как функции асинхронные
-database.authentication();
-database.ModelsSynchronization();
 const token = process.env.TOKEN;
-export const bot = new TelegramBot(token, {polling: true});
-new API(bot);
+connect().then(() => {
+  try {
+    const bot = new TelegramBot(token, { polling: true });
+    new API(bot);
+  } catch (e) {
+    console.log(e);
+  }
+});
+

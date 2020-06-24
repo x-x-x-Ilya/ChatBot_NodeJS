@@ -1,6 +1,6 @@
 import {AppointmentRepository} from '../repositories/AppointmentRepository';
-
 const appointmentRepository = new AppointmentRepository();
+
 export class AppointmentService {
 
   setAppointment(): string {

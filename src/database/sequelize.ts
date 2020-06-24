@@ -1,9 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('sequelize');
+import {Sequelize} from 'sequelize';
 
 try {
   module.exports = new Sequelize(
-    process.env.DB_NAME,
+  process.env.DB_NAME,
     process.env.USER_NAME,
     process.env.DB_PASS,
   {
@@ -23,7 +22,7 @@ try {
         timestamps: false,
       }
     });
-  console.log("sequelize connected")
+  console.log("Sequelize connected")
 } catch (error) {
   console.log(error);
 }

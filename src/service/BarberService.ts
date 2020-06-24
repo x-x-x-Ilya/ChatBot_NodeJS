@@ -1,13 +1,13 @@
 import {BarberRepository} from '../repositories/BarberRepository';
-const repository = new BarberRepository();
+const barberRepository = new BarberRepository();
 export class BarberService {
 
   showBarberList() : Promise<string>{
-    return repository.showBarberList();
+    return barberRepository.showBarberList();
   }
 
   selectBarber() {
-    return repository.selectBarber();
+    return barberRepository.selectBarber();
   }
 
 }

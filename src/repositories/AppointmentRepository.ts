@@ -1,14 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { Op } = require("sequelize");
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Appointment = require('../database/models/appointments');
+import { Op } from 'sequelize';
+import {appointments} from '../database/models/appointments';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize-values')();
 export class AppointmentRepository {
 
   setAppointment() {
-    return Appointment.create({
+    return appointments.create({
       /*date:
       begin:
       end:
@@ -22,7 +19,7 @@ export class AppointmentRepository {
   }
   
   showMyAppointments(id) {  // или добавить условие поиска или убрать лишнее в сервисах
-    return Appointment.findAll({
+    return appointments.findAll({
       where:{
         client_id: id,
         deleted: false
@@ -42,7 +39,7 @@ export class AppointmentRepository {
   }
 
   async showMyHistory(id): Promise<string> {
-    return await Appointment.findAll(
+    return await appointments.findAll(
       { where: {
           client_id: id,
           deleted: false },
@@ -66,7 +63,7 @@ export class AppointmentRepository {
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
 
-    return await Appointment.findAll({
+    return await appointments.findAll({
       where:{
         date: {
          [Op.between]: [Date.parse(check_date.toString() + " GMT") / 1000, Date.parse(nextDay.toString()+ " GMT") / 1000]
@@ -113,7 +110,7 @@ export class AppointmentRepository {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   deleteAppointment(should_be_appointment_id){
-    const appointment = Appointment.findOne({where:{id:should_be_appointment_id}});
+    const appointment = appointments.findOne({where:{id:should_be_appointment_id}});
     return appointment.update({
       deleted: true
     });

@@ -1,14 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Barber = require('../database/models/barbers');
-
+import {barbers} from '../database/models/barbers';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize-values')();
 
 export class BarberRepository {
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async showBarberList() : Promise<string>{
-    return await Barber.findAll({
+    return await barbers.findAll({
       attributes: ['first_name', 'last_name'],
       raw: true,
     }).then(function(barbers) {
@@ -20,11 +17,8 @@ export class BarberRepository {
       return Response;
     });}
 
-
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async selectBarber() {
-    return await Barber.findOne({});
+    async selectBarber() {
+    return await barbers.findOne({});
   }
 
 }

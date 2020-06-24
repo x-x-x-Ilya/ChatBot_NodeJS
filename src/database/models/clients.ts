@@ -1,14 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ClientSequelize = require('sequelize');
+import Sequelize from 'sequelize';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ClientDatabase = require('../sequelize');
 
-const clients = ClientDatabase.define('clients', {
-  id: { type: ClientSequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
-  first_name: { type: ClientSequelize.STRING, allowNull: false },
-  last_name: { type: ClientSequelize.STRING, allowNull: false },
-  email: { type: ClientSequelize.STRING, allowNull: true },
-  deleted: { type: ClientSequelize.BOOLEAN, allowNull: false}
+export const clients = ClientDatabase.define('clients', {
+  id: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
+  first_name: { type: Sequelize.STRING, allowNull: false },
+  last_name: { type: Sequelize.STRING, allowNull: false },
+  email: { type: Sequelize.STRING, allowNull: true },
+  deleted: { type: Sequelize.BOOLEAN, allowNull: false}
 });
-
-module.exports = clients;
