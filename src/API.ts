@@ -53,12 +53,12 @@ export class API {
           isCommand = true;
           break;
 
-        case menuButtons.EnterEmailAddress:
-          await clientRouter.EnterEmailAddress(TelegramBot, msg);
+        case menuButtons.MyProfile:
+          await clientRouter.MyProfile(TelegramBot, msg);
           isCommand = true;
           break;
 
-        case menuButtons.Start:
+        case '/start':
           await clientRouter.addClient(TelegramBot, msg);
           TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
           isCommand = true;

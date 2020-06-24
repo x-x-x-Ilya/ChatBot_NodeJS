@@ -30,17 +30,25 @@ export class ClientRepository {
     }
   }
 
-  async addClient(id, first_name, last_name){
-    const client = await clients.findOne({
-      where:{id:id}
-    });
-    if(client == null)
-    return clients.create({
-      id: id,
-      first_name: first_name,
-      last_name: last_name,
-      deleted: false
+  async MyProfile(id){
+    return await clients.findOne({
+      where: {
+        id: id
+      },
+      raw: true
     });
   }
 
+  async addClient(id, first_name, last_name) {
+    const client = await clients.findOne({
+      where: { id: id }
+    });
+    if (client == null)
+      return clients.create({
+        id: id,
+        first_name: first_name,
+        last_name: last_name,
+        deleted: false
+      });
+  }
 }

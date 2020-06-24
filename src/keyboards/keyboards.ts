@@ -2,11 +2,11 @@ import { menuButtons } from './key-board-buttons';
 
 export const menu = {
   reply_markup: JSON.stringify({
+    resize_keyboard: true,
     keyboard: [
       [menuButtons.PriceList, menuButtons.BarberList],
-      [menuButtons.Appointments],
-      [menuButtons.SignUpForAnAppointment],
-      [menuButtons.EnterEmailAddress]
+      [menuButtons.Appointments, menuButtons.SignUpForAnAppointment],
+      [menuButtons.MyProfile]
     ]
   })
 };
@@ -46,4 +46,13 @@ export const appointment = {
       ]
     ]
   }
+};
+
+export const profile = {
+  reply_markup: JSON.stringify({
+    resize_keyboard: true,
+    keyboard: [
+      ['send my email', 'send my last_name']
+    ]
+  })
 };

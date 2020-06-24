@@ -39,7 +39,7 @@ CREATE TABLE services (
 CREATE TABLE clients (
 	id         INT          NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
-	last_name VARCHAR(255) NOT NULL,
+	last_name VARCHAR(255)  NULL,
     email      VARCHAR(255) NULL UNIQUE,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
