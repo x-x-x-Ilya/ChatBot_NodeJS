@@ -21,7 +21,7 @@ CREATE TABLE barbers (
 
 CREATE TABLE appointments (
     id 	 serial  PRIMARY KEY,
-	date  INT NOT NULL,
+	date  TIMESTAMP NOT NULL,
 	client_id INT NOT NULL,
 	barber_id INT NOT NULL,
 	service_id INT NOT NULL,

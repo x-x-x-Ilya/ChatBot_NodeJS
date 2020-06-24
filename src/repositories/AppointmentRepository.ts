@@ -58,7 +58,6 @@ export class AppointmentRepository {
     });
   }
 
-  // перенести формирование вывода на другой уровень
   async checkDateAppointment(check_date: Date) : Promise<string>{
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
@@ -66,7 +65,7 @@ export class AppointmentRepository {
     return await appointments.findAll({
       where:{
         date: {
-         [Op.between]: [Date.parse(check_date.toString() + " GMT") / 1000, Date.parse(nextDay.toString()+ " GMT") / 1000]
+          [Op.between]: [check_date, nextDay]
         },
         deleted: false
       },
@@ -74,10 +73,12 @@ export class AppointmentRepository {
     }).then(function (appointments : Array<any>) {
         let found_in_sec = [];
         for (let i = 0; i < appointments.length; i++) {
-          found_in_sec.push(new Date(Sequelize.getValues(appointments[i].date * 1000)).getHours() * 3600+
-            new Date(Sequelize.getValues(appointments[i].date * 1000)).getMinutes() * 60);
+          console.log(appointments[i].date.getHours());
+          found_in_sec.push(appointments[i].date.getHours() * 3600 + appointments[i].date.getMinutes() * 60);
       }
+      console.log("before: " + found_in_sec);
       found_in_sec = found_in_sec.sort();
+      console.log("after: " + found_in_sec);
         let zero;
         let R = "We are have no work:\r\n";
         if(found_in_sec[0] != 36000)
@@ -108,10 +109,9 @@ export class AppointmentRepository {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  deleteAppointment(should_be_appointment_id){
-    const appointment = appointments.findOne({where:{id:should_be_appointment_id}});
-    return appointment.update({
+  async deleteAppointment(should_be_appointment_id){
+    const appointment = await appointments.findOne({where:{id:should_be_appointment_id}});
+    return await appointment.update({
       deleted: true
     });
   }
