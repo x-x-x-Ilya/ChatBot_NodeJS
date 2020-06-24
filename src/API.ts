@@ -1,9 +1,9 @@
-import { menu, back, help, appointment } from '../keyboards/keyboards';
-import { menuButtons } from '../keyboards/key-board-buttons';
-import { AppointmentRouter } from './AppointmentRouter';
-import { ClientRouter } from './ClientRouter';
-import { BarberRouter } from './BarberRouter';
-import { ServiceRouter } from './ServiceRouter';
+import { menu, back, help, appointment } from './keyboards/keyboards';
+import { menuButtons } from './keyboards/key-board-buttons';
+import { AppointmentRouter } from './route/AppointmentRouter';
+import { ClientRouter } from './route/ClientRouter';
+import { BarberRouter } from './route/BarberRouter';
+import { ServiceRouter } from './route/ServiceRouter';
 import * as Bot from 'node-telegram-bot-api';
 
 const appointmentRouter = new AppointmentRouter();
@@ -11,16 +11,15 @@ const serviceRouter = new ServiceRouter();
 const barberRouter = new BarberRouter();
 const clientRouter = new ClientRouter();
 
-export class API {      //{parse_mode: JSON/HTML}
+export class API {
   constructor(TelegramBot : Bot) {
-    console.log("constructor started...");
-    TelegramBot.on('message', async msg => {
 
+    TelegramBot.on('message', async msg => {
       let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
 
       switch (msg.text) {
         case menuButtons.Back:
-          TelegramBot.sendMessage(msg.chat.id, 'menu:', menu);
+          TelegramBot.sendMessage(msg.chat.id, 'Waiting for you command...', menu);
           isCommand = true;
           break;
 

@@ -1,6 +1,11 @@
 import { menu, back } from '../keyboards/keyboards';
 import { menuButtons } from '../keyboards/key-board-buttons';
 import { AppointmentController } from '../controller/AppointmentController';
+import { ServiceController} from '../controller/ServiceController';
+import { BarberController} from '../controller/BarberController';
+
+const barberController = new BarberController();
+const serviceController = new ServiceController();
 const appointmentController = new AppointmentController();
 
 export class AppointmentRouter {
@@ -22,17 +27,33 @@ export class AppointmentRouter {
   }
 
   async SignUpForAnAppointment(TelegramBot, msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")');
-      TelegramBot.onText(/\/date (.+)/, async (msg) => {
-        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text));
-      });
-      /*await TelegramBot.on('message', async function (msg) {  // после первого выполнения продолжает использоваться
-        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text));
-      });*/
-    //TelegramBot.sendMessage(msg.chat.id, "send me time you want");
-    //  await TelegramBot.on('message', async function (msg) { check next message}
-    //  set barber
-    //  set service
+     const appointment = [];
+
+    TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")');
+    TelegramBot.onText(/\/date (.+)/, async (msg) => {
+      TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text.substring(6, msg.text.length)));
+      appointment.push(msg.text.substring(6, msg.text.length));
+    });
+
+    TelegramBot.sendMessage(msg.chat.id, 'send me time you want (format: "/time 10:17)');
+    TelegramBot.onText(/\/time (.+)/, async (msg) => {
+      appointment.push(msg.text.substring(6, msg.text.length));
+      TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkTimeAppointment(appointment));
+    });
+
+    TelegramBot.sendMessage(msg.chat.id, 'send me service you want (format: "/service "service_name")');
+    TelegramBot.onText(/\/service (.+)/, async (msg) => {
+      //TelegramBot.sendMessage(msg.chat.id, await serviceController.setService(msg.text.substring(8, msg.text.length)));
+      appointment.push(msg.text.substring(8, msg.text.length));
+    });
+
+    TelegramBot.sendMessage(msg.chat.id, 'send me barber you want (format: "/barber "barber_name")');
+    TelegramBot.onText(/\/barber (.+)/, async (msg) => {
+      //TelegramBot.sendMessage(msg.chat.id, await barberController.setBarber(msg.text.substring(8, msg.text.length)));
+      appointment.push(msg.text.substring(8, msg.text.length));
+    });
+    // await appointmentController.setBarber()
+
     //  all info together and accept
     //  saving
     //  TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);

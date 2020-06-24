@@ -4,7 +4,6 @@ const serviceController = new ServiceController();
 
 export class ServiceRouter {
 
-
   async PriceList(TelegramBot, msg) {
     TelegramBot.sendMessage(msg.chat.id, 'Price list:' + await serviceController.showPriceList(), back);
   }

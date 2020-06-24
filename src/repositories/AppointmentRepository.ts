@@ -4,7 +4,8 @@ import {appointments} from '../database/models/appointments';
 const Sequelize = require('sequelize-values')();
 export class AppointmentRepository {
 
-  setAppointment() {
+  checkTimeAppointment(dateAndTimeArr) {
+
     return appointments.create({
       /*date:
       begin:
@@ -59,6 +60,7 @@ export class AppointmentRepository {
   }
 
   async checkDateAppointment(check_date: Date) : Promise<string>{
+
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
 

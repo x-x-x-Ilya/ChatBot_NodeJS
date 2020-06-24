@@ -12,7 +12,7 @@ admin.initializeApp({
 import * as TelegramBot from 'node-telegram-bot-api';
 import {connect} from './database/synchronization';
 
-import {API} from './route/API';
+import {API} from './API';
 // сделать последовательное выполнение так как функции асинхронные
 const token = process.env.TOKEN;
 connect().then(() => {
