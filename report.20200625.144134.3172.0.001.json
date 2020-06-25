@@ -1,0 +1,154 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200625.144134.3172.0.001.json",
+    "dumpEventTime": "2020-06-25T14:41:34Z",
+    "dumpEventTimeStamp": "1593085294185",
+    "processId": 3172,
+    "cwd": "C:\\project\\ChatBot_NodeJS",
+    "commandLine": [
+      "node",
+      "C:\\project\\ChatBot_NodeJS\\node_modules\\.bin\\\\..\\ts-node\\dist\\bin.js",
+      "src/main.ts"
+    ],
+    "nodejsVersion": "v12.13.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.13.0",
+      "v8": "7.7.299.13-node.12",
+      "uv": "1.32.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.13.0/node-v12.13.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.13.0/node-v12.13.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.13.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.18363",
+    "osVersion": "Windows 10 Pro",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 5931343,
+        "nice": 0,
+        "sys": 5338453,
+        "idle": 64440375,
+        "irq": 1641625
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 3466109,
+        "nice": 0,
+        "sys": 2406812,
+        "idle": 69836640,
+        "irq": 64781
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 5612531,
+        "nice": 0,
+        "sys": 3561296,
+        "idle": 66535718,
+        "irq": 125671
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 4926859,
+        "nice": 0,
+        "sys": 1945640,
+        "idle": 68837046,
+        "irq": 52171
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 6010578,
+        "nice": 0,
+        "sys": 2676109,
+        "idle": 67022859,
+        "irq": 68062
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 3522421,
+        "nice": 0,
+        "sys": 1851296,
+        "idle": 70335828,
+        "irq": 33968
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 5836171,
+        "nice": 0,
+        "sys": 2291406,
+        "idle": 67581968,
+        "irq": 53578
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+        "speed": 1800,
+        "user": 3810265,
+        "nice": 0,
+        "sys": 1779328,
+        "idle": 70119953,
+        "irq": 27859
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "VirtualBox Host-Only Network",
+        "internal": false,
+        "mac": "0a:00:27:00:00:0e",
+        "address": "fe80::1d0b:8f0:85c0:4b55",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 14
+      },
+      {
+        "name": "VirtualBox Host-Only Network",
+        "internal": false,
+        "mac": "0a:00:27:00:00:0e",
+        "address": "192.168.56.1",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Npcap Loopback Adapter",
+        "internal": false,
+        "mac": "02:00:4c:4f:4f:50",
+        "address": "fe80::908:2dec:c6fa:b58",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 11
+      },
+      {
+        "name": "Npcap Loopback Adapter",
+        "internal": false,
+        "mac": "

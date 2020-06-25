@@ -33,7 +33,7 @@ export class API {
           isCommand = true;
           break;
 
-          case menuButtons.Appointments:
+          case profileButtons.Appointments:
             TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', appointment);
           isCommand = true;
           break;
@@ -43,13 +43,18 @@ export class API {
           isCommand = true;
           break;
 
-        case menuButtons.SignUpForAnAppointment:
-          await appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
+        case menuButtons.checkDateAppointment:
+          await appointmentRouter.checkDateAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
         case profileButtons.sendLastName:
           await clientRouter.EnterLastName(TelegramBot, msg);
+          isCommand = true;
+          break;
+
+        case menuButtons.SignUpForAService:
+          await appointmentRouter.SignUpForAService(TelegramBot, msg);
           isCommand = true;
           break;
 

@@ -3,19 +3,19 @@ const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
-  checkTimeAppointment(dateAndTimeArr): string {
-    return appointmentService.checkTimeAppointment(dateAndTimeArr);
+  async showMyAppointments(id) {
+    return await appointmentService.showMyAppointments(id);
   }
 
-  showMyAppointments(id): string {
-    return appointmentService.showMyAppointments(id);
+  async setAppointment(date, time, id) {
+    return await appointmentService.setAppointment(date, time, id);
   }
 
   async showMyHistory(id): Promise<string> {
     return await appointmentService.showMyHistory(id);
   }
 
-  async checkDateAppointment(should_be_appointment_date : string): Promise<string> {
+  async checkDateAppointment(should_be_appointment_date : string) {
     return await appointmentService.checkDateAppointment(should_be_appointment_date);
   }
 

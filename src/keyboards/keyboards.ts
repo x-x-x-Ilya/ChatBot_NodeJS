@@ -5,8 +5,8 @@ export const menu = {
     resize_keyboard: true,
     keyboard: [
       [menuButtons.PriceList, menuButtons.BarberList],
-      [menuButtons.Appointments, menuButtons.SignUpForAnAppointment],
-      [menuButtons.MyProfile]
+      [menuButtons.MyProfile, menuButtons.checkDateAppointment],
+      [menuButtons.SignUpForAService]
     ]
   })
 };
@@ -53,7 +53,7 @@ export const profile = {
     resize_keyboard: true,
     keyboard: [
       [profileButtons.sendEmail,profileButtons.sendLastName],
-      [menuButtons.Back]
+      [profileButtons.Appointments, menuButtons.Back]
     ]
   })
 };

@@ -23,8 +23,8 @@ CREATE TABLE appointments (
     id 	 serial  PRIMARY KEY,
 	date  TIMESTAMP NOT NULL,
 	client_id INT NOT NULL,
-	barber_id INT NOT NULL,
-	service_id INT NOT NULL,
+	barber_id INT NULL,
+	service_id INT NULL,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
 

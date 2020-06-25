@@ -1,12 +1,11 @@
 export const menuButtons = {
   PriceList: 'Price list',
   BarberList: 'Barber list',
-  Appointments: 'Appointments',
-  SignUpForAnAppointment: 'Sign up for an appointment',
-  MyProfile: 'My profile',//'Enter email address',
+  checkDateAppointment: 'Check date appointment',
+  MyProfile: 'My profile',
   RemoveMyAppointment: 'Remove my appointment',
   Back: 'Back',
-  //Start: '/\/start',
+  SignUpForAService: 'Sign up for a service',
   Help: '/\/help'
 };
 
@@ -14,4 +13,5 @@ export const menuButtons = {
 export const profileButtons = {
   sendEmail: 'send my email',
   sendLastName:'send my last_name',
+  Appointments: 'My appointments',
 }

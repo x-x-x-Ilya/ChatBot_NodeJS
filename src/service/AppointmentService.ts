@@ -3,16 +3,16 @@ const appointmentRepository = new AppointmentRepository();
 
 export class AppointmentService {
 
-  checkTimeAppointment(dateAndTimeArr): string {
-    return appointmentRepository.checkTimeAppointment(dateAndTimeArr);
-  }
-
-  showMyAppointments(id): string {
-    return appointmentRepository.showMyAppointments(id);
+  async showMyAppointments(id) {
+    return await appointmentRepository.showMyAppointments(id);
   }
 
   async showMyHistory(id): Promise<string>{
     return await appointmentRepository.showMyHistory(id);
+  }
+
+  async setAppointment(date, time, id){
+    return await appointmentRepository.setAppointment(date, time, id);
   }
 
   async deleteAppointment(should_be_appointment_id): Promise<string> {
