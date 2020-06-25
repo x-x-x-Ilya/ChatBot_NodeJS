@@ -5,13 +5,17 @@ export const menuButtons = {
   MyProfile: 'My profile',
   RemoveMyAppointment: 'Remove my appointment',
   Back: 'Back',
-  SignUpForAService: 'Sign up for an appointment',
+  SignUpForAnAppointment: 'Sign up for an appointment',
   Help: '/\/help'
 };
 
-
 export const profileButtons = {
-  sendEmail: 'send my email',
-  sendLastName:'send my last_name',
+  sendEmail: 'Send my email',
+  sendLastName:'Send my last name',
   Appointments: 'My appointments',
+}
+
+export const appointmentButtons = {
+  AppointmentsHistory: 'Appointments history',
+  BookedAppointments:'Booked appointments'
 }

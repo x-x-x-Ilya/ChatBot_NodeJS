@@ -53,8 +53,8 @@ export class API {
           isCommand = true;
           break;
 
-        case menuButtons.SignUpForAService:
-          await appointmentRouter.SignUpForAService(TelegramBot, msg);
+        case menuButtons.SignUpForAnAppointment:
+          await appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 

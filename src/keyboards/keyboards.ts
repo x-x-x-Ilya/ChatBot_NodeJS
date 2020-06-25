@@ -1,11 +1,11 @@
-import { menuButtons, profileButtons } from './key-board-buttons';
+import { menuButtons, profileButtons, appointmentButtons } from './key-board-buttons';
 
 export const menu = {
   reply_markup: JSON.stringify({
     resize_keyboard: true,
     keyboard: [
       [menuButtons.PriceList, menuButtons.BarberList],
-      [menuButtons.SignUpForAService, menuButtons.checkDateAppointment],
+      [menuButtons.SignUpForAnAppointment, menuButtons.checkDateAppointment],
       [menuButtons.MyProfile]
     ]
   })
@@ -34,13 +34,13 @@ export const appointment = {
     inline_keyboard:[
       [
         {
-          text: 'Appointments history',
+          text: appointmentButtons.AppointmentsHistory,
           callback_data: 'appointmentsHistory'
         }
       ],
       [
         {
-          text: 'Booked appointments',
+          text: appointmentButtons.BookedAppointments,
           callback_data: 'bookedAppointments'
         }
       ]
@@ -52,7 +52,7 @@ export const profile = {
   reply_markup: JSON.stringify({
     resize_keyboard: true,
     keyboard: [
-      [profileButtons.sendEmail,profileButtons.sendLastName],
+      [profileButtons.sendEmail, profileButtons.sendLastName],
       [profileButtons.Appointments, menuButtons.Back]
     ]
   })
