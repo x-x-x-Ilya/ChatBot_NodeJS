@@ -10,6 +10,8 @@ export class ClientService {
     async MyProfile(id){
       let Response = "";
       const client = await clientRepository.MyProfile(id);
+      if(client.last_name == null) client.last_name = 'not indicated';
+      if(client.email == null) client.email = 'not indicated';
       Response += "first_name: " + client.first_name + "\r\nlast_name: " + client.last_name + "\r\nemail: " + client.email;
       return Response;
     }

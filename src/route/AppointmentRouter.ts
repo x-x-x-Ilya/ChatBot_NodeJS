@@ -11,6 +11,7 @@ const appointmentController = new AppointmentController();
 export class AppointmentRouter {
 
   async AppointmentsHistory(TelegramBot, msg) {
+
     TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyHistory(msg.chat.id), menu);
   }
 
@@ -30,8 +31,7 @@ export class AppointmentRouter {
   async checkDateAppointment(TelegramBot, msg) {
     TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")');
     TelegramBot.onText(/\/date (.+)/, async (msg) => {
-      const date = await appointmentController.checkDateAppointment(msg.text.substring(6, msg.text.length));
-      TelegramBot.sendMessage(msg.chat.id, date);
+      TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text.substring(6, msg.text.length)));
     });
   };
 

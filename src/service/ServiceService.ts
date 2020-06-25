@@ -9,9 +9,12 @@ export class ServiceService {
     const services: Array <any> = await serviceRepository.showPriceList();
       let Response = '\r\n';
       for (let i = 0; i < services.length; i++) {
-        Response += Sequelize.getValues(services[i].name) + ' ';
-        Response += Sequelize.getValues(services[i].time) + ' ';
-        Response += Sequelize.getValues(services[i].price) + '\r\n';
+        const cur_name  : string = Sequelize.getValues(services[i].name);
+        const cur_time  : string = Sequelize.getValues(services[i].time);
+        const cur_price : string = Sequelize.getValues(services[i].price).toString();
+        Response += "[" + (i+1) + "] " + cur_name + ' ';
+        Response += cur_time + ' ';
+        Response += cur_price + '\r\n';
       }
       return Response;
     }

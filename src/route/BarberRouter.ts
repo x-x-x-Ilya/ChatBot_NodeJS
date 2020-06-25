@@ -6,7 +6,7 @@ export class BarberRouter {
 
   async BarberList(TelegramBot, msg) {
     //const r = await barberController.showBarberList();
-    TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + await barberController.showBarberList(), back);
+    TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + await barberController.showBarberList(), menu);
   }
 
 /*

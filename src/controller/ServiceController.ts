@@ -7,8 +7,4 @@ export class ServiceController {
     return await serviceService.showPriceList();
   }
 
-  selectPrice(msg_should_be_id){
-    return serviceService.selectPrice(msg_should_be_id);
-  }
-
 }

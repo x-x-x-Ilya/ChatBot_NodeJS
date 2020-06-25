@@ -5,8 +5,8 @@ export const menu = {
     resize_keyboard: true,
     keyboard: [
       [menuButtons.PriceList, menuButtons.BarberList],
-      [menuButtons.MyProfile, menuButtons.checkDateAppointment],
-      [menuButtons.SignUpForAService]
+      [menuButtons.SignUpForAService, menuButtons.checkDateAppointment],
+      [menuButtons.MyProfile]
     ]
   })
 };
