@@ -4,18 +4,21 @@ import {routes} from './route/routes';
 import * as Bot from 'node-telegram-bot-api';
 
 export class API {
+
   constructor(TelegramBot : Bot) {
+    let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
 
     TelegramBot.on('message', async msg => {
-      let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
+      isCommand = false;
 
       switch (msg.text) {
+
         case menuButtons.Back:
           TelegramBot.sendMessage(msg.chat.id, 'Waiting for you command...', menu);
           isCommand = true;
           break;
 
-          case menuButtons.BarberList:
+        case menuButtons.BarberList:
           await routes.barberRouter.BarberList(TelegramBot, msg);
           isCommand = true;
           break;
@@ -25,8 +28,8 @@ export class API {
           isCommand = true;
           break;
 
-          case profileButtons.Appointments:
-            TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', appointment);
+        case profileButtons.Appointments:
+          TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', appointment);
           isCommand = true;
           break;
 

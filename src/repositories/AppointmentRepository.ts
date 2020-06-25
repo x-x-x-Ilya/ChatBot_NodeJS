@@ -52,12 +52,11 @@ export class AppointmentRepository {
   }
 
 
-  async setAppointment(date, time, id){
+  async setAppointment(date, id){
     const appointment =  await appointments.create({
       date: date,
-      time:time,
-      client_id:id,
-      deleted:false
+      client_id: id,
+      deleted: false
     })
     if(appointment)
       return true;

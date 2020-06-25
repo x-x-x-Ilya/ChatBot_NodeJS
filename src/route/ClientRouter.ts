@@ -19,12 +19,11 @@ export class ClientRouter {
     });
   }
 
-
   async EnterEmailAddress(TelegramBot, msg) {
     TelegramBot.sendMessage(msg.chat.id, 'Enter your email ("/email examplmail@mail.com")', back);
       TelegramBot.onText(/\/email (.+)/, async (msg) => {
       await clientController.enterEmail(msg.text.substring(7, msg.length), msg.chat.id);
-      TelegramBot.sendMessage(msg.chat.id, "your email added to our client base", back);
+      TelegramBot.sendMessage(msg.chat.id, "your email added to our client base", profile);
     });
   }
 

@@ -1,4 +1,4 @@
-import {AppointmentController } from './controller/AppointmentController';
+/*import {AppointmentController } from './controller/AppointmentController';
 import {BarberController } from './controller/BarberController';
 import {ClientController } from './controller/ClientController';
 import {ServiceController } from './controller/ServiceController';
@@ -31,3 +31,5 @@ const serviceRepository = new ServiceRepository();
 export const controllers = {appointmentController, barberController, clientController, serviceController};
 export const services = {appointmentService, barberService, clientService, serviceService};
 export const repository = {appointmentRepository, barberRepository, clientRepository, serviceRepository};
+
+*/

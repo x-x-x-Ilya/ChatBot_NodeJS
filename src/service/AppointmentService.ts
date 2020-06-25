@@ -28,8 +28,8 @@ export class AppointmentService {
   }
 
 
-  async setAppointment(date, time, id) {
-    return await appointmentRepository.setAppointment(date, time, id);
+  async setAppointment(date, id) {
+    return await appointmentRepository.setAppointment(date, id);
   }
 
   async deleteAppointment(should_be_appointment_id): Promise<string> {

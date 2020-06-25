@@ -7,8 +7,8 @@ export class AppointmentController {
     return await appointmentService.showMyAppointments(id);
   }
 
-  async setAppointment(date, time, id) {
-    return await appointmentService.setAppointment(date, time, id);
+  async setAppointment(date, id) {
+    return await appointmentService.setAppointment(date, id);
   }
 
   async showMyHistory(id): Promise<string> {

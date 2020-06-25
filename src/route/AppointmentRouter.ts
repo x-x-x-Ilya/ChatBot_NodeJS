@@ -7,9 +7,10 @@ const appointmentController = new AppointmentController();
 export class AppointmentRouter {
 
   async AppointmentsHistory(TelegramBot, msg) {
-
     TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyHistory(msg.chat.id), menu);
   }
+
+
 
   async showMyAppointments(TelegramBot, msg) {
     const back = {
@@ -17,7 +18,7 @@ export class AppointmentRouter {
         resize_keyboard: true,
         keyboard: [
           [menuButtons.Back],
-          ['Remove my appointment']
+          ['Remove my appointment', 'Edit appointment']
         ]
       })
     };
@@ -42,8 +43,10 @@ export class AppointmentRouter {
         day = parseInt(t[0]);
       check_date = new Date(Year, Month, day);
       const today = new Date();
-      if (check_date >= today)
-      TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "/time 16:00")');
+      if (check_date >= today) {
+        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text.substring(6, msg.text.length)));
+        TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "/time 16:00")');
+      }
       else {
         TelegramBot.sendMessage(msg.chat.id, 'Date should be in future', back);
       }
@@ -51,7 +54,11 @@ export class AppointmentRouter {
 
     TelegramBot.onText(/\/time (.+)/, async (msg) => {  // всегда одно и то же время ??? дублированный вызов
         const time = msg.text.substring(6, msg.text.length);
-        if(await appointmentController.setAppointment(check_date, time, msg.chat.id))
+        const t = time.split(':');
+      check_date.setHours(t[0]);
+      check_date.setMinutes(t[1]);
+
+        if(await appointmentController.setAppointment(check_date, msg.chat.id))
          TelegramBot.sendMessage(msg.chat.id, "Your appointment added, you can also set barber and service or do it later.");
         //set barber
         //set service

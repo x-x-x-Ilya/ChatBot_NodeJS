@@ -14,8 +14,6 @@ export class ClientController {
     return await clientService.enterLastName(last_name, id);
   }
 
-
-
   async addClient(id, first_name, last_name){
     return await clientService.addClient(id, first_name, last_name);
   }
