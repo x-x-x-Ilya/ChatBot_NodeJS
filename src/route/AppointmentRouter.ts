@@ -1,11 +1,7 @@
 import { menu, back } from '../keyboards/keyboards';
 import { menuButtons } from '../keyboards/key-board-buttons';
 import { AppointmentController } from '../controller/AppointmentController';
-import { ServiceController} from '../controller/ServiceController';
-import { BarberController} from '../controller/BarberController';
 
-const barberController = new BarberController();
-const serviceController = new ServiceController();
 const appointmentController = new AppointmentController();
 
 export class AppointmentRouter {

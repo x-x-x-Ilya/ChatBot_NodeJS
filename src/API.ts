@@ -1,15 +1,7 @@
 import { menu, back, help, appointment } from './keyboards/keyboards';
 import { menuButtons, profileButtons } from './keyboards/key-board-buttons';
-import { AppointmentRouter } from './route/AppointmentRouter';
-import { ClientRouter } from './route/ClientRouter';
-import { BarberRouter } from './route/BarberRouter';
-import { ServiceRouter } from './route/ServiceRouter';
+import {routes} from './route/routes';
 import * as Bot from 'node-telegram-bot-api';
-
-const appointmentRouter = new AppointmentRouter();
-const serviceRouter = new ServiceRouter();
-const barberRouter = new BarberRouter();
-const clientRouter = new ClientRouter();
 
 export class API {
   constructor(TelegramBot : Bot) {
@@ -24,12 +16,12 @@ export class API {
           break;
 
           case menuButtons.BarberList:
-          await barberRouter.BarberList(TelegramBot, msg);
+          await routes.barberRouter.BarberList(TelegramBot, msg);
           isCommand = true;
           break;
 
         case menuButtons.RemoveMyAppointment:
-          await appointmentRouter.RemoveMyAppointment(TelegramBot, msg);
+          await routes.appointmentRouter.RemoveMyAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
@@ -39,27 +31,27 @@ export class API {
           break;
 
         case menuButtons.PriceList:
-          await serviceRouter.PriceList(TelegramBot, msg);
+          await routes.serviceRouter.PriceList(TelegramBot, msg);
           isCommand = true;
           break;
 
         case menuButtons.checkDateAppointment:
-          await appointmentRouter.checkDateAppointment(TelegramBot, msg);
+          await routes.appointmentRouter.checkDateAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
         case profileButtons.sendLastName:
-          await clientRouter.EnterLastName(TelegramBot, msg);
+          await routes.clientRouter.EnterLastName(TelegramBot, msg);
           isCommand = true;
           break;
 
         case menuButtons.SignUpForAnAppointment:
-          await appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
+          await routes.appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
           isCommand = true;
           break;
 
         case profileButtons.sendEmail:
-          await clientRouter.EnterEmailAddress(TelegramBot, msg);
+          await routes.clientRouter.EnterEmailAddress(TelegramBot, msg);
           isCommand = true;
           break;
 
@@ -69,12 +61,12 @@ export class API {
           break;
 
         case menuButtons.MyProfile:
-          await clientRouter.MyProfile(msg, TelegramBot);
+          await routes.clientRouter.MyProfile(msg, TelegramBot);
           isCommand = true;
           break;
 
         case '/start':
-          await clientRouter.addClient(TelegramBot, msg);
+          await routes.clientRouter.addClient(TelegramBot, msg);
           TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
           isCommand = true;
           break;
@@ -90,10 +82,10 @@ export class API {
     // для инлайн клавиатуры
     TelegramBot.on('callback_query', async query => {
       if(query.data === 'bookedAppointments'){
-        await appointmentRouter.showMyAppointments(TelegramBot, query.message)
+        await routes.appointmentRouter.showMyAppointments(TelegramBot, query.message)
       }
       else if(query.data === 'appointmentsHistory'){
-        await appointmentRouter.AppointmentsHistory(TelegramBot, query.message);
+        await routes.appointmentRouter.AppointmentsHistory(TelegramBot, query.message);
       }
     })
   }
