@@ -1,4 +1,4 @@
-import { menuButtons } from './key-board-buttons';
+import { menuButtons, profileButtons } from './key-board-buttons';
 
 export const menu = {
   reply_markup: JSON.stringify({
@@ -52,7 +52,8 @@ export const profile = {
   reply_markup: JSON.stringify({
     resize_keyboard: true,
     keyboard: [
-      ['send my email', 'send my last_name']
+      [profileButtons.sendEmail,profileButtons.sendLastName],
+      [menuButtons.Back]
     ]
   })
 };

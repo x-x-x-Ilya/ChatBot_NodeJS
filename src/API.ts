@@ -1,5 +1,5 @@
 import { menu, back, help, appointment } from './keyboards/keyboards';
-import { menuButtons } from './keyboards/key-board-buttons';
+import { menuButtons, profileButtons } from './keyboards/key-board-buttons';
 import { AppointmentRouter } from './route/AppointmentRouter';
 import { ClientRouter } from './route/ClientRouter';
 import { BarberRouter } from './route/BarberRouter';
@@ -48,13 +48,23 @@ export class API {
           isCommand = true;
           break;
 
+        case profileButtons.sendLastName:
+          await clientRouter.EnterLastName(TelegramBot, msg);
+          isCommand = true;
+          break;
+
+        case profileButtons.sendEmail:
+          await clientRouter.EnterEmailAddress(TelegramBot, msg);
+          isCommand = true;
+          break;
+
         case menuButtons.Help:
           TelegramBot.sendMessage(msg.chat.id, 'help text', help);
           isCommand = true;
           break;
 
         case menuButtons.MyProfile:
-          await clientRouter.MyProfile(TelegramBot, msg);
+          await clientRouter.MyProfile(msg, TelegramBot);
           isCommand = true;
           break;
 

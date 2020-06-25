@@ -9,3 +9,9 @@ export const menuButtons = {
   //Start: '/\/start',
   Help: '/\/help'
 };
+
+
+export const profileButtons = {
+  sendEmail: 'send my email',
+  sendLastName:'send my last_name',
+}

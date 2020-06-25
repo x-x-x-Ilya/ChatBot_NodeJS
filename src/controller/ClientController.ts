@@ -3,15 +3,20 @@ const clientService = new ClientService();
 
 export class ClientController {
 
-  enterEmail(email, id, first_name, last_name) {
-    email = email.substring(7, email.length);
-    return clientService.enterEmail(email, id, first_name, last_name);
+  async enterEmail(email, id) {
+    return await clientService.enterEmail(email, id);
   }
   async MyProfile(id){
     return await clientService.MyProfile(id);
   }
 
-  addClient(id, first_name, last_name){
-    return clientService.addClient(id, first_name, last_name);
+  async enterLastName(last_name, id){
+    return await clientService.enterLastName(last_name, id);
+  }
+
+
+
+  async addClient(id, first_name, last_name){
+    return await clientService.addClient(id, first_name, last_name);
   }
 }

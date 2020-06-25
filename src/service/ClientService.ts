@@ -3,19 +3,23 @@ const clientRepository = new ClientRepository();
 
 export class ClientService {
 
-    enterEmail(email, id, first_name, last_name) {
-      return  clientRepository.enterEmail(email, id, first_name, last_name);
+    async enterEmail(email, id) {
+      return  await clientRepository.enterEmail(email, id);
     }
 
     async MyProfile(id){
       let Response = "";
       const client = await clientRepository.MyProfile(id);
-      Response += "name: " + client.first_name + ", last_name: " + client.last_name + ", email: " + client.email;
+      Response += "first_name: " + client.first_name + "\r\nlast_name: " + client.last_name + "\r\nemail: " + client.email;
       return Response;
     }
 
-  addClient(id, first_name, last_name){
-    return  clientRepository.addClient(id, first_name, last_name);
+  async enterLastName(last_name, id) {
+    return await clientRepository.enterLastName(last_name, id);
+  }
+
+  async addClient(id, first_name, last_name) {
+    return  await clientRepository.addClient(id, first_name, last_name);
 
   }
 }
