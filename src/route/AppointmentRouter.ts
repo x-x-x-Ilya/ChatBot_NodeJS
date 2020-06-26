@@ -20,7 +20,7 @@ export class AppointmentRouter {
         ]
       })
     };
-    TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + await appointmentController.showMyAppointments(msg.chat.id), back);
+    TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + await appointmentController.showMyAppointments(/*msg.chat.id*/2), back);
   }
 
   async checkDateAppointment(TelegramBot, msg) {

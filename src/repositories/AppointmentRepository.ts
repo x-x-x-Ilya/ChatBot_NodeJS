@@ -3,7 +3,6 @@ import { Op } from 'sequelize';
 const appointments = require('../database/models/appointments');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const barbers = require('../database/models/barbers') ;
-import {services} from '../database/models/services';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize-values')();
 
@@ -22,12 +21,11 @@ export class AppointmentRepository {
         {
           model: barbers,
           attributes: ['first_name', 'last_name'],
-          as: 'barbers',
-        }, {
+        }/*, {
           model: services,
           attributes: ['name'],
           as: 'services'
-        }]
+        }*/]
     });
   }
 
