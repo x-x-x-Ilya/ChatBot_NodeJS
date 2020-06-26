@@ -15,7 +15,7 @@ export class AppointmentController {
     return await appointmentService.showMyHistory(id);
   }
 
-  async checkDateAppointment(should_be_appointment_date : string) {
+  async checkDateAppointment(should_be_appointment_date) {
     return await appointmentService.checkDateAppointment(should_be_appointment_date);
   }
 

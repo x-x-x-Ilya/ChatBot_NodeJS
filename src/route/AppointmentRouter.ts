@@ -10,8 +10,6 @@ export class AppointmentRouter {
     TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyHistory(msg.chat.id), menu);
   }
 
-
-
   async showMyAppointments(TelegramBot, msg) {
     const back = {
       reply_markup: JSON.stringify({
@@ -26,31 +24,29 @@ export class AppointmentRouter {
   }
 
   async checkDateAppointment(TelegramBot, msg) {
-    TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")');
-    TelegramBot.onText(/\/date (.+)/, async (msg) => {
-      TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text.substring(6, msg.text.length)));
-    });
-  };
-
-  async SignUpForAnAppointment(TelegramBot, msg){
-    let check_date: Date;
-    TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")', back);
-    TelegramBot.onText(/\/date (.+)/, async (msg) => {
       const date = msg.text.substring(6, msg.text.length);
       const t = date.split('.'),
         Year = t[2],
         Month = parseInt(t[1]) - 1,
         day = parseInt(t[0]);
-      check_date = new Date(Year, Month, day);
-      const today = new Date();
-      if (check_date >= today) {
-        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(msg.text.substring(6, msg.text.length)));
-        TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "/time 16:00")');
+      const check_date = new Date(Year, Month, day);
+      if(check_date > new Date())
+        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(check_date), menu);
+      else
+        TelegramBot.sendMessage(msg.chat.id, 'Date should be in future');
+  };
+
+  async SignUpForAnAppointment(TelegramBot, msg){
+      const date = msg.text.substring(6, msg.text.length);
+      const t = date.split('.'), Year = t[2], Month = parseInt(t[1]) - 1, day = parseInt(t[0]);
+      const check_date = new Date(Year, Month, day);
+      if (check_date >= new Date()) {
+        TelegramBot.sendMessage(msg.chat.id, await appointmentController.checkDateAppointment(check_date), back);
+        TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "/time 16:00")', back);
       }
       else {
         TelegramBot.sendMessage(msg.chat.id, 'Date should be in future', back);
       }
-    });
 
     TelegramBot.onText(/\/time (.+)/, async (msg) => {  // всегда одно и то же время ??? дублированный вызов
         const time = msg.text.substring(6, msg.text.length);
@@ -67,6 +63,17 @@ export class AppointmentRouter {
     });
   }
 
+
+  async RemoveMyAppointment(TelegramBot, msg) {
+    TelegramBot.sendMessage(msg.chat.id, 'Send me id of your appointment', back);
+    TelegramBot.onText(/\/id (.+)/, async function (msg) {  // после первого выполнения продолжает использоваться
+      await appointmentController.deleteAppointment(msg.text);
+      TelegramBot.sendMessage(msg.chat.id, 'check console result', back);
+    });
+
+  };
+
+}
 
     /*
 
@@ -92,17 +99,3 @@ export class AppointmentRouter {
     //  all info together and accept
     //  saving
     //  TelegramBot.sendMessage(msg.chat.id, appointmentController.setAppointment(), back);
-
-
-  async RemoveMyAppointment(TelegramBot, msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Send me id of your appointment', back);
-      TelegramBot.onText(/\/id (.+)/, async function (msg) {  // после первого выполнения продолжает использоваться
-        await appointmentController.deleteAppointment(msg.text);
-        TelegramBot.sendMessage(msg.chat.id, 'check console result', back);
-      });
-
-    };
-
-
-}
-

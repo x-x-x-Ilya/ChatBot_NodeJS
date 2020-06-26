@@ -1,5 +1,5 @@
 DROP DATABASE barbershop;
-CREATE DATABASE barbershop
+CREATE DATABASE barbershop;
     WITH
     OWNER = postgres
     ENCODING = 'UTF8'

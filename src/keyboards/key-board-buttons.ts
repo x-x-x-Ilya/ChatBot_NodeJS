@@ -6,7 +6,7 @@ export const menuButtons = {
   RemoveMyAppointment: 'Remove my appointment',
   Back: 'Back',
   SignUpForAnAppointment: 'Sign up for an appointment',
-  Help: '/\/help'
+  Help: '/\/help',
 };
 
 export const profileButtons = {

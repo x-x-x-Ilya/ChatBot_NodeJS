@@ -11,6 +11,25 @@ export class API {
     TelegramBot.on('message', async msg => {
       isCommand = false;
 
+      //commands
+      if(msg.text.indexOf('/check')!= -1) {
+        await routes.appointmentRouter.checkDateAppointment(TelegramBot, msg);
+        isCommand = true;
+      }
+      else if(msg.text.indexOf('/date')!= -1) {
+        await routes.appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
+        isCommand = true;
+      }
+      else if(msg.text.indexOf('/email')!= -1) {
+        await routes.clientRouter.EnterEmailAddress(TelegramBot, msg);
+        isCommand = true;
+      }
+      else if(msg.text.indexOf('/last_name')!= -1) {
+        await routes.clientRouter.EnterLastName(TelegramBot, msg);
+        isCommand = true;
+      }
+
+      //buttons
       switch (msg.text) {
 
         case menuButtons.Back:
@@ -39,22 +58,22 @@ export class API {
           break;
 
         case menuButtons.checkDateAppointment:
-          await routes.appointmentRouter.checkDateAppointment(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/check 06.05.2020")');
           isCommand = true;
           break;
 
         case profileButtons.sendLastName:
-          await routes.clientRouter.EnterLastName(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter your last_name ("/last_name some-last_name")', back);
           isCommand = true;
           break;
 
         case menuButtons.SignUpForAnAppointment:
-          await routes.appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")', back);
           isCommand = true;
           break;
 
         case profileButtons.sendEmail:
-          await routes.clientRouter.EnterEmailAddress(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter your email ("/email examplmail@mail.com")', back);
           isCommand = true;
           break;
 
@@ -82,7 +101,7 @@ export class API {
 
     });
 
-    // для инлайн клавиатуры
+    //inline keyboards
     TelegramBot.on('callback_query', async query => {
       if(query.data === 'bookedAppointments'){
         await routes.appointmentRouter.showMyAppointments(TelegramBot, query.message)

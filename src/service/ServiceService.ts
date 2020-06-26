@@ -12,6 +12,7 @@ export class ServiceService {
         const cur_name  : string = Sequelize.getValues(services[i].name);
         const cur_time  : string = Sequelize.getValues(services[i].time);
         const cur_price : string = Sequelize.getValues(services[i].price).toString();
+
         Response += "[" + (i+1) + "] " + cur_name + ' ';
         Response += cur_time + ' ';
         Response += cur_price + '\r\n';

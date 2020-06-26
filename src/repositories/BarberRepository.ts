@@ -1,4 +1,5 @@
-import {barbers} from '../database/models/barbers';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const barbers = require('../database/models/barbers') ;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize-values')();
 

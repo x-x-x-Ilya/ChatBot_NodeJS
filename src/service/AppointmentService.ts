@@ -7,6 +7,10 @@ export class AppointmentService {
 
   async showMyAppointments(id) {
     const allAppointments = await appointmentRepository.showMyAppointments(id);
+
+    for (let i = 0; i < allAppointments.length; i++)
+    console.log(allAppointments[i]);
+
     let Response = '\r\n';
     const curDate = new Date();
     for (let i = 0; i < allAppointments.length; i++) {
@@ -36,14 +40,9 @@ export class AppointmentService {
     return await appointmentRepository.deleteAppointment(should_be_appointment_id);
   }
 
-  async checkDateAppointment(should_be_appointment_date): Promise<string> {
-    const t = should_be_appointment_date.split('.'),
-      Year = t[2],
-      Month = parseInt(t[1]) - 1,
-      date = parseInt(t[0]);
-    const check_date: Date = new Date(Year, Month, date);
+  async checkDateAppointment(date): Promise<string> {
 
-    const appointment = await appointmentRepository.checkDateAppointment(check_date);
+    const appointment = await appointmentRepository.checkDateAppointment(date);
     if(appointment.length == 0){
       return "We are free from 10:00 to 22:00";
     }

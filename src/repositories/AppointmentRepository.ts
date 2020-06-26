@@ -1,7 +1,13 @@
 import { Op } from 'sequelize';
-import {appointments} from '../database/models/appointments';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const appointments = require('../database/models/appointments');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const barbers = require('../database/models/barbers') ;
+import {services} from '../database/models/services';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize-values')();
+
+
 export class AppointmentRepository {
 
   async showMyAppointments(id) {  // или добавить условие поиска или убрать лишнее в сервисах
@@ -10,8 +16,18 @@ export class AppointmentRepository {
         client_id: id,
         deleted: false
       },
-      attributes: ['date'], // include barber && service
-      raw: true
+      raw: true,
+      attributes: ['date', 'id'],
+      include: [
+        {
+          model: barbers,
+          attributes: ['first_name', 'last_name'],
+          as: 'barbers',
+        }, {
+          model: services,
+          attributes: ['name'],
+          as: 'services'
+        }]
     });
   }
 
