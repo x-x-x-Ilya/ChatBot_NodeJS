@@ -1,4 +1,4 @@
-import { menuButtons, profileButtons, appointmentButtons } from './key-board-buttons';
+import { menuButtons, profileButtons, appointmentButtons, editButtons } from './key-board-buttons';
 
 export const menu = {
   reply_markup: JSON.stringify({
@@ -57,3 +57,14 @@ export const profile = {
     ]
   })
 };
+
+export const edit = {
+  reply_markup: JSON.stringify({
+    resize_keyboard: true,
+    keyboard: [
+    [editButtons.ChangeDate, editButtons.ChangeBarber],
+      [editButtons.ChangeService, editButtons.ChangeTime],
+      [editButtons.Delete, menuButtons.Back]
+      ]
+  })
+}

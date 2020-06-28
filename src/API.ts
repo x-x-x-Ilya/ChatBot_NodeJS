@@ -1,5 +1,5 @@
-import { menu, back, help, appointment } from './keyboards/keyboards';
-import { menuButtons, profileButtons } from './keyboards/key-board-buttons';
+import { menu, back, help, appointment, edit } from './keyboards/keyboards';
+import { appointmentButtons, menuButtons, profileButtons } from './keyboards/key-board-buttons';
 import {routes} from './route/routes';
 import * as Bot from 'node-telegram-bot-api';
 
@@ -47,7 +47,11 @@ export class API {
           }
         isCommand = true;
       }
-
+      else if(msg.text.indexOf('/id') != -1) {
+        const appointment = await routes.appointmentRouter.GetAppointment(msg, parseInt(msg.text.substring(4, msg.text.length), 10));
+        TelegramBot.sendMessage(msg.chat.id, 'Select operation', edit);
+        isCommand = true;
+      }
 
       //buttons
       switch (msg.text) {
@@ -91,6 +95,13 @@ export class API {
           TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")', back);
           isCommand = true;
           break;
+
+
+        case appointmentButtons.Edit:
+          TelegramBot.sendMessage(msg.chat.id, 'Enter appointment you would like to edit (format: "/id 75675")', back);
+          isCommand = true;
+          break;
+
 
         case profileButtons.sendEmail:
           TelegramBot.sendMessage(msg.chat.id, 'Enter your email ("/email examplmail@mail.com")', back);

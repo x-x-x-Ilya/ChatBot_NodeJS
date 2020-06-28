@@ -25,6 +25,10 @@ export class AppointmentService {
     return Response;
   }
 
+  async GetAppointment(appoinment_id, client_id) {
+    return await appointmentRepository.GetAppointment(appoinment_id, client_id);
+  }
+
 
   async setAppointment(TelegramBot, msg, date, barber, service) {
     return await appointmentRepository.setAppointment(TelegramBot, msg, date, barber, service);

@@ -1,5 +1,5 @@
 import { menu, back } from '../keyboards/keyboards';
-import { menuButtons } from '../keyboards/key-board-buttons';
+import { appointmentButtons, menuButtons } from '../keyboards/key-board-buttons';
 import { AppointmentController } from '../controller/AppointmentController';
 import { routes } from './routes';
 
@@ -11,13 +11,17 @@ export class AppointmentRouter {
     TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyHistory(msg.chat.id), menu);
   }
 
+  async GetAppointment(msg, id){
+    return await appointmentController.GetAppointment(msg.chat.id, id);
+  }
+
   async showMyAppointments(TelegramBot, msg) {
     const back = {
       reply_markup: JSON.stringify({
         resize_keyboard: true,
         keyboard: [
           [menuButtons.Back],
-          ['Remove my appointment', 'Edit appointment']
+          [appointmentButtons.Edit]
         ]
       })
     };

@@ -6,7 +6,10 @@ export class AppointmentController {
   async showMyAppointments(id) {
     return await appointmentService.showMyAppointments(id);
   }
+  async GetAppointment(client_id, appoinment_id){
+    return await appointmentService.GetAppointment(appoinment_id, client_id);
 
+  }
   async showMyHistory(id): Promise<string> {
     return await appointmentService.showMyHistory(id);
   }

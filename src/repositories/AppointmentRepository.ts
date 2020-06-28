@@ -6,6 +6,14 @@ import {appointments} from '../database/models/appointments';
 const Sequelize = require('sequelize-values')();
 
 export class AppointmentRepository {
+  async GetAppointment(appoinment_id, client_id) {
+    return await appointments.findOne({
+      where:{
+        id:appoinment_id,
+        client_id:client_id
+      }
+    })
+  }
 
   async showMyAppointments(id) {  // или добавить условие поиска или убрать лишнее в сервисах
     return await appointments.findAll({

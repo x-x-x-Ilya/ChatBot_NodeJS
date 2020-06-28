@@ -17,5 +17,14 @@ export const profileButtons = {
 
 export const appointmentButtons = {
   AppointmentsHistory: 'Appointments history',
-  BookedAppointments:'Booked appointments'
+  BookedAppointments:'Booked appointments',
+  Edit: 'Edit'
+}
+
+export const editButtons = {
+  Delete: 'Delete',
+  ChangeBarber: 'Change barber',
+  ChangeService: 'Change service',
+  ChangeDate: 'Change date and time',
+  ChangeTime: 'Change time'
 }
