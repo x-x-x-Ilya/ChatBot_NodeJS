@@ -13,8 +13,8 @@ export class ServiceService {
         const cur_time  : string = Sequelize.getValues(services[i].time);
         const cur_price : string = Sequelize.getValues(services[i].price).toString();
 
-        Response += "[" + Sequelize.getValues(services[i].id) + "] " + cur_name + ' ';
-        Response += cur_time + ' ';
+        Response += "[" + Sequelize.getValues(services[i].id) + "] " + cur_name + '\t';
+        Response += cur_time + '\t';
         Response += cur_price + '\r\n';
       }
       return Response;

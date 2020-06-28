@@ -31,7 +31,6 @@ export class API {
       }
       else if(msg.text.indexOf('/time') != -1){
         await routes.appointmentRouter.SetTime(TelegramBot, msg, date);
-
         isCommand = true;
       }
       else if(msg.text.indexOf('/barber') != -1){
@@ -116,7 +115,6 @@ export class API {
       }
 
       if(!isCommand){
-        if(msg.text.indexOf('/\/date') != -1 && msg.text.indexOf('/\/email') != -1)
         TelegramBot.sendMessage(msg.chat.id, 'I do not understand you, please, try again', help);
       }
 

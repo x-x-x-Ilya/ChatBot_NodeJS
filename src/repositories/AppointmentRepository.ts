@@ -11,6 +11,9 @@ export class AppointmentRepository {
     return await appointments.findAll({
       where: {
         client_id: id,
+        date: {
+          [Op.gte]: new Date()
+        },
         deleted: false
       },
       attributes: ['date', 'id'],
@@ -30,7 +33,10 @@ export class AppointmentRepository {
       {
         where: {
           client_id: id,
-          deleted: false
+          deleted: false,
+          date: {
+            [Op.lte]: new Date()
+          },
         },
         raw: true
       });

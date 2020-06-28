@@ -7,17 +7,11 @@ export class AppointmentService {
 
   async showMyAppointments(id) {
     const allAppointments = await appointmentRepository.showMyAppointments(id);
-
-    for (let i = 0; i < allAppointments.length; i++)
-    console.log(allAppointments[i]);
-
     let Response = '\r\n';
-    const curDate = new Date();
     let temp;
     for (let i = 0; i < allAppointments.length; i++) {
       temp = Sequelize.getValues(allAppointments[i]);
-      if(temp.date > curDate) // не проходит проверка
-        Response += "[" + temp.id + "]" + temp.date + " " + temp.service.name + " " + temp.barber.first_name + " " + temp.barber.last_name + '\r\n';
+        Response += "[" + temp.id + "] " + temp.date + " " + temp.service.name + " " + temp.barber.first_name + " " + temp.barber.last_name + '\r\n';
     }
     return Response;
   }
@@ -25,10 +19,8 @@ export class AppointmentService {
   async showMyHistory(id) {
     const allAppointments = await appointmentRepository.showMyHistory(id);
     let Response = '\r\n';
-    const curDate = new Date();
     for (let i = 0; i < allAppointments.length; i++) {
-      if(Sequelize.getValues(allAppointments[i].date) < curDate) // не проходит проверка
-      Response += Sequelize.getValues(allAppointments[i].date) + '\r\n';
+      Response += "[" + Sequelize.getValues(allAppointments[i]).id + "] " + Sequelize.getValues(allAppointments[i].date) + '\r\n';
     }
     return Response;
   }
