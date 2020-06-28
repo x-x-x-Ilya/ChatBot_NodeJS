@@ -13,7 +13,7 @@ export class ServiceService {
         const cur_time  : string = Sequelize.getValues(services[i].time);
         const cur_price : string = Sequelize.getValues(services[i].price).toString();
 
-        Response += "[" + (i+1) + "] " + cur_name + ' ';
+        Response += "[" + Sequelize.getValues(services[i].id) + "] " + cur_name + ' ';
         Response += cur_time + ' ';
         Response += cur_price + '\r\n';
       }
@@ -21,8 +21,8 @@ export class ServiceService {
     }
 
 
-  selectPrice(msg_should_be_id){
-    return serviceRepository.selectPrice(msg_should_be_id);
+  async SetService(id){
+    return await serviceRepository.SetService(id);
   }
 
 }

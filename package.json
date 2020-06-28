@@ -30,6 +30,7 @@
     "node-telegram-bot-api": "^0.50.0",
     "nodemon": "^2.0.4",
     "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",

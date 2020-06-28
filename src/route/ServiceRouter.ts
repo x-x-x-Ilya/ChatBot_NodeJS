@@ -7,6 +7,10 @@ export class ServiceRouter {
   async PriceList(TelegramBot, msg) {
     TelegramBot.sendMessage(msg.chat.id, 'Price list:' + await serviceController.showPriceList(), menu);
   }
+
+  async SetService(TelegramBot, msg) {
+      return await serviceController.SetService(msg.text.substring(9, msg.text.length));
+  }
 }
 
 /*  constructor(TelegramBot) {

@@ -7,19 +7,16 @@ export class ServiceRepository {
   async showPriceList() {
     return await services.findAll({
       where: { deleted: false },
-      attributes: ['name', 'time', 'price'],
+      attributes: ['name', 'time', 'price', 'id'],
       raw: true,
     });
   }
 
-  async selectPrice(msg_should_be_id) {
-    const service = await services.findOne({
-      where:{
-        id: msg_should_be_id
-      },
-      attributes: ['price', 'name', 'time']});
-      console.log(service);
-      return service;
+  async SetService(id) {
+    return await services.findOne({
+        where:{
+          id: id
+        },
+    });
   }
-
 }

@@ -13,9 +13,11 @@ export class AppointmentService {
 
     let Response = '\r\n';
     const curDate = new Date();
+    let temp;
     for (let i = 0; i < allAppointments.length; i++) {
-      if(Sequelize.getValues(allAppointments[i].date) > curDate) // не проходит проверка
-        Response += Sequelize.getValues(allAppointments[i].date) + '\r\n';
+      temp = Sequelize.getValues(allAppointments[i]);
+      if(temp.date > curDate) // не проходит проверка
+        Response += "[" + temp.id + "]" + temp.date + " " + temp.service.name + " " + temp.barber.first_name + " " + temp.barber.last_name + '\r\n';
     }
     return Response;
   }
@@ -32,17 +34,17 @@ export class AppointmentService {
   }
 
 
-  async setAppointment(date, id) {
-    return await appointmentRepository.setAppointment(date, id);
+  async setAppointment(TelegramBot, msg, date, barber, service) {
+    return await appointmentRepository.setAppointment(TelegramBot, msg, date, barber, service);
   }
 
   async deleteAppointment(should_be_appointment_id): Promise<string> {
     return await appointmentRepository.deleteAppointment(should_be_appointment_id);
   }
 
-  async checkDateAppointment(date): Promise<string> {
+  async freeDateAppointment(date): Promise<string> {
 
-    const appointment = await appointmentRepository.checkDateAppointment(date);
+    const appointment = await appointmentRepository.freeDateAppointment(date);
     if(appointment.length == 0){
       return "We are free from 10:00 to 22:00";
     }

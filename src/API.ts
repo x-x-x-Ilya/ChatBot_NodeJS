@@ -7,17 +7,18 @@ export class API {
 
   constructor(TelegramBot : Bot) {
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
-
+    let date: Date;
+    let barber;
     TelegramBot.on('message', async msg => {
       isCommand = false;
 
       //commands
       if(msg.text.indexOf('/check')!= -1) {
-        await routes.appointmentRouter.checkDateAppointment(TelegramBot, msg);
+        await routes.appointmentRouter.freeDateAppointment(TelegramBot, msg);
         isCommand = true;
       }
       else if(msg.text.indexOf('/date')!= -1) {
-        await routes.appointmentRouter.SignUpForAnAppointment(TelegramBot, msg);
+        date = await routes.appointmentRouter.SetDate(TelegramBot, msg);
         isCommand = true;
       }
       else if(msg.text.indexOf('/email')!= -1) {
@@ -28,6 +29,26 @@ export class API {
         await routes.clientRouter.EnterLastName(TelegramBot, msg);
         isCommand = true;
       }
+      else if(msg.text.indexOf('/time') != -1){
+        await routes.appointmentRouter.SetTime(TelegramBot, msg, date);
+
+        isCommand = true;
+      }
+      else if(msg.text.indexOf('/barber') != -1){
+        barber = await routes.barberRouter.SetBarber(TelegramBot, msg);
+        isCommand = true;
+      }
+      else if(msg.text.indexOf('/service') != -1){
+          const service = await routes.serviceRouter.SetService(TelegramBot, msg);
+          const res = await routes.appointmentRouter.setAppointment(TelegramBot, msg, date, barber, service);
+          if(res == false)
+            TelegramBot.sendMessage(msg.chat.id, 'Sorry, somethings wrong, try again', menu);
+          else {
+            TelegramBot.sendMessage(msg.chat.id, 'Your appointment added:' + "[" + res.id + "]" + res.date + " " + res.service.name + " " + res.barber.first_name + " " + res.barber.last_name + '\r\n', menu);
+          }
+        isCommand = true;
+      }
+
 
       //buttons
       switch (msg.text) {

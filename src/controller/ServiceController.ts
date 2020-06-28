@@ -7,4 +7,8 @@ export class ServiceController {
     return await serviceService.showPriceList();
   }
 
+  async SetService(id) {
+    return await serviceService.SetService(id);
+  }
+
 }
