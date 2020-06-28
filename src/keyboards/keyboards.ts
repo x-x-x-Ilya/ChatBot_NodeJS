@@ -1,70 +1,50 @@
 import { menuButtons, profileButtons, appointmentButtons, editButtons } from './key-board-buttons';
 
-export const menu = {
-  reply_markup: JSON.stringify({
-    resize_keyboard: true,
-    keyboard: [
-      [menuButtons.PriceList, menuButtons.BarberList],
-      [menuButtons.SignUpForAnAppointment, menuButtons.checkDateAppointment],
-      [menuButtons.MyProfile]
-    ]
-  })
-};
+const menuKeyboard = [
+  [menuButtons.PriceList, menuButtons.BarberList],
+  [menuButtons.SignUpForAnAppointment, menuButtons.checkDateAppointment],
+  [menuButtons.MyProfile]
+];
 
-export const back = {
-  reply_markup: JSON.stringify({
-    resize_keyboard: true,
-    keyboard: [
-      [menuButtons.Back]
-    ]
-  })
-};
+const backKeyboard = [
+  [menuButtons.Back]
+];
 
-export const help = {
-  reply_markup: JSON.stringify({
+const profileKeyboard = [
+  [profileButtons.sendEmail, profileButtons.sendLastName],
+  [profileButtons.Appointments, menuButtons.Back]
+];
+
+const editKeyboard = [
+  [editButtons.ChangeDate, editButtons.ChangeBarber],
+  [editButtons.ChangeService, editButtons.ChangeTime],
+  [editButtons.Delete, menuButtons.Back]
+];
+
+function reply_markup(arg: string[][]){
+  return  JSON.stringify({
     resize_keyboard: true,
-    keyboard: [
-      [menuButtons.Back]
-    ]
-  })
-};
+    keyboard: arg
+  });
+}
+
+export const menu = {reply_markup:reply_markup(menuKeyboard)};
+export const back = {reply_markup:reply_markup(backKeyboard)};
+export const help = {reply_markup:reply_markup(backKeyboard)};
+export const profile = {reply_markup:reply_markup(profileKeyboard)}
+export const edit = {reply_markup:reply_markup(editKeyboard)}
 
 export const appointment = {
   reply_markup:{
     inline_keyboard:[
-      [
-        {
+      [{
           text: appointmentButtons.AppointmentsHistory,
           callback_data: 'appointmentsHistory'
-        }
-      ],
-      [
-        {
+    }],
+      [{
           text: appointmentButtons.BookedAppointments,
           callback_data: 'bookedAppointments'
-        }
-      ]
+        }]
     ]
   }
 };
-
-export const profile = {
-  reply_markup: JSON.stringify({
-    resize_keyboard: true,
-    keyboard: [
-      [profileButtons.sendEmail, profileButtons.sendLastName],
-      [profileButtons.Appointments, menuButtons.Back]
-    ]
-  })
-};
-
-export const edit = {
-  reply_markup: JSON.stringify({
-    resize_keyboard: true,
-    keyboard: [
-    [editButtons.ChangeDate, editButtons.ChangeBarber],
-      [editButtons.ChangeService, editButtons.ChangeTime],
-      [editButtons.Delete, menuButtons.Back]
-      ]
-  })
-}
