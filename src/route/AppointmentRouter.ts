@@ -65,13 +65,9 @@ export class AppointmentRouter {
     return date;
   }
 
-  async RemoveMyAppointment(TelegramBot, msg) {
-    TelegramBot.sendMessage(msg.chat.id, 'Send me id of your appointment', back);
-    TelegramBot.onText(/\/id (.+)/, async function (msg) {  // после первого выполнения продолжает использоваться
-      await appointmentController.deleteAppointment(msg.text);
-      TelegramBot.sendMessage(msg.chat.id, 'check console result', back);
-    });
-
+  async RemoveMyAppointment(TelegramBot, msg, appointment) {
+      await appointmentController.deleteAppointment(appointment);
+      TelegramBot.sendMessage(msg.chat.id, 'Appointment removed successfully', back);
   };
 
   async setAppointment(TelegramBot, msg, date, barber, service){

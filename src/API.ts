@@ -1,14 +1,28 @@
 import { menu, back, help, appointment, edit } from './keyboards/keyboards';
-import { appointmentButtons, menuButtons, profileButtons } from './keyboards/key-board-buttons';
+import { appointmentButtons, editButtons, menuButtons, profileButtons } from './keyboards/key-board-buttons';
 import {routes} from './route/routes';
 import * as Bot from 'node-telegram-bot-api';
+
+/*
+bot.sendMessage(nonExistentUserId, 'text').catch((error) => {
+  console.log(error.code);  // => 'ETELEGRAM'
+  console.log(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
+});*/
+
+/*
+bot.on('polling_error', (error) => {
+  console.log(error.code);  // => 'EFATAL'
+});
+ */
 
 export class API {
 
   constructor(TelegramBot : Bot) {
+
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
     let date: Date;
     let barber;
+    let cur_appointment = null;
     TelegramBot.on('message', async msg => {
       isCommand = false;
 
@@ -48,7 +62,7 @@ export class API {
         isCommand = true;
       }
       else if(msg.text.indexOf('/id') != -1) {
-        const appointment = await routes.appointmentRouter.GetAppointment(msg, parseInt(msg.text.substring(4, msg.text.length), 10));
+        cur_appointment = await routes.appointmentRouter.GetAppointment(msg, parseInt(msg.text.substring(4, msg.text.length), 10));
         TelegramBot.sendMessage(msg.chat.id, 'Select operation', edit);
         isCommand = true;
       }
@@ -61,13 +75,14 @@ export class API {
           isCommand = true;
           break;
 
-        case menuButtons.BarberList:
-          await routes.barberRouter.BarberList(TelegramBot, msg);
+        case editButtons.Delete:
+          await routes.appointmentRouter.RemoveMyAppointment(TelegramBot, msg, cur_appointment.id)
           isCommand = true;
           break;
 
-        case menuButtons.RemoveMyAppointment:
-          await routes.appointmentRouter.RemoveMyAppointment(TelegramBot, msg);
+
+        case menuButtons.BarberList:
+          await routes.barberRouter.BarberList(TelegramBot, msg);
           isCommand = true;
           break;
 
@@ -125,9 +140,9 @@ export class API {
           break;
       }
 
-      if(!isCommand){
+      if(!isCommand)
         TelegramBot.sendMessage(msg.chat.id, 'I do not understand you, please, try again', help);
-      }
+
 
     });
 

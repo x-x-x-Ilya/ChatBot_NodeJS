@@ -2,7 +2,7 @@ import {Sequelize} from 'sequelize';
 
 try {
   module.exports = new Sequelize(
-  process.env.DB_NAME,
+    process.env.DB_NAME,
     process.env.USER_NAME,
     process.env.DB_PASS,
   {
@@ -26,3 +26,4 @@ try {
 } catch (error) {
   console.log(error);
 }
+

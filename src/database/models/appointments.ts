@@ -3,7 +3,7 @@ import Sequelize from 'sequelize';
 const AppointmentDatabase = require('../sequelize');
 
 export const appointments = AppointmentDatabase.define('appointments', {
-  id: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
+  id: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},
   date: { type: Sequelize.DATE, allowNull: false},
   client_id:{ type: Sequelize.INTEGER, allowNull: false},
   service_id:{ type: Sequelize.INTEGER, allowNull: false},

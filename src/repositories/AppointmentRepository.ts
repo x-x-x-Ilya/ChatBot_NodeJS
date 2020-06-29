@@ -10,7 +10,8 @@ export class AppointmentRepository {
     return await appointments.findOne({
       where:{
         id:appoinment_id,
-        client_id:client_id
+        client_id:client_id,
+        deleted: false
       }
     })
   }
@@ -65,7 +66,7 @@ export class AppointmentRepository {
   }
 
   async deleteAppointment(should_be_appointment_id) {
-    const appointment = await appointments.findOne({ where: { id: should_be_appointment_id } });
+    const appointment = await appointments.findOne({ where: { id: parseInt(should_be_appointment_id, 10) } });
     return await appointment.update({
       deleted: true
     });
