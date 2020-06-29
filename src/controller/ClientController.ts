@@ -7,7 +7,12 @@ export class ClientController {
     return await clientService.enterEmail(email, id);
   }
   async MyProfile(id){
-    return await clientService.MyProfile(id);
+    const client = await clientService.MyProfile(id);
+    let Response = "";
+    if(client.last_name == null) client.last_name = 'not indicated';
+    if(client.email == null) client.email = 'not indicated';
+    Response += "First name: " + client.first_name + "\r\nLast name: " + client.last_name + "\r\nEmail: " + client.email;
+    return Response;
   }
 
   async enterLastName(last_name, id){

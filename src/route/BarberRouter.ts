@@ -5,8 +5,12 @@ import {routes} from './routes';
 const barberController = new BarberController();
 
 export class BarberRouter {
-  async BarberList(TelegramBot, msg) {
-    TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + await barberController.showBarberList(), menu);
+  async BarberList(TelegramBot, msg) : Promise<void>{
+    const list = await barberController.showBarberList();
+    if(list != false)
+    TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + list, menu);
+    else
+      TelegramBot.sendMessage(msg.chat.id, 'Somethings wrong, please try again later...', menu);
   }
 
   async SetBarber(TelegramBot, msg){

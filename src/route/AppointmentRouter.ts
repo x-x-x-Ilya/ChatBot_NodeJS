@@ -1,4 +1,4 @@
-import { menu, back } from '../keyboards/keyboards';
+import { menu, back, back_with_edit_button, profile } from '../keyboards/keyboards';
 import { appointmentButtons, menuButtons } from '../keyboards/key-board-buttons';
 import { AppointmentController } from '../controller/AppointmentController';
 import { routes } from './routes';
@@ -8,7 +8,11 @@ const appointmentController = new AppointmentController();
 export class AppointmentRouter {
 
   async AppointmentsHistory(TelegramBot, msg) {
-    TelegramBot.sendMessage(msg.chat.id, 'Your history:' + await appointmentController.showMyHistory(msg.chat.id), menu);
+    const history = await appointmentController.showMyHistory(msg.chat.id);
+    if(history != false)
+    TelegramBot.sendMessage(msg.chat.id, 'Your history:' + history, menu);
+    else
+      TelegramBot.sendMessage(msg.chat.id, 'You have empty history', menu);
   }
 
   async GetAppointment(msg, id){
@@ -16,16 +20,12 @@ export class AppointmentRouter {
   }
 
   async showMyAppointments(TelegramBot, msg) {
-    const back = {
-      reply_markup: JSON.stringify({
-        resize_keyboard: true,
-        keyboard: [
-          [menuButtons.Back],
-          [appointmentButtons.Edit]
-        ]
-      })
-    };
-    TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + await appointmentController.showMyAppointments(msg.chat.id), back);
+    const booked_appointments = await appointmentController.showMyAppointments(msg.chat.id)
+    if(booked_appointments != false)
+    TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + booked_appointments, back_with_edit_button);
+    else
+      TelegramBot.sendMessage(msg.chat.id, 'You have no planned appointments', profile);
+
   }
 
   async freeDateAppointment(TelegramBot, msg) {
@@ -66,8 +66,7 @@ export class AppointmentRouter {
   }
 
   async RemoveMyAppointment(TelegramBot, msg, appointment) {
-      await appointmentController.deleteAppointment(appointment);
-      TelegramBot.sendMessage(msg.chat.id, 'Appointment removed successfully', back);
+      return await appointmentController.deleteAppointment(msg.chat.id, appointment);
   };
 
   async setAppointment(TelegramBot, msg, date, barber, service){

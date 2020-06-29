@@ -16,7 +16,7 @@ export class AppointmentRepository {
     })
   }
 
-  async showMyAppointments(id) {  // или добавить условие поиска или убрать лишнее в сервисах
+  async showMyAppointments(id) {
     return await appointments.findAll({
       where: {
         client_id: id,
@@ -65,11 +65,15 @@ export class AppointmentRepository {
     });
   }
 
-  async deleteAppointment(should_be_appointment_id) {
-    const appointment = await appointments.findOne({ where: { id: parseInt(should_be_appointment_id, 10) } });
-    return await appointment.update({
-      deleted: true
-    });
+  async deleteAppointment(appointment) {
+    //const appointment = await appointments.findOne({ where: { id: parseInt(should_be_appointment_id, 10) } });
+    if (appointment != null) {
+      await appointment.update({
+        deleted: true
+      });
+      return appointment.deleted == true;
+    }
+    return false;
   }
 
   async setAppointment(TelegramBot, msg, date, barber, service) {

@@ -4,24 +4,15 @@ const serviceController = new ServiceController();
 
 export class ServiceRouter {
 
-  async PriceList(TelegramBot, msg) {
-    TelegramBot.sendMessage(msg.chat.id, 'Price list:' + await serviceController.showPriceList(), menu);
+  async PriceList(TelegramBot, msg) : Promise<void>{
+    const list = await serviceController.showPriceList();
+    if(list != false)
+    TelegramBot.sendMessage(msg.chat.id, 'Price list:' + list, menu);
+    else
+      TelegramBot.sendMessage(msg.chat.id, 'Somethings wrong, please, try again later...', menu);
   }
 
   async SetService(TelegramBot, msg) {
       return await serviceController.SetService(msg.text.substring(9, msg.text.length));
   }
 }
-
-/*  constructor(TelegramBot) {
-
-    TelegramBot.onText(/Select price/, function (msg) {
-      TelegramBot.sendMessage(msg.chat.id, 'Enter price id', back);
-      TelegramBot.on('message', async function (msg) {
-        await serviceController.selectPrice(msg.text);
-        // how to send response
-        TelegramBot.sendMessage(msg.chat.id, 'Price info: in console', back);
-      });
-    });
-  }*/
-

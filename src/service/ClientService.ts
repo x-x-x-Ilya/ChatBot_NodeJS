@@ -8,12 +8,7 @@ export class ClientService {
     }
 
     async MyProfile(id){
-      let Response = "";
-      const client = await clientRepository.MyProfile(id);
-      if(client.last_name == null) client.last_name = 'not indicated';
-      if(client.email == null) client.email = 'not indicated';
-      Response += "First name: " + client.first_name + "\r\nLast name: " + client.last_name + "\r\nEmail: " + client.email;
-      return Response;
+      return await clientRepository.MyProfile(id);
     }
 
   async enterLastName(last_name, id) {

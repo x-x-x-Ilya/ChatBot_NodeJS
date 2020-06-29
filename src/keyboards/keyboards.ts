@@ -21,6 +21,11 @@ const editKeyboard = [
   [editButtons.Delete, menuButtons.Back]
 ];
 
+const back_with_edit_keyboard = [
+  [menuButtons.Back],
+  [appointmentButtons.Edit]
+]
+
 function reply_markup(arg: string[][]){
   return  JSON.stringify({
     resize_keyboard: true,
@@ -28,6 +33,7 @@ function reply_markup(arg: string[][]){
   });
 }
 
+export const back_with_edit_button = {reply_markup:reply_markup(back_with_edit_keyboard)};
 export const menu = {reply_markup:reply_markup(menuKeyboard)};
 export const back = {reply_markup:reply_markup(backKeyboard)};
 export const help = {reply_markup:reply_markup(backKeyboard)};

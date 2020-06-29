@@ -1,9 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import { where } from 'sequelize';
-
 import {barbers} from '../database/models/barbers';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('sequelize-values')();
 
 export class BarberRepository {
 

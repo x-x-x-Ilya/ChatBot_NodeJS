@@ -49,6 +49,7 @@ export class API {
       }
       else if(msg.text.indexOf('/barber') != -1){
         barber = await routes.barberRouter.SetBarber(TelegramBot, msg);
+
         isCommand = true;
       }
       else if(msg.text.indexOf('/service') != -1){
@@ -63,7 +64,10 @@ export class API {
       }
       else if(msg.text.indexOf('/id') != -1) {
         cur_appointment = await routes.appointmentRouter.GetAppointment(msg, parseInt(msg.text.substring(4, msg.text.length), 10));
-        TelegramBot.sendMessage(msg.chat.id, 'Select operation', edit);
+        if(cur_appointment != null)
+          TelegramBot.sendMessage(msg.chat.id, 'Select operation', edit);
+        else
+          TelegramBot.sendMessage(msg.chat.id, 'Error, please try again...', back);
         isCommand = true;
       }
 
@@ -76,10 +80,12 @@ export class API {
           break;
 
         case editButtons.Delete:
-          await routes.appointmentRouter.RemoveMyAppointment(TelegramBot, msg, cur_appointment.id)
+          if(await routes.appointmentRouter.RemoveMyAppointment(TelegramBot, msg, cur_appointment.id))
+          TelegramBot.sendMessage(msg.chat.id, 'Appointment removed successfully.', back);
+          else
+            TelegramBot.sendMessage(msg.chat.id, 'Operation error, please, try again.', back);
           isCommand = true;
           break;
-
 
         case menuButtons.BarberList:
           await routes.barberRouter.BarberList(TelegramBot, msg);
@@ -95,6 +101,15 @@ export class API {
           await routes.serviceRouter.PriceList(TelegramBot, msg);
           isCommand = true;
           break;
+
+
+        case menuButtons.MyProfile:
+          await routes.clientRouter.MyProfile(msg, TelegramBot);
+          isCommand = true;
+          break;
+
+
+
 
         case menuButtons.checkDateAppointment:
           TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/check 06.05.2020")');
@@ -128,8 +143,11 @@ export class API {
           isCommand = true;
           break;
 
-        case menuButtons.MyProfile:
-          await routes.clientRouter.MyProfile(msg, TelegramBot);
+
+
+          case editButtons.ChangeBarber:
+          await routes.barberRouter.BarberList(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want (format: "/barber 81558452")', back);
           isCommand = true;
           break;
 
@@ -139,6 +157,8 @@ export class API {
           isCommand = true;
           break;
       }
+
+
 
       if(!isCommand)
         TelegramBot.sendMessage(msg.chat.id, 'I do not understand you, please, try again', help);
