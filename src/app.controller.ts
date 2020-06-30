@@ -9,17 +9,15 @@ import { bot } from './main';
 export class  BarberController{
   constructor(private readonly appService: BarberService) {}
 
-  /*@Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }*/
-
   @Post()
-  //Hello(@Req() request): string {
-  Hello(@Body() body): string {
-  bot.processUpdate(body);
-    return this.appService.getHello(body);
+  Hello(@Body() body) {
+    bot.processUpdate(body);
   }
+
+
+
+
+
   @Get()
   async showBarberList() : Promise<string | boolean> {
     const barbers = await this.appService.showBarberList();

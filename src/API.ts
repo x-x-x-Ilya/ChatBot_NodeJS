@@ -17,6 +17,7 @@ export class API {
 
 
   constructor(TelegramBot : Bot) {
+
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
     let date: Date;
     let barber;
