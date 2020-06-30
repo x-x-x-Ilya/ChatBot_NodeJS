@@ -3,7 +3,6 @@ import { appointmentButtons, editButtons, menuButtons, profileButtons } from './
 import {routes} from './route/routes';
 import * as Bot from 'node-telegram-bot-api';
 
-
 function sendMessage(TelegramBot, msg, text, keyboard){
   TelegramBot.sendMessage(msg.chat.id, text, keyboard).catch((error) => {
     console.log(error.code);
@@ -25,6 +24,7 @@ export class API {
 
     TelegramBot.on('message', async msg => {
       isCommand = false;
+
 
       //commands
       if(msg.text.indexOf('/check') != -1) {
