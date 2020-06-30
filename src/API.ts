@@ -3,19 +3,19 @@ import { appointmentButtons, editButtons, menuButtons, profileButtons } from './
 import {routes} from './route/routes';
 import * as Bot from 'node-telegram-bot-api';
 
-/*
-bot.sendMessage(nonExistentUserId, 'text').catch((error) => {
-  console.log(error.code);  // => 'ETELEGRAM'
-  console.log(error.response.body); // => { ok: false, error_code: 400, description: 'Bad Request: chat not found' }
-});*/
 
-/*
-bot.on('polling_error', (error) => {
-  console.log(error.code);  // => 'EFATAL'
-});
- */
+function sendMessage(TelegramBot, msg, text, keyboard){
+  TelegramBot.sendMessage(msg.chat.id, text, keyboard).catch((error) => {
+    console.log(error.code);
+    console.log(error.response.body);
+  });
+}
+
 
 export class API {
+
+
+
 
   constructor(TelegramBot : Bot) {
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
@@ -56,7 +56,8 @@ export class API {
           const service = await routes.serviceRouter.SetService(TelegramBot, msg);
           const res = await routes.appointmentRouter.setAppointment(TelegramBot, msg, date, barber, service);
           if(res == false)
-            TelegramBot.sendMessage(msg.chat.id, 'Sorry, somethings wrong, try again', menu);
+            sendMessage(TelegramBot, msg, 'Sorry, somethings wrong, try again', menu);
+            //TelegramBot.sendMessage(msg.chat.id, 'Sorry, somethings wrong, try again', menu);
           else {
             TelegramBot.sendMessage(msg.chat.id, 'Your appointment added:' + "[" + res.id + "]" + res.date + " " + res.service.name + " " + res.barber.first_name + " " + res.barber.last_name + '\r\n', menu);
           }
@@ -75,15 +76,15 @@ export class API {
       switch (msg.text) {
 
         case menuButtons.Back:
-          TelegramBot.sendMessage(msg.chat.id, 'Waiting for you command...', menu);
+          sendMessage(TelegramBot, msg, 'Waiting for you command...', menu);
           isCommand = true;
           break;
 
         case editButtons.Delete:
           if(await routes.appointmentRouter.RemoveMyAppointment(TelegramBot, msg, cur_appointment.id))
-          TelegramBot.sendMessage(msg.chat.id, 'Appointment removed successfully.', back);
+            sendMessage(TelegramBot, msg, 'Appointment removed successfully.', back);
           else
-            TelegramBot.sendMessage(msg.chat.id, 'Operation error, please, try again.', back);
+            sendMessage(TelegramBot, msg, 'Operation error, please, try again.', back);
           isCommand = true;
           break;
 
@@ -93,7 +94,7 @@ export class API {
           break;
 
         case profileButtons.Appointments:
-          TelegramBot.sendMessage(msg.chat.id, 'What kind of appointments you want?', appointment);
+          sendMessage(TelegramBot, msg, 'What kind of appointments you want?', appointment);
           isCommand = true;
           break;
 
@@ -109,17 +110,17 @@ export class API {
 
         case '/start':
           await routes.clientRouter.addClient(TelegramBot, msg);
-          TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
+          sendMessage(TelegramBot, msg, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
           isCommand = true;
           break;
 
         case profileButtons.sendLastName:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter your last_name ("/last_name some-last_name")', back);
+          sendMessage(TelegramBot, msg, 'Enter your last_name ("/last_name some-last_name")', back);
           isCommand = true;
           break;
 
         case menuButtons.checkDateAppointment:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/check 06.05.2020")');
+          sendMessage(TelegramBot, msg, 'Enter date you would like to visit us (format: "/check 06.05.2020")', back);
           isCommand = true;
           break;
 

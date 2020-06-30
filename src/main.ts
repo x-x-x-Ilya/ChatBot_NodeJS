@@ -10,7 +10,12 @@ const token = process.env.TOKEN;
 connect().then(() => {
   try {
     init.init();
-    const bot : TelegramBot = new TelegramBot(token, { polling: true });
+    const bot: TelegramBot = new TelegramBot(token, { polling: true });
+
+    bot.on('polling_error', (error) => {
+      console.log(error.code);
+    });
+
     new API(bot);
   } catch (e) {
     console.log(e);

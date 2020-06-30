@@ -34,3 +34,15 @@ CREATE TABLE appointments (
 	service_id INT NOT NULL REFERENCES "services" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
+
+CREATE OR REPLACE VIEW current_day AS
+   SELECT
+	appointments.date,
+	clients.first_name,
+	services.name,
+	services.price
+	FROM appointments
+	JOIN clients ON appointments.client_id = clients.id
+	JOIN services ON appointments.service_id = services.id
+    WHERE
+	date >= CURRENT_DATE AND date <= CURRENT_DATE+1 AND appointments.deleted = false;
