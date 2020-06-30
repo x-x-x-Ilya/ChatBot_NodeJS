@@ -1,10 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('sequelize-values')();
 import {services} from '../database/models/services';
 
 export class ServiceRepository {
 
-  async showPriceList() {
+  async showPriceList() : Promise<Array<any>> {
     return await services.findAll({
       where: { deleted: false },
       attributes: ['name', 'time', 'price', 'id'],
@@ -12,7 +10,7 @@ export class ServiceRepository {
     });
   }
 
-  async SetService(id) {
+  async SetService(id : number) : Promise<any> {
     return await services.findOne({
         where:{
           id: id

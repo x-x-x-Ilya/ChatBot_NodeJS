@@ -3,35 +3,41 @@ const appointmentRepository = new AppointmentRepository();
 
 export class AppointmentService {
 
-  async showMyAppointments(id) {
+  async showMyAppointments(id : number) : Promise<Array<any>> {
     return await appointmentRepository.showMyAppointments(id);
   }
 
-  async showMyHistory(id) {
+  async showMyHistory(id : number) : Promise<Array<any>>{
     return  await appointmentRepository.showMyHistory(id);
   }
 
-  async GetAppointment(appoinment_id, client_id) {
-    return await appointmentRepository.GetAppointment(appoinment_id, client_id);
+  async GetAppointment(appointment_id : number, client_id : number) : Promise<any>{
+    return await appointmentRepository.GetAppointment(appointment_id, client_id);
   }
 
 
-  async setAppointment(TelegramBot, msg, date, barber, service) {
+  async setAppointment(TelegramBot : any, msg : any, date : Date, barber : any, service : any) : Promise<any> {
     return await appointmentRepository.setAppointment(TelegramBot, msg, date, barber, service);
   }
 
-  async deleteAppointment(user_id, should_be_appointment_id){
+  async deleteAppointment(user_id : number, should_be_appointment_id : number) : Promise<any>{
     const appointment = appointmentRepository.GetAppointment(should_be_appointment_id, user_id);
     return await appointmentRepository.deleteAppointment(appointment);
   }
 
-  async freeDateAppointment(date): Promise<string> {
+  async freeDateAppointment(date : Date): Promise<string> {
 
     const appointment = await appointmentRepository.freeDateAppointment(date);
     if(appointment.length == 0){
       return "We are free from 10:00 to 22:00";
     }
     let found_in_sec = [];
+    found_in_sec.sort((a: number, b:number) => {
+      if(a > b)
+        return b;
+      else
+        return a;
+    });
     for (let i = 0; i < appointment.length; i++) {
       found_in_sec.push(appointment[i].date.getHours() * 3600 + appointment[i].date.getMinutes() * 60);
     }
@@ -46,11 +52,5 @@ export class AppointmentService {
       R += "from " + found_in_sec[found_in_sec.length - 1] / 3600 + ":" + (found_in_sec[found_in_sec.length - 1] % 3600) / 60 + " to 22:00\r\n";
     }
     return R;
-    found_in_sec.sort((a: number, b:number) => {
-      if(a > b)
-        return b;
-      else
-        return a;
-    });
   };
 }

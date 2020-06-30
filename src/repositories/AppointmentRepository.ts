@@ -2,42 +2,36 @@ import {Op} from 'sequelize';
 import {services} from '../database/models/services';
 import {barbers} from '../database/models/barbers';
 import {appointments} from '../database/models/appointments';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('sequelize-values')();
 
 export class AppointmentRepository {
-  async GetAppointment(appoinment_id, client_id) {
+
+  async GetAppointment(appointment_id : number, client_id : number): Promise<any> {
     return await appointments.findOne({
       where:{
-        id:appoinment_id,
+        id:appointment_id,
         client_id:client_id,
         deleted: false
       }
     })
   }
 
-  async showMyAppointments(id) {
+  async showMyAppointments(id:number): Promise<Array<any>> {
     return await appointments.findAll({
       where: {
-        client_id: id,
-        date: {
-          [Op.gte]: new Date()
-        },
-        deleted: false
+        client_id: id, deleted: false,
+        date: { [Op.gte]: new Date() }
       },
       attributes: ['date', 'id'],
-      include: [
-        {
+      include: [{
           model: barbers,
           attributes: ['first_name', 'last_name'],
         }, {
           model: services,
           attributes: ['name'],
         }]
-    });
-  }
+    });}
 
-  async showMyHistory(id) {
+  async showMyHistory(id :number) : Promise<Array<any>> {
     return await appointments.findAll(
       {
         where: {
@@ -51,7 +45,7 @@ export class AppointmentRepository {
       });
   }
 
-  async freeDateAppointment(check_date: Date) {
+  async freeDateAppointment(check_date: Date) : Promise<Array<any>> {
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
     return await appointments.findAll({
@@ -65,7 +59,7 @@ export class AppointmentRepository {
     });
   }
 
-  async deleteAppointment(appointment) {
+  async deleteAppointment(appointment : any) : Promise<boolean>{
     //const appointment = await appointments.findOne({ where: { id: parseInt(should_be_appointment_id, 10) } });
     if (appointment != null) {
       await appointment.update({
@@ -76,7 +70,7 @@ export class AppointmentRepository {
     return false;
   }
 
-  async setAppointment(TelegramBot, msg, date, barber, service) {
+  async setAppointment(TelegramBot: any, msg: any, date: Date, barber : any, service : any) : Promise<any>{
     try {
       const appointment = await appointments.create({
         // id по умолчанию

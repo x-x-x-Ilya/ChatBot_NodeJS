@@ -3,11 +3,11 @@ const barberRepository = new BarberRepository();
 
 export class BarberService {
 
-  async showBarberList() {
+  async showBarberList() : Promise<Array<any>> {
     return await barberRepository.showBarberList();
   }
 
-  async selectBarber(id) {
+  async selectBarber(id : number) : Promise<any> {
     return await barberRepository.selectBarber(id);
   }
 

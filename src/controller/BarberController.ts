@@ -3,8 +3,7 @@ const barberService = new BarberService();
 
 export class BarberController {
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-   async showBarberList() {
+   async showBarberList() : Promise<string | boolean> {
     const barbers = await barberService.showBarberList();
      if(barbers.length != 0) {
        let Response = '\r\n';
@@ -17,7 +16,7 @@ export class BarberController {
      return false;
   }
 
-  async selectBarber(id){
+  async selectBarber(id : number) : Promise<any>{
     return await barberService.selectBarber(id);
   }
 

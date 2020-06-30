@@ -2,7 +2,7 @@ import {clients} from '../database/models/clients';
 
 export class ClientRepository {
 
-  async enterEmail(email, id) {
+  async enterEmail(email : string, id : number) : Promise<string>{
       const client = await clients.findOne({
         where: { id: id }
       });
@@ -12,7 +12,7 @@ export class ClientRepository {
         return 'Your email updated';
   }
 
-  async enterLastName(last_name, id){
+  async enterLastName(last_name : string, id : number) : Promise<string>{
     const client = await clients.findOne({
       where: { id: id }
     });
@@ -22,7 +22,7 @@ export class ClientRepository {
     return 'Your last_name updated';
   }
 
-  async MyProfile(id){
+  async MyProfile(id : number) : Promise<any>{
     return await clients.findOne({
       where: {
         id: id
@@ -31,7 +31,7 @@ export class ClientRepository {
     });
   }
 
-  async addClient(id, first_name, last_name) {
+  async addClient(id : number, first_name : string, last_name : string) : Promise<any> {
     const client = await clients.findOne({
       where: { id: id }
     });

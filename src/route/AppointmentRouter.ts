@@ -7,28 +7,27 @@ const appointmentController = new AppointmentController();
 
 export class AppointmentRouter {
 
-  async AppointmentsHistory(TelegramBot, msg) {
+  async AppointmentsHistory(TelegramBot : any, msg :any) : Promise<void> {
     const history = await appointmentController.showMyHistory(msg.chat.id);
-    if(history != false)
-    TelegramBot.sendMessage(msg.chat.id, 'Your history:' + history, menu);
+    if (history != false)
+      TelegramBot.sendMessage(msg.chat.id, 'Your history:' + history, menu);
     else
       TelegramBot.sendMessage(msg.chat.id, 'You have empty history', menu);
   }
 
-  async GetAppointment(msg, id){
+  async GetAppointment(msg : any, id : number) : Promise<any>{
     return await appointmentController.GetAppointment(msg.chat.id, id);
   }
 
-  async showMyAppointments(TelegramBot, msg) {
+  async showMyAppointments(TelegramBot : any, msg : any) : Promise<void> {
     const booked_appointments = await appointmentController.showMyAppointments(msg.chat.id)
-    if(booked_appointments != false)
-    TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + booked_appointments, back_with_edit_button);
+    if (booked_appointments != false)
+      TelegramBot.sendMessage(msg.chat.id, 'Your planned appointments:' + booked_appointments, back_with_edit_button);
     else
       TelegramBot.sendMessage(msg.chat.id, 'You have no planned appointments', profile);
-
   }
 
-  async freeDateAppointment(TelegramBot, msg) {
+  async freeDateAppointment(TelegramBot : any, msg : any) : Promise<void> {
       const date = msg.text.substring(6, msg.text.length);
       const t = date.split('.'),
         Year = t[2],
@@ -41,7 +40,7 @@ export class AppointmentRouter {
         TelegramBot.sendMessage(msg.chat.id, 'Date should be in future');
   };
 
-  async SetDate(TelegramBot, msg) {
+  async SetDate(TelegramBot : any, msg : any) : Promise<any> {
     const date = msg.text.substring(6, msg.text.length);
     const t = date.split('.'), Year = t[2], Month = parseInt(t[1]) - 1, day = parseInt(t[0]);
     const check_date = new Date(Year, Month, day);
@@ -54,7 +53,7 @@ export class AppointmentRouter {
     }
   }
 
-  async SetTime(TelegramBot, msg, date:Date) {
+  async SetTime(TelegramBot : any, msg : any, date : Date) : Promise<any> {
     const time = msg.text.substring(6, msg.text.length);
     const t = time.split(':');
     date.setHours(parseInt(t[0], 10));
@@ -65,11 +64,11 @@ export class AppointmentRouter {
     return date;
   }
 
-  async RemoveMyAppointment(TelegramBot, msg, appointment) {
+  async RemoveMyAppointment(TelegramBot : any, msg : any, appointment : any) : Promise<any> {
       return await appointmentController.deleteAppointment(msg.chat.id, appointment);
   };
 
-  async setAppointment(TelegramBot, msg, date, barber, service){
+  async setAppointment(TelegramBot : any, msg : any, date : Date, barber : any, service : any) :Promise<any>{
     return await appointmentController.setAppointment(TelegramBot, msg, date, barber, service);
 
   }

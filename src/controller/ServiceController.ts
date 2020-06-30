@@ -3,7 +3,7 @@ const serviceService = new ServiceService();
 
 export class ServiceController {
 
-  async showPriceList() {
+  async showPriceList() : Promise<string | boolean> {
     const services: Array <any> = await serviceService.showPriceList();
     if(services.length != 0) {
       let Response = '\r\n';
@@ -16,7 +16,7 @@ export class ServiceController {
     return false;
   }
 
-  async SetService(id) {
+  async SetService(id : number) : Promise<any> {
     return await serviceService.SetService(id);
   }
 

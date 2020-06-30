@@ -18,16 +18,16 @@ bot.on('polling_error', (error) => {
 export class API {
 
   constructor(TelegramBot : Bot) {
-
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
     let date: Date;
     let barber;
     let cur_appointment = null;
+
     TelegramBot.on('message', async msg => {
       isCommand = false;
 
       //commands
-      if(msg.text.indexOf('/check')!= -1) {
+      if(msg.text.indexOf('/check') != -1) {
         await routes.appointmentRouter.freeDateAppointment(TelegramBot, msg);
         isCommand = true;
       }
@@ -102,17 +102,14 @@ export class API {
           isCommand = true;
           break;
 
-
         case menuButtons.MyProfile:
           await routes.clientRouter.MyProfile(msg, TelegramBot);
           isCommand = true;
           break;
 
-
-
-
-        case menuButtons.checkDateAppointment:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/check 06.05.2020")');
+        case '/start':
+          await routes.clientRouter.addClient(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
           isCommand = true;
           break;
 
@@ -121,20 +118,25 @@ export class API {
           isCommand = true;
           break;
 
+        case menuButtons.checkDateAppointment:
+          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/check 06.05.2020")');
+          isCommand = true;
+          break;
+
+        case profileButtons.sendEmail:
+          TelegramBot.sendMessage(msg.chat.id, 'Enter your email ("/email examplmail@mail.com")', back);
+          isCommand = true;
+          break;
+
+
+
         case menuButtons.SignUpForAnAppointment:
           TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")', back);
           isCommand = true;
           break;
 
-
         case appointmentButtons.Edit:
           TelegramBot.sendMessage(msg.chat.id, 'Enter appointment you would like to edit (format: "/id 75675")', back);
-          isCommand = true;
-          break;
-
-
-        case profileButtons.sendEmail:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter your email ("/email examplmail@mail.com")', back);
           isCommand = true;
           break;
 
@@ -144,16 +146,9 @@ export class API {
           break;
 
 
-
           case editButtons.ChangeBarber:
           await routes.barberRouter.BarberList(TelegramBot, msg);
           TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want (format: "/barber 81558452")', back);
-          isCommand = true;
-          break;
-
-        case '/start':
-          await routes.clientRouter.addClient(TelegramBot, msg);
-          TelegramBot.sendMessage(msg.chat.id, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
           isCommand = true;
           break;
       }

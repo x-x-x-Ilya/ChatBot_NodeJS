@@ -4,11 +4,10 @@ const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
-  async showMyAppointments(id) {
+  async showMyAppointments(id : number) : Promise<boolean | string>{
     const appointments = await appointmentService.showMyAppointments(id);
     if (appointments.length != 0) {
       let Response = '\r\n';
-      let temp;
       for (let i = 0; i < appointments.length; i++) {
         Response += "[" + appointments[i].id + "] " + appointments[i].date + " " + appointments[i].service.name + " " + appointments[i].barber.first_name + " " + appointments[i].barber.last_name + '\r\n';
       }
@@ -17,11 +16,12 @@ export class AppointmentController {
     else
       return false;
   }
-  async GetAppointment(client_id, appoinment_id){
-    return await appointmentService.GetAppointment(appoinment_id, client_id);
 
+  async GetAppointment(client_id :number, appointment_id : number) : Promise<any>{
+    return await appointmentService.GetAppointment(appointment_id, client_id);
   }
-  async showMyHistory(id){
+
+  async showMyHistory(id : number) : Promise<string | boolean>{
     const allAppointments = await appointmentService.showMyHistory(id);
     if (allAppointments.length != 0) {
       let Response = '\r\n';
@@ -33,15 +33,15 @@ export class AppointmentController {
     return false;
   }
 
-  async freeDateAppointment(should_be_appointment_date) {
+  async freeDateAppointment(should_be_appointment_date : Date) :Promise<any> {
     return await appointmentService.freeDateAppointment(should_be_appointment_date);
   }
 
-  async deleteAppointment(user_id, should_be_appointment_id) {
+  async deleteAppointment(user_id : number, should_be_appointment_id : number) : Promise<any> {
     return await appointmentService.deleteAppointment(user_id, should_be_appointment_id);
   }
 
-  async setAppointment(TelegramBot, msg, date, barber, service){
+  async setAppointment(TelegramBot : any, msg : any, date :Date, barber : any, service : any) : Promise<any>{
     return await appointmentService.setAppointment(TelegramBot, msg, date, barber, service);
   }
 
