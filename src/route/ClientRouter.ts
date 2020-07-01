@@ -13,7 +13,7 @@ export class ClientRouter {
   }
 
   async EnterLastName(TelegramBot : any, msg : any) : Promise<void> {
-      await clientController.enterLastName(msg.text.substring(11, msg.text.length), msg.chat.id);
+    TelegramBot.sendMessage(msg.chat.id, await clientController.enterLastName(msg.text.substring(11, msg.text.length), msg.chat.id), profile);
   }
 
   async EnterEmailAddress(TelegramBot : any, msg :any) :Promise<void> {

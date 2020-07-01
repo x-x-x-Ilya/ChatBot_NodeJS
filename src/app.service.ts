@@ -3,8 +3,8 @@ import { barbers } from './database/models/barbers';
 
 @Injectable()
 export class BarberService {
-  getHello(request): string {
-    console.log(request);
+  getHello(): string {
+    //console.log(request);
     return 'Hello World!';
   }
 

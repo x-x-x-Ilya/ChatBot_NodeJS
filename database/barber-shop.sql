@@ -46,3 +46,28 @@ CREATE OR REPLACE VIEW current_day AS
 	JOIN services ON appointments.service_id = services.id
     WHERE
 	date >= CURRENT_DATE AND date <= CURRENT_DATE+1 AND appointments.deleted = false;
+
+
+/*
+CREATE OR REPLACE PROCEDURE get_statistics_last_month() -- сделать возврат: колличество проведенных услуг
+returns table (date date, name varchar, price integer)
+LANGUAGE  PLpgSQL
+AS $$
+BEGIN
+declare s table;
+    SELECT
+	appointments.date,
+	services.name,
+	services.price
+	FROM appointments
+	JOIN clients ON appointments.client_id = clients.id
+	JOIN services ON appointments.service_id = services.id
+    WHERE
+	date >= current_date-30 AND date <= current_date + 1 AND appointments.deleted = false;
+	return s;
+COMMIT;
+END;
+$$;
+
+CALL get_statistics_last_month();
+*/

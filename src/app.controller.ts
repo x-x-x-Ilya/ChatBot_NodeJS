@@ -13,8 +13,10 @@ export class  BarberController{
   Hello(@Body() body) {
     bot.processUpdate(body);
   }
-
-
+  @Get()
+  getHello(){
+    return this.appService.getHello();
+  }
 
 
 
