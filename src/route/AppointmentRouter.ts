@@ -28,8 +28,7 @@ export class AppointmentRouter {
   }
 
   async freeDateAppointment(TelegramBot : any, msg : any) : Promise<void> {
-      const date = msg.text.substring(6, msg.text.length);
-      const t = date.split('.'),
+      const t = msg.text.split('.'),
         Year = t[2],
         Month = parseInt(t[1]) - 1,
         day = parseInt(t[0]);
@@ -41,12 +40,10 @@ export class AppointmentRouter {
   };
 
   async SetDate(TelegramBot : any, msg : any) : Promise<any> {
-    const date = msg.text.substring(6, msg.text.length);
-    const t = date.split('.'), Year = t[2], Month = parseInt(t[1]) - 1, day = parseInt(t[0]);
+    const t = msg.text.split('.'), Year = t[2], Month = parseInt(t[1]) - 1, day = parseInt(t[0]);
     const check_date = new Date(Year, Month, day);
     if (check_date >= new Date()) {
       TelegramBot.sendMessage(msg.chat.id, await appointmentController.freeDateAppointment(check_date), back);
-      TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "/time 16:00")', back);
       return check_date;
     } else {
       TelegramBot.sendMessage(msg.chat.id, 'Date should be in future', back);
@@ -54,13 +51,9 @@ export class AppointmentRouter {
   }
 
   async SetTime(TelegramBot : any, msg : any, date : Date) : Promise<any> {
-    const time = msg.text.substring(6, msg.text.length);
-    const t = time.split(':');
+    const t = msg.text.split(':');
     date.setHours(parseInt(t[0], 10));
     date.setMinutes(parseInt(t[1], 10));
-    await routes.barberRouter.BarberList(TelegramBot, msg);
-    TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want (format: "/barber 81558452")', back);
-    // добавить проверку, что это время действительно свободно
     return date;
   }
 

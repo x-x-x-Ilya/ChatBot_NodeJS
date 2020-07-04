@@ -14,10 +14,8 @@ export class BarberRouter {
   }
 
   async SetBarber(TelegramBot :any, msg : any) : Promise<any>{
-    const barber = await barberController.selectBarber(msg.text.substring(8, msg.text.length));
+    const barber = await barberController.selectBarber(msg.text);
     TelegramBot.sendMessage(msg.chat.id, 'Your Barber: ' + barber.first_name + " " + barber.last_name, back);
-    await routes.serviceRouter.PriceList(TelegramBot, msg);
-    TelegramBot.sendMessage(msg.chat.id, 'Select id service you want (format: "/service 4586")', back);
     return barber;
   }
 }

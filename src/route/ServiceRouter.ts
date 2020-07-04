@@ -13,6 +13,6 @@ export class ServiceRouter {
   }
 
   async SetService(TelegramBot : any, msg : any) : Promise<any>{
-      return await serviceController.SetService(msg.text.substring(9, msg.text.length));
+      return await serviceController.SetService(msg.text);
   }
 }

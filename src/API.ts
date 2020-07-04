@@ -10,66 +10,79 @@ function sendMessage(TelegramBot, msg, text, keyboard){
   });
 }
 
-
 export class API {
 
-
-
-
   constructor(TelegramBot : Bot) {
+    let last_name_message_id;
+    let email_message_id;
+    let check_date_message_id;
+    let edit_appointment_message_id;
+    let set_barber_message_id;
+    let sign_up_for_appointment_message;
+    let set_time_message_id;
+    let set_service_msg_id;
 
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
+
+
+
     let date: Date;
     let barber;
     let cur_appointment = null;
 
     TelegramBot.on('message', async msg => {
+      console.log(msg);
       isCommand = false;
 
-
-      //commands
-      if(msg.text.indexOf('/check') != -1) {
-        await routes.appointmentRouter.freeDateAppointment(TelegramBot, msg);
-        isCommand = true;
-      }
-      else if(msg.text.indexOf('/date')!= -1) {
-        date = await routes.appointmentRouter.SetDate(TelegramBot, msg);
-        isCommand = true;
-      }
-      else if(msg.text.indexOf('/email')!= -1) {
-        await routes.clientRouter.EnterEmailAddress(TelegramBot, msg);
-        isCommand = true;
-      }
-      else if(msg.text.indexOf('/last_name')!= -1) {
+      if(msg.message_id == last_name_message_id) {
         await routes.clientRouter.EnterLastName(TelegramBot, msg);
         isCommand = true;
       }
-      else if(msg.text.indexOf('/time') != -1){
-        await routes.appointmentRouter.SetTime(TelegramBot, msg, date);
+      else if(msg.message_id == check_date_message_id){
+        await routes.appointmentRouter.freeDateAppointment(TelegramBot, msg);
         isCommand = true;
       }
-      else if(msg.text.indexOf('/barber') != -1){
+      else if(msg.message_id == email_message_id){
+        await routes.clientRouter.EnterEmailAddress(TelegramBot, msg);
+        isCommand = true;
+      }
+      else if(msg.message_id == set_barber_message_id){
         barber = await routes.barberRouter.SetBarber(TelegramBot, msg);
+        await routes.serviceRouter.PriceList(TelegramBot, msg);
+        set_service_msg_id = msg.message_id + 2;
+        TelegramBot.sendMessage(msg.chat.id, 'Select id service you want', back);
+        isCommand = true;
+      }
+      else if(msg.message_id == sign_up_for_appointment_message){
+        date = await routes.appointmentRouter.SetDate(TelegramBot, msg);
+        set_time_message_id = msg.message_id + 2;
+        TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "16:00")', back);
+        isCommand = true;
+      }
+      else if(msg.message_id == set_time_message_id){
+        await routes.appointmentRouter.SetTime(TelegramBot, msg, date);
+        await routes.barberRouter.BarberList(TelegramBot, msg);
+        set_barber_message_id = msg.message_id+2;
+        TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want', back);
+        isCommand = true;
+      }
 
-        isCommand = true;
-      }
-      else if(msg.text.indexOf('/service') != -1){
-          const service = await routes.serviceRouter.SetService(TelegramBot, msg);
-          const res = await routes.appointmentRouter.setAppointment(TelegramBot, msg, date, barber, service);
-          if(res == false)
-            sendMessage(TelegramBot, msg, 'Sorry, somethings wrong, try again', menu);
-            //TelegramBot.sendMessage(msg.chat.id, 'Sorry, somethings wrong, try again', menu);
-          else {
-            TelegramBot.sendMessage(msg.chat.id, 'Your appointment added:' + "[" + res.id + "]" + res.date + " " + res.service.name + " " + res.barber.first_name + " " + res.barber.last_name + '\r\n', menu);
-          }
-        isCommand = true;
-      }
-      else if(msg.text.indexOf('/id') != -1) {
-        cur_appointment = await routes.appointmentRouter.GetAppointment(msg, parseInt(msg.text.substring(4, msg.text.length), 10));
+      else if (msg.message_id == edit_appointment_message_id){
+        cur_appointment = await routes.appointmentRouter.GetAppointment(msg, parseInt(msg.text, 10));
         if(cur_appointment != null)
           TelegramBot.sendMessage(msg.chat.id, 'Select operation', edit);
         else
           TelegramBot.sendMessage(msg.chat.id, 'Error, please try again...', back);
+        isCommand = true;
+      }
+      else if(msg.message_id == set_service_msg_id){
+          const service = await routes.serviceRouter.SetService(TelegramBot, msg);
+          const res = await routes.appointmentRouter.setAppointment(TelegramBot, msg, date, barber, service);
+          if(res == false)
+            sendMessage(TelegramBot, msg, 'Sorry, somethings wrong, try again', menu);
+          else {
+            TelegramBot.sendMessage(msg.chat.id, 'Your appointment added:' + "[" + res.id + "]" + res.date + " " + res.service.name + " " + res.barber.first_name + " " + res.barber.last_name + '\r\n', menu);
+          }
         isCommand = true;
       }
 
@@ -99,7 +112,7 @@ export class API {
           isCommand = true;
           break;
 
-        case menuButtons.PriceList:
+          case menuButtons.PriceList:
           await routes.serviceRouter.PriceList(TelegramBot, msg);
           isCommand = true;
           break;
@@ -109,6 +122,7 @@ export class API {
           isCommand = true;
           break;
 
+
         case '/start':
           await routes.clientRouter.addClient(TelegramBot, msg);
           sendMessage(TelegramBot, msg, 'Hello, ' + msg.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
@@ -116,29 +130,26 @@ export class API {
           break;
 
         case profileButtons.sendLastName:
-          sendMessage(TelegramBot, msg, 'Enter your last_name ("/last_name some-last_name")', back);
+          last_name_message_id = msg.message_id + 2;
+          sendMessage(TelegramBot, msg, 'Enter your last_name', back);
           isCommand = true;
           break;
 
         case menuButtons.checkDateAppointment:
-          sendMessage(TelegramBot, msg, 'Enter date you would like to visit us (format: "/check 06.05.2020")', back);
+          check_date_message_id = msg.message_id + 2;
+          sendMessage(TelegramBot, msg, 'Enter date you would like to visit us (format: "06.05.2020")', back);
           isCommand = true;
           break;
 
         case profileButtons.sendEmail:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter your email ("/email examplmail@mail.com")', back);
-          isCommand = true;
-          break;
-
-
-
-        case menuButtons.SignUpForAnAppointment:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "/date 06.05.2020")', back);
+          email_message_id = msg.message_id + 2;
+          TelegramBot.sendMessage(msg.chat.id, 'Enter your email', back);
           isCommand = true;
           break;
 
         case appointmentButtons.Edit:
-          TelegramBot.sendMessage(msg.chat.id, 'Enter appointment you would like to edit (format: "/id 75675")', back);
+          edit_appointment_message_id = msg.message_id + 2;
+          TelegramBot.sendMessage(msg.chat.id, 'Enter appointment id you would like to edit', back);
           isCommand = true;
           break;
 
@@ -147,19 +158,22 @@ export class API {
           isCommand = true;
           break;
 
-
-          case editButtons.ChangeBarber:
+        case editButtons.ChangeBarber:
+          set_barber_message_id = msg.chat.id + 2;
           await routes.barberRouter.BarberList(TelegramBot, msg);
-          TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want (format: "/barber 81558452")', back);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want', back);
+          isCommand = true;
+          break;
+
+        case menuButtons.SignUpForAnAppointment:
+          sign_up_for_appointment_message = msg.chat.id + 2;
+          TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "06.05.2020")', back);
           isCommand = true;
           break;
       }
 
-
-
       if(!isCommand)
         TelegramBot.sendMessage(msg.chat.id, 'I do not understand you, please, try again', help);
-
 
     });
 
