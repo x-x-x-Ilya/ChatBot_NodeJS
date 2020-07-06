@@ -10,4 +10,4 @@ export async function connect() {
   } catch (error) {
     console.log('Unable to connect or sync with the database: ', error);
   }
-};
+}

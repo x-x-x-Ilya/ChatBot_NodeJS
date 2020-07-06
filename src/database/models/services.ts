@@ -3,11 +3,14 @@ import Sequelize from 'sequelize';
 const ServiceDatabase = require('../sequelize');
 
 export const services = ServiceDatabase.define('services', {
-  id: { type: Sequelize.INTEGER, allowNull: false, autoIncrement: true, primaryKey: true},  // serial not INTEGER
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  }, // serial not INTEGER
   name: { type: Sequelize.STRING, allowNull: false },
   time: { type: Sequelize.TIME, allowNull: false },
   price: { type: Sequelize.INTEGER, allowNull: false },
-  deleted: { type: Sequelize.BOOLEAN, allowNull: false}
+  deleted: { type: Sequelize.BOOLEAN, allowNull: false },
 });
-
-
