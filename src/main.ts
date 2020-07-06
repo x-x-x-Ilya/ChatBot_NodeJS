@@ -13,7 +13,7 @@ export const bot = new TelegramBot(token);
 async function bootstrap() {
   connect().then(async () => {
     try {
-      bot.setWebHook('https://73fa0492b2ce.ngrok.io');  //  start ngrok http 7000
+      bot.setWebHook('https://76f262ed68bd.ngrok.io');  //  start ngrok http 7000
       init.init();
       new API(bot);
       const app = await NestFactory.create(AppModule);

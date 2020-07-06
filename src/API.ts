@@ -13,6 +13,7 @@ function sendMessage(TelegramBot, msg, text, keyboard){
 export class API {
 
   constructor(TelegramBot : Bot) {
+
     let last_name_message_id;
     let email_message_id;
     let check_date_message_id;
@@ -23,7 +24,7 @@ export class API {
     let set_service_msg_id;
 
     let isCommand = false;  // если для сообщения есть команда то переменная станет true, если false вызывается /help
-
+    let isCreating = false; // если пытаемся создать запись в барбершопе true
 
 
     let date: Date;
@@ -46,24 +47,37 @@ export class API {
         await routes.clientRouter.EnterEmailAddress(TelegramBot, msg);
         isCommand = true;
       }
-      else if(msg.message_id == set_barber_message_id){
+
+      if(msg.message_id == set_barber_message_id){
         barber = await routes.barberRouter.SetBarber(TelegramBot, msg);
-        await routes.serviceRouter.PriceList(TelegramBot, msg);
-        set_service_msg_id = msg.message_id + 2;
-        TelegramBot.sendMessage(msg.chat.id, 'Select id service you want', back);
+        if(isCreating) {
+          await routes.serviceRouter.PriceList(TelegramBot, msg);
+          set_service_msg_id = msg.message_id + 2;
+          TelegramBot.sendMessage(msg.chat.id, 'Select id service you want', back);
+        }
+        if(!isCreating){
+          cur_appointment.barber_id = barber.id;
+          await routes.appointmentRouter.updateAppointment(cur_appointment);
+        }
         isCommand = true;
       }
+
+
       else if(msg.message_id == sign_up_for_appointment_message){
         date = await routes.appointmentRouter.SetDate(TelegramBot, msg);
-        set_time_message_id = msg.message_id + 2;
-        TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "16:00")', back);
+        if(isCreating) {
+          set_time_message_id = msg.message_id + 2;
+          TelegramBot.sendMessage(msg.chat.id, 'Enter time, you would like to visit us (format: "16:00")', back);
+        }
         isCommand = true;
       }
       else if(msg.message_id == set_time_message_id){
         await routes.appointmentRouter.SetTime(TelegramBot, msg, date);
-        await routes.barberRouter.BarberList(TelegramBot, msg);
-        set_barber_message_id = msg.message_id+2;
-        TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want', back);
+        if(isCreating) {
+          await routes.barberRouter.BarberList(TelegramBot, msg);
+          set_barber_message_id = msg.message_id + 2;
+          TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want', back);
+        }
         isCommand = true;
       }
 
@@ -77,12 +91,14 @@ export class API {
       }
       else if(msg.message_id == set_service_msg_id){
           const service = await routes.serviceRouter.SetService(TelegramBot, msg);
+        if(isCreating) {
           const res = await routes.appointmentRouter.setAppointment(TelegramBot, msg, date, barber, service);
-          if(res == false)
+          if (res == false)
             sendMessage(TelegramBot, msg, 'Sorry, somethings wrong, try again', menu);
           else {
             TelegramBot.sendMessage(msg.chat.id, 'Your appointment added:' + "[" + res.id + "]" + res.date + " " + res.service.name + " " + res.barber.first_name + " " + res.barber.last_name + '\r\n', menu);
           }
+        }
         isCommand = true;
       }
 
@@ -158,14 +174,30 @@ export class API {
           isCommand = true;
           break;
 
+        case editButtons.ChangeTime:
+          set_time_message_id = msg.message_id + 3;
+          const obj_like_message = {text:cur_appointment.date.toString()}
+          await routes.appointmentRouter.freeDateAppointment(TelegramBot, obj_like_message);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter time you want', back);
+          isCommand = true;
+          break;
+
         case editButtons.ChangeBarber:
-          set_barber_message_id = msg.chat.id + 2;
+          set_barber_message_id = msg.message_id + 3;
           await routes.barberRouter.BarberList(TelegramBot, msg);
           TelegramBot.sendMessage(msg.chat.id, 'Enter barber id you want', back);
           isCommand = true;
           break;
 
+        case editButtons.ChangeService:
+          set_service_msg_id = msg.message_id + 3;
+          await routes.serviceRouter.PriceList(TelegramBot, msg);
+          TelegramBot.sendMessage(msg.chat.id, 'Enter service id you want', back);
+          isCommand = true;
+          break;
+
         case menuButtons.SignUpForAnAppointment:
+          isCreating = true;
           sign_up_for_appointment_message = msg.chat.id + 2;
           TelegramBot.sendMessage(msg.chat.id, 'Enter date you would like to visit us (format: "06.05.2020")', back);
           isCommand = true;

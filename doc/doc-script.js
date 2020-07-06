@@ -13,7 +13,7 @@ var sidebarVisible = (window.localStorage && window.localStorage.docker_showSide
 /**
  * ## makeTree
  *
- * Consructs the folder tree keyboards
+ * Consructs the folder tree view
  *
  * @param {object} treeData Folder structure as in [queueFile](../src/docker.js.html#docker.prototype.queuefile)
  * @param {string} root Path from current file to root (ie `'../../'` etc.)

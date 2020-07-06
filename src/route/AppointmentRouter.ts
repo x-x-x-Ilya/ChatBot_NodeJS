@@ -61,6 +61,10 @@ export class AppointmentRouter {
       return await appointmentController.deleteAppointment(msg.chat.id, appointment);
   };
 
+  async updateAppointment(currentAppointment){
+    return await appointmentController.updateAppointment(currentAppointment);
+  }
+
   async setAppointment(TelegramBot : any, msg : any, date : Date, barber : any, service : any) :Promise<any>{
     return await appointmentController.setAppointment(TelegramBot, msg, date, barber, service);
 

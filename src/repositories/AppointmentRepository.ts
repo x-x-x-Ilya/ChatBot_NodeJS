@@ -101,4 +101,21 @@ export class AppointmentRepository {
       console.log(e);
     }
   }
+
+  async updateAppointment(currentAppointment){
+
+    const appointment = await appointments.findOne({
+      where:{
+        id: currentAppointment.id,
+        client_id: currentAppointment.client_id
+      }
+  });
+    appointment.update({
+      id: currentAppointment.id,
+      service_id: currentAppointment.service,
+      barber_id: currentAppointment.barber_id,
+      date: currentAppointment.date,
+      deleted:currentAppointment.deleted
+    });
+  }
 }

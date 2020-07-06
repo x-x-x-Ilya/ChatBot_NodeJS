@@ -1,4 +1,4 @@
-const fs = require('fs');
+/*const fs = require('fs');
 const _ = require('lodash');
 const exec = require('child_process').exec;
 
@@ -6,21 +6,22 @@ const dbOptions =  {
   user: process.env.USER_NAME,
   pass: process.env.DB_PASS,
   host: process.env.HOST,
-  port: 3000,
+  port: 5432,
   database: process.env.DB_NAME,
   autoBackup: true,
   removeOldBackup: true,
   keepLastDaysBackup: 2,
-  autoBackupPath: '<serverPath>' // i.e. /var/database-backup/
+  autoBackupPath: '/database-backup/' // i.e. /var/database-backup/
 };
-
+*/
 /* return date object */
-exports.stringToDate = function (dateString) {
+/*exports.stringToDate = function (dateString) {
   return new Date(dateString);
 }
-
+*/
 /* return if variable is empty or not. */
 //export.empty = function(mixedVar) {
+/*
 function  empty(mixedVar){
 let undef, key, i, len;
   const emptyValues = [undef, null, false, 0, '', '0'];
@@ -48,15 +49,15 @@ function dbAutoBackUp() {
     let beforeDate, oldBackupDir, oldBackupPath;
     const currentDate = this.stringToDate(date); // Current date
     const newBackupDir = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    const newBackupPath = dbOptions.autoBackupPath + 'mongodump-' + newBackupDir; // New backup path for current backup process
+    const newBackupPath = dbOptions.autoBackupPath + 'psql-' + newBackupDir; // New backup path for current backup process
     // check for remove old backup after keeping # of days given in configuration
     if (dbOptions.removeOldBackup == true) {
       beforeDate = _.clone(currentDate);
       beforeDate.setDate(beforeDate.getDate() - dbOptions.keepLastDaysBackup); // Substract number of days to keep backup and remove old backup
       oldBackupDir = beforeDate.getFullYear() + '-' + (beforeDate.getMonth() + 1) + '-' + beforeDate.getDate();
-      oldBackupPath = dbOptions.autoBackupPath + 'mongodump-' + oldBackupDir; // old backup(after keeping # of days)
+      oldBackupPath = dbOptions.autoBackupPath + 'psql-' + oldBackupDir; // old backup(after keeping # of days)
     }
-    const cmd = 'mongodump --host ' + dbOptions.host + ' --port ' + dbOptions.port + ' --db ' + dbOptions.database + ' --username ' + dbOptions.user + ' --password ' + dbOptions.pass + ' --out ' + newBackupPath; // Command for mongodb dump process
+    const cmd = 'pg_dump  --host ' + dbOptions.host + ' --port ' + dbOptions.port + ' --db ' + dbOptions.database + ' --username ' + dbOptions.user + ' --password ' + dbOptions.pass + ' --out ' + newBackupPath; // Command for mongodb dump process
 
     exec(cmd, function (error, stdout, stderr) {
       if (this.empty(error)) {
@@ -72,9 +73,10 @@ function dbAutoBackUp() {
 }
 
 
-const CronJob = require('cron').CronJob;
+/*const CronJob = require('cron').CronJob;
 const Cron = require('./ mongodb_backup.js');
 
 new CronJob ('0 0 0 * * *', function () {
   Cron.dbAutoBackUp();
-}, null, true, 'America / New_York');
+}, null, true, 'America / New_York');*/
+

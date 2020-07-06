@@ -41,6 +41,10 @@ export class AppointmentController {
     return await appointmentService.deleteAppointment(user_id, should_be_appointment_id);
   }
 
+  async updateAppointment(currentAppointment){
+    return await appointmentService.updateAppointment(currentAppointment);
+  }
+
   async setAppointment(TelegramBot : any, msg : any, date :Date, barber : any, service : any) : Promise<any>{
     return await appointmentService.setAppointment(TelegramBot, msg, date, barber, service);
   }

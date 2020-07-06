@@ -1,0 +1,42 @@
+# docker-compose up     -d (флаг для запуска в фоне)
+# docker-machine ip default (отсюда будет взят локальный ip)
+version: '3'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    POSTGRES_HOST_AUTH_METHOD: trust
+    POSTGRES_PASSWORD:
+      -root
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  #mongo:
+  # build: ./docker-mongo
+
+  app:
+    depends_on:
+      - db
+    build: .
+    #ports:
+    #  - "7000:7000"
+    volumes:
+      - .:/code
+      - logvolume01:/var/log
+    links:
+      - redis
+  redis:
+    image: redis
+
+volumes:
+  logvolume01: {}
+
+
+

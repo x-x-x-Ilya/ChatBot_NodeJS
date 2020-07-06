@@ -53,4 +53,10 @@ export class AppointmentService {
     }
     return R;
   };
+
+  async updateAppointment(currentAppointment){
+    await appointmentRepository.updateAppointment(currentAppointment);
+  }
+
+
 }
