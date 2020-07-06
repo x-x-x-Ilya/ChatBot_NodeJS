@@ -95,7 +95,7 @@ export class AppointmentService {
     return R;
   }
 
-  async updateAppointment(currentAppointment) {
+  async updateAppointment(currentAppointment : any) : Promise<any> {
     await appointmentRepository.updateAppointment(currentAppointment);
   }
 }

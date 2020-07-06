@@ -9,7 +9,6 @@ import {
   menuButtons,
 } from '../keyboards/key-board-buttons';
 import { AppointmentController } from '../controller/AppointmentController';
-import { routes } from './routes';
 
 const appointmentController = new AppointmentController();
 
@@ -94,7 +93,7 @@ export class AppointmentRouter {
     );
   }
 
-  async updateAppointment(currentAppointment) {
+  async updateAppointment(currentAppointment : any) : Promise<any> {
     return await appointmentController.updateAppointment(currentAppointment);
   }
 
