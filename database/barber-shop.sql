@@ -1,9 +1,9 @@
--- Создание базы данных
+/* Создание базы данных
 DROP TABLE barbers CASCADE;
 DROP TABLE appointments CASCADE;
 DROP TABLE clients CASCADE;
 DROP TABLE services CASCADE;
-
+*/
 CREATE TABLE barbers (
 	id         SERIAL       NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
@@ -36,6 +36,16 @@ CREATE TABLE appointments (
     deleted    BOOLEAN   NOT NULL DEFAULT FALSE
 );
 
+
+insert into barbers(1, 'Leha', 'Moroz', false);
+insert into barbers(2, 'Anton', 'Trubeckoy', false);
+insert into barbers(3, 'Miha', 'Korin', false);
+insert into barbers(4, 'Ilya', 'Bobr', false);
+
+insert into services(1, 'haircut', 1:00, 15, false);
+insert into services(2, 'shaving', 1:00, 10, false);
+
+
 -- Создание представления
 
 CREATE OR REPLACE VIEW current_day AS
@@ -49,6 +59,7 @@ CREATE OR REPLACE VIEW current_day AS
 	JOIN services ON appointments.service_id = services.id
     WHERE
 	date >= CURRENT_DATE AND date <= CURRENT_DATE+1 AND appointments.deleted = false;
+
 
 -- Создание процедуры
 
@@ -104,3 +115,4 @@ BEGIN
    	return 'haircuts: ' || haircuts || '    shavings: ' || shavings || '    all: ' || (haircuts+shavings);
 END;
 $BODY$ LANGUAGE plpgsql;
+
