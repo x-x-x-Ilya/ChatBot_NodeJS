@@ -9,7 +9,6 @@ MAINTAINER Ilya x-x-x-ilya <iripinskij@gmail.com>
 WORKDIR /usr/src/app
 
 # Install dependencies
-#COPY package*.json ./
 COPY package.json ./
 RUN npm install
 
@@ -20,7 +19,7 @@ COPY . .
 RUN npm run build
 
 # Specify port app runs on
-EXPOSE 7000
+EXPOSE 80
 
 # Run the app
 CMD [ "npm", "start" ]
