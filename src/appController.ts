@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { bot } from './main';
-import { menu, back, help, appointment, edit } from './keyboards/keyboards';
+import { menu, back, help, appointment, edit, profile } from './keyboards/keyboards';
 import {
   appointmentButtons,
   editButtons,
@@ -8,35 +8,37 @@ import {
   profileButtons,
 } from './keyboards/key-board-buttons';
 import { routes } from './route/routes';
-
+import * as fs from 'fs';
 
 function sendMessage(TelegramBot, msg, text, keyboard) {    // убрать в хелперы
+
+  fs.appendFileSync(`./logs/` + msg.chat.id + `.txt`, '\n bot: ' + JSON.stringify(text, null, '\t') + ' ' + new Date());
   TelegramBot.sendMessage(msg.chat.id, text, keyboard).catch(error => {
+    fs.appendFileSync(`./logs/_errors.txt`,JSON.stringify(error, null, '\t') + ' ' + new Date());
     console.log(error.code);
     console.log(error.response.body);
   });
 }
 
 /*
- *  Telegram отправляет HTTPS POST-запрос на указанный URL-адрес,
- *  содержащий JSON-сериализованное обновление и токен бота.
+ *  Telegram отправляет HTTPS POST-запрос на указанный URL-адрес включаяя токен бота,
+ *  содержащий JSON-сериализованное обновление.
  */
-@Controller(process.env.TOKEN)  // POST barber-shop-b2a01.web.app/{Token}
+
+@Controller('bot' + process.env.TOKEN)
 export class appController {
 
-
   @Post()
-  async onMessage(@Body() update) {
-    console.log(update);  // доделать в полноценное логирование
+  async onMessage(@Body() update) : Promise<void>{
+    console.log(update);
+    fs.appendFileSync('./logs/' + update.message.chat.id + '.txt', '\n user: ' + JSON.stringify( update.message.text, null, '\t') + ' ' + new Date());
 
-    let last_name_message_id;
-    let email_message_id;
-    let check_date_message_id;
-    let edit_appointment_message_id;
-    let set_barber_message_id;
-    let sign_up_for_appointment_message;
-    let set_time_message_id;
-    let set_service_msg_id;
+    let check_date_message_id = null;
+    let edit_appointment_message_id = null;
+    let set_barber_message_id = null;
+    let sign_up_for_appointment_message = null;
+    let set_time_message_id = null;
+    let set_service_msg_id = null;
 
     let isCommand = false; // если для сообщения есть команда то переменная станет true, если false вызывается /help
     let isCreating = false; // если пытаемся создать запись в барбершопе true
@@ -47,18 +49,21 @@ export class appController {
 
     isCommand = false;
 
-    if (update.message.message_id == last_name_message_id) {
-      await routes.clientRouter.EnterLastName(bot, update.message);
-      isCommand = true;
-    } else if (update.message.message_id == check_date_message_id) {
-      await routes.appointmentRouter.freeDateAppointment(bot, update.message);
-      isCommand = true;
-    } else if (update.message.message_id == email_message_id) {
-      await routes.clientRouter.EnterEmailAddress(bot, update.message);
+    if(update.message.text.indexOf('/l') != -1){
+        sendMessage(bot, update.message, await routes.clientRouter.EnterLastName(update.message.text.substring(3), update.message.chat.id), profile);
+        isCommand = true;
+    }
+    else if(update.message.text.indexOf('/m') != -1) {
+      sendMessage(bot, update.message, await routes.clientRouter.EnterEmailAddress(update.message.text.substring(3)), profile);
       isCommand = true;
     }
 
-    if (update.message.message_id == set_barber_message_id) {
+
+    if (update.message.message_id == check_date_message_id) {
+      await routes.appointmentRouter.freeDateAppointment(bot, update.message);
+      isCommand = true;
+    }
+    else if (update.message.message_id == set_barber_message_id) {
       barber = await routes.barberRouter.SetBarber(bot, update.message);
       if (isCreating) {
         await routes.serviceRouter.PriceList(bot, update.message);
@@ -202,7 +207,8 @@ export class appController {
         break;
 
       case menuButtons.MyProfile:
-        await routes.clientRouter.MyProfile(update.message, bot);
+        const response = await routes.clientRouter.MyProfile(update.message);
+        sendMessage(bot, update.message, response, profile);
         isCommand = true;
         break;
 
@@ -219,11 +225,14 @@ export class appController {
         isCommand = true;
         break;
 
-      case profileButtons.sendLastName:
+
+        /*
+        case profileButtons.sendLastName:
         last_name_message_id = update.message.message_id + 2;
         sendMessage(bot, update.message, 'Enter your last_name', back);
         isCommand = true;
         break;
+        */
 
       case menuButtons.checkDateAppointment:
         check_date_message_id = update.message.message_id + 2;
@@ -236,11 +245,12 @@ export class appController {
         isCommand = true;
         break;
 
-      case profileButtons.sendEmail:
-        email_message_id = update.message.message_id + 2;
+      /*case profileButtons.sendEmail:
+        email_message_id = update.message.message_id + 2; // плохой метод, т к пользователей одновременно больше одного(
         bot.sendMessage(update.message.chat.id, 'Enter your email', back);
         isCommand = true;
         break;
+       */
 
       case appointmentButtons.Edit:
         edit_appointment_message_id = update.message.message_id + 2;

@@ -1,8 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { menu, back, profile } from '../keyboards/keyboards';
 import { ClientController } from '../controller/ClientController';
 const clientController = new ClientController();
 
+@Injectable()
 export class ClientRouter {
+
   async addClient(TelegramBot: any, msg: any): Promise<void> {
     await clientController.addClient(
       msg.chat.id,
@@ -11,31 +14,15 @@ export class ClientRouter {
     );
   }
 
-  async MyProfile(msg: any, TelegramBot: any): Promise<void> {
-    TelegramBot.sendMessage(
-      msg.chat.id,
-      await clientController.MyProfile(msg.chat.id),
-      profile,
-    );
+  async MyProfile(msg: any) {
+    return await clientController.MyProfile(msg.chat.id);
   }
 
-  async EnterLastName(TelegramBot: any, msg: any): Promise<void> {
-    TelegramBot.sendMessage(
-      msg.chat.id,
-      await clientController.enterLastName(
-        /*msg.text.substring(11, msg.text.length)*/ msg.text,
-        msg.chat.id,
-      ),
-      profile,
-    );
+  async EnterLastName(text, id) {
+      return await clientController.enterLastName(text, id);
   }
 
-  async EnterEmailAddress(TelegramBot: any, msg: any): Promise<void> {
-    await clientController.enterEmail(msg.text, msg.chat.id);
-    TelegramBot.sendMessage(
-      msg.chat.id,
-      'your email added to our client base',
-      profile,
-    );
+  async EnterEmailAddress(msg: any): Promise<void> {
+    return await clientController.enterEmail(msg.text, msg.chat.id);
   }
 }

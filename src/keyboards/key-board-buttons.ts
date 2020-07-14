@@ -10,9 +10,7 @@ export const menuButtons = {
 };
 
 export const profileButtons = {
-  sendEmail: 'Send my email',
-  sendLastName: 'Send my last name',
-  Appointments: 'My appointments',
+  Appointments: 'My appointments'
 };
 
 export const appointmentButtons = {

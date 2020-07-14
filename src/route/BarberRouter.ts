@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { menu, back } from '../keyboards/keyboards';
 import { BarberController } from '../controller/BarberController';
 import { routes } from './routes';
 
 const barberController = new BarberController();
 
+@Injectable()
 export class BarberRouter {
   async BarberList(TelegramBot: any, msg: any): Promise<void> {
     const list = await barberController.showBarberList();

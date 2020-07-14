@@ -2,6 +2,7 @@ import { ClientRepository } from '../repositories/ClientRepository';
 const clientRepository = new ClientRepository();
 
 export class ClientService {
+
   async enterEmail(email: string, id: number): Promise<any> {
     return await clientRepository.enterEmail(email, id);
   }

@@ -1,3 +1,5 @@
+import { Injectable } from '@nestjs/common';
+
 import {
   menu,
   back,
@@ -12,6 +14,7 @@ import { AppointmentController } from '../controller/AppointmentController';
 
 const appointmentController = new AppointmentController();
 
+@Injectable()
 export class AppointmentRouter {
   async AppointmentsHistory(TelegramBot: any, msg: any): Promise<void> {
     const history = await appointmentController.showMyHistory(msg.chat.id);

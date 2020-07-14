@@ -14,7 +14,6 @@ const menuKeyboard = [
 const backKeyboard = [[menuButtons.Back]];
 
 const profileKeyboard = [
-  [profileButtons.sendEmail, profileButtons.sendLastName],
   [profileButtons.Appointments, menuButtons.Back],
 ];
 

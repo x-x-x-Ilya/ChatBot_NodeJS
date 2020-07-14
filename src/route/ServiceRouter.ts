@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { menu, back } from '../keyboards/keyboards';
 import { ServiceController } from '../controller/ServiceController';
 const serviceController = new ServiceController();
 
+@Injectable()
 export class ServiceRouter {
   async PriceList(TelegramBot: any, msg: any): Promise<void> {
     const list = await serviceController.showPriceList();
