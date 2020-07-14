@@ -1,14 +1,22 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { bot } from './main';
 import { menu, back, help, appointment, edit, profile } from './keyboards/keyboards';
+import * as fs from 'fs';
 import {
   appointmentButtons,
   editButtons,
   menuButtons,
   profileButtons,
 } from './keyboards/key-board-buttons';
-import { routes } from './route/routes';
-import * as fs from 'fs';
+import { AppointmentRouter } from './route/AppointmentRouter';
+import { BarberRouter } from './route/BarberRouter';
+import { ClientRouter } from './route/ClientRouter';
+import { ServiceRouter } from './route/ServiceRouter';
+
+const appointmentRouter = new AppointmentRouter();
+const barberRouter = new BarberRouter();
+const clientRouter = new ClientRouter();
+const serviceRouter = new ServiceRouter();
 
 function sendMessage(TelegramBot, msg, text, keyboard) {    // убрать в хелперы
 
@@ -33,7 +41,6 @@ export class appController {
     console.log(update);
     fs.appendFileSync('./logs/' + update.message.chat.id + '.txt', '\n user: ' + JSON.stringify( update.message.text, null, '\t') + ' ' + new Date());
 
-    let check_date_message_id = null;
     let edit_appointment_message_id = null;
     let set_barber_message_id = null;
     let sign_up_for_appointment_message = null;
@@ -50,23 +57,21 @@ export class appController {
     isCommand = false;
 
     if(update.message.text.indexOf('/l') != -1){
-        sendMessage(bot, update.message, await routes.clientRouter.EnterLastName(update.message.text.substring(3), update.message.chat.id), profile);
+        sendMessage(bot, update.message, await clientRouter.EnterLastName(update.message.text.substring(3), update.message.chat.id), profile);
         isCommand = true;
     }
     else if(update.message.text.indexOf('/m') != -1) {
-      sendMessage(bot, update.message, await routes.clientRouter.EnterEmailAddress(update.message.text.substring(3)), profile);
+      sendMessage(bot, update.message, await clientRouter.EnterEmailAddress(update.message.text.substring(3)), profile);
       isCommand = true;
     }
-
-
-    if (update.message.message_id == check_date_message_id) {
-      await routes.appointmentRouter.freeDateAppointment(bot, update.message);
+    else if (update.message.text.indexOf('/check') != -1) {
+      sendMessage(bot, update.message, await appointmentRouter.freeDateAppointment(update.message.text.substring(7)), menu);
       isCommand = true;
     }
     else if (update.message.message_id == set_barber_message_id) {
-      barber = await routes.barberRouter.SetBarber(bot, update.message);
+      barber = await barberRouter.SetBarber(bot, update.message);
       if (isCreating) {
-        await routes.serviceRouter.PriceList(bot, update.message);
+        await serviceRouter.PriceList(bot, update.message);
         set_service_msg_id = update.message.message_id + 2;
         bot.sendMessage(
           update.message.chat.id,
@@ -76,11 +81,11 @@ export class appController {
       }
       if (!isCreating) {
         cur_appointment.barber_id = barber.id;
-        await routes.appointmentRouter.updateAppointment(cur_appointment);
+        await appointmentRouter.updateAppointment(cur_appointment);
       }
       isCommand = true;
     } else if (update.message.message_id == sign_up_for_appointment_message) {
-      date = await routes.appointmentRouter.SetDate(bot, update.message);
+      date = await appointmentRouter.SetDate(bot, update.message);
       if (isCreating) {
         set_time_message_id = update.message.message_id + 2;
         bot.sendMessage(
@@ -91,9 +96,9 @@ export class appController {
       }
       isCommand = true;
     } else if (update.message.message_id == set_time_message_id) {
-      await routes.appointmentRouter.SetTime(bot, update.message, date);
+      await appointmentRouter.SetTime(bot, update.message, date);
       if (isCreating) {
-        await routes.barberRouter.BarberList(bot, update.message);
+        await barberRouter.BarberList(bot, update.message);
         set_barber_message_id = update.message.message_id + 2;
         bot.sendMessage(
           update.message.chat.id,
@@ -103,7 +108,7 @@ export class appController {
       }
       isCommand = true;
     } else if (update.message.message_id == edit_appointment_message_id) {
-      cur_appointment = await routes.appointmentRouter.GetAppointment(
+      cur_appointment = await appointmentRouter.GetAppointment(
         update.message,
         parseInt(update.message.text, 10),
       );
@@ -117,39 +122,19 @@ export class appController {
         );
       isCommand = true;
     } else if (update.message.message_id == set_service_msg_id) {
-      const service = await routes.serviceRouter.SetService(bot, update.message);
+      const service = await serviceRouter.SetService(bot, update.message);
       if (isCreating) {
-        const res = await routes.appointmentRouter.setAppointment(
-          bot,
-          update.message,
-          date,
-          barber,
-          service,
-        );
+        const res = await appointmentRouter.setAppointment(
+          bot, update.message, date, barber, service);
         if (res == false)
-          sendMessage(
-            bot,
-            update.message,
-            'Sorry, somethings wrong, try again',
-            menu,
-          );
+          sendMessage(bot, update.message, 'Sorry, somethings wrong, try again', menu,);
         else {
-          bot.sendMessage(
-            update.message.chat.id,
-            'Your appointment added:' +
-            '[' +
-            res.id +
-            ']' +
-            res.date +
-            ' ' +
-            res.service.name +
-            ' ' +
-            res.barber.first_name +
-            ' ' +
-            res.barber.last_name +
-            '\r\n',
-            menu,
-          );
+          bot.sendMessage(update.message.chat.id,
+            'Your appointment added: [' + res.id + ']' +
+            res.date + ' ' +
+            res.service.name + ' ' +
+            res.barber.first_name + ' ' +
+            res.barber.last_name + '\r\n', menu,);
         }
       }
       isCommand = true;
@@ -163,31 +148,15 @@ export class appController {
         break;
 
       case editButtons.Delete:
-        if (
-          await routes.appointmentRouter.RemoveMyAppointment(
-            bot,
-            update.message,
-            cur_appointment.id,
-          )
-        )
-          sendMessage(
-            bot,
-            update.message,
-            'Appointment removed successfully.',
-            back,
-          );
+        if (await appointmentRouter.RemoveMyAppointment(bot, update.message, cur_appointment.id))
+          sendMessage(bot, update.message, 'Appointment removed successfully.', back);
         else
-          sendMessage(
-            bot,
-            update.message,
-            'Operation error, please, try again.',
-            back,
-          );
+          sendMessage(bot, update.message,'Operation error, please, try again.', back);
         isCommand = true;
         break;
 
       case menuButtons.BarberList:
-        await routes.barberRouter.BarberList(bot, update.message);
+        await barberRouter.BarberList(bot, update.message);
         isCommand = true;
         break;
 
@@ -202,18 +171,18 @@ export class appController {
         break;
 
       case menuButtons.PriceList:
-        await routes.serviceRouter.PriceList(bot, update.message);
+        await serviceRouter.PriceList(bot, update.message);
         isCommand = true;
         break;
 
       case menuButtons.MyProfile:
-        const response = await routes.clientRouter.MyProfile(update.message);
+        const response = await clientRouter.MyProfile(update.message);
         sendMessage(bot, update.message, response, profile);
         isCommand = true;
         break;
 
       case '/start':
-        await routes.clientRouter.addClient(bot, update.message);
+        await clientRouter.addClient(bot, update.message);
         sendMessage(
           bot,
           update.message,
@@ -224,33 +193,6 @@ export class appController {
         );
         isCommand = true;
         break;
-
-
-        /*
-        case profileButtons.sendLastName:
-        last_name_message_id = update.message.message_id + 2;
-        sendMessage(bot, update.message, 'Enter your last_name', back);
-        isCommand = true;
-        break;
-        */
-
-      case menuButtons.checkDateAppointment:
-        check_date_message_id = update.message.message_id + 2;
-        sendMessage(
-          bot,
-          update.message,
-          'Enter date you would like to visit us (format: "06.05.2020")',
-          back,
-        );
-        isCommand = true;
-        break;
-
-      /*case profileButtons.sendEmail:
-        email_message_id = update.message.message_id + 2; // плохой метод, т к пользователей одновременно больше одного(
-        bot.sendMessage(update.message.chat.id, 'Enter your email', back);
-        isCommand = true;
-        break;
-       */
 
       case appointmentButtons.Edit:
         edit_appointment_message_id = update.message.message_id + 2;
@@ -268,19 +210,16 @@ export class appController {
         break;
 
       case editButtons.ChangeTime:
-        set_time_message_id = update.message.message_id + 3;
-        const obj_like_message = { text: cur_appointment.date.toString() };
-        await routes.appointmentRouter.freeDateAppointment(
-          bot,
-          obj_like_message,
-        );
-        bot.sendMessage(update.message.chat.id, 'Enter time you want', back);
+        //set_time_message_id = update.message.message_id + 3;
+        //const obj_like_message = { text: cur_appointment.date.toString() };
+        //await appointmentRouter.freeDateAppointment(bot, obj_like_message);
+        bot.sendMessage(update.message.chat.id, 'no code now(', back);
         isCommand = true;
         break;
 
       case editButtons.ChangeBarber:
         set_barber_message_id = update.message.message_id + 3;
-        await routes.barberRouter.BarberList(bot, update.message);
+        await barberRouter.BarberList(bot, update.message);
         bot.sendMessage(
           update.message.chat.id,
           'Enter barber id you want',
@@ -291,7 +230,7 @@ export class appController {
 
       case editButtons.ChangeService:
         set_service_msg_id = update.message.message_id + 3;
-        await routes.serviceRouter.PriceList(bot, update.message);
+        await serviceRouter.PriceList(bot, update.message);
         bot.sendMessage(
           update.message.chat.id,
           'Enter service id you want',
@@ -321,12 +260,12 @@ export class appController {
     //inline keyboards
     bot.on('callback_query', async query => {
       if (query.data === 'bookedAppointments') {
-        await routes.appointmentRouter.showMyAppointments(
+        await appointmentRouter.showMyAppointments(
           bot,
           query.message,
         );
       } else if (query.data === 'appointmentsHistory') {
-        await routes.appointmentRouter.AppointmentsHistory(
+        await appointmentRouter.AppointmentsHistory(
           bot,
           query.message,
         );

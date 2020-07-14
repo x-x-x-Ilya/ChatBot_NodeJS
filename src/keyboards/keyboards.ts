@@ -7,7 +7,7 @@ import {
 
 const menuKeyboard = [
   [menuButtons.PriceList, menuButtons.BarberList],
-  [menuButtons.SignUpForAnAppointment, menuButtons.checkDateAppointment],
+  [menuButtons.SignUpForAnAppointment], //, menuButtons.checkDateAppointment],
   [menuButtons.MyProfile],
 ];
 

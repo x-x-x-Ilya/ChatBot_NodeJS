@@ -1,12 +1,12 @@
 export const menuButtons = {
   PriceList: 'Price list',
   BarberList: 'Barber list',
-  checkDateAppointment: 'Check date appointment',
+  //checkDateAppointment: 'Check date appointment',
   MyProfile: 'My profile',
   RemoveMyAppointment: 'Remove my appointment',
   Back: 'Back',
   SignUpForAnAppointment: 'Sign up for an appointment',
-  Help: '//help',
+  Help: '/help',
 };
 
 export const profileButtons = {

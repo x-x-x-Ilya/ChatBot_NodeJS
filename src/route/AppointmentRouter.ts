@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
-
 import {
   menu,
   back,
   back_with_edit_button,
   profile,
 } from '../keyboards/keyboards';
-import {
-  appointmentButtons,
-  menuButtons,
-} from '../keyboards/key-board-buttons';
+
 import { AppointmentController } from '../controller/AppointmentController';
 
 const appointmentController = new AppointmentController();
 
 @Injectable()
 export class AppointmentRouter {
+
   async AppointmentsHistory(TelegramBot: any, msg: any): Promise<void> {
     const history = await appointmentController.showMyHistory(msg.chat.id);
     if (history != false)
@@ -45,19 +42,16 @@ export class AppointmentRouter {
       );
   }
 
-  async freeDateAppointment(TelegramBot: any, msg: any): Promise<void> {
-    const t = msg.text.split('.'),
+  async freeDateAppointment(date: any) {
+    const t = date.split('.'),
       Year = t[2],
       Month = parseInt(t[1]) - 1,
       day = parseInt(t[0]);
     const check_date = new Date(Year, Month, day);
     if (check_date > new Date())
-      TelegramBot.sendMessage(
-        msg.chat.id,
-        await appointmentController.freeDateAppointment(check_date),
-        menu,
-      );
-    else TelegramBot.sendMessage(msg.chat.id, 'Date should be in future');
+      return await appointmentController.freeDateAppointment(check_date);
+    else
+      return 'Date should be in future';
   }
 
   async SetDate(TelegramBot: any, msg: any): Promise<any> {
