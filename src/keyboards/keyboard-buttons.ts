@@ -1,25 +1,21 @@
-export const menuButtons = {
+export const isMenu = {
   PriceList: 'Price list',
   BarberList: 'Barber list',
   //checkDateAppointment: 'Check date appointment',
-  MyProfile: 'My profile',
-  RemoveMyAppointment: 'Remove my appointment',
+  Profile: 'My profile',
+  RemoveAppointment: 'Remove my appointment',
   Back: 'Back',
   SignUpForAnAppointment: 'Sign up for an appointment',
-  Help: '/help',
+  Help: 'Help',
 };
 
-export const profileButtons = {
-  Appointments: 'My appointments'
-};
-
-export const appointmentButtons = {
-  AppointmentsHistory: 'Appointments history',
-  BookedAppointments: 'Booked appointments',
+export const isAppointment = {
+  History: 'Appointments history',
+  Booked: 'Booked appointments',
   Edit: 'Edit',
 };
 
-export const editButtons = {
+export const isEdit = {
   Delete: 'Delete',
   ChangeBarber: 'Change barber',
   ChangeService: 'Change service',
