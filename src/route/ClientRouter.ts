@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { menu, back, profile } from '../keyboards/keyboards';
 import { ClientController } from '../controller/ClientController';
 const clientController = new ClientController();
 
@@ -14,15 +13,15 @@ export class ClientRouter {
     );
   }
 
-  async MyProfile(msg: any) {
+  async Profile(msg: any) {
     return await clientController.MyProfile(msg.chat.id);
   }
 
-  async EnterLastName(text, id) {
+  async SetLastName(text, id) {
       return await clientController.enterLastName(text, id);
   }
 
-  async EnterEmailAddress(msg: any): Promise<void> {
+  async SetEmail(msg: any): Promise<void> {
     return await clientController.enterEmail(msg.text, msg.chat.id);
   }
 }

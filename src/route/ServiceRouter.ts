@@ -1,20 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { menu, back } from '../keyboards/keyboards';
 import { ServiceController } from '../controller/ServiceController';
 const serviceController = new ServiceController();
 
 @Injectable()
 export class ServiceRouter {
-  async PriceList(TelegramBot: any, msg: any): Promise<void> {
+  async List(): Promise<string | boolean> {
     const list = await serviceController.showPriceList();
     if (list != false)
-      TelegramBot.sendMessage(msg.chat.id, 'Price list:' + list, menu);
+      return list;
     else
-      TelegramBot.sendMessage(
-        msg.chat.id,
-        'Somethings wrong, please, try again later...',
-        menu,
-      );
+      return 'Somethings wrong, please, try again later...';
   }
 
   async SetService(TelegramBot: any, msg: any): Promise<any> {

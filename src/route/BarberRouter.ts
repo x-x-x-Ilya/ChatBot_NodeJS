@@ -1,24 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { menu, back } from '../keyboards/keyboards';
 import { BarberController } from '../controller/BarberController';
 
 const barberController = new BarberController();
 
 @Injectable()
 export class BarberRouter {
-  async BarberList(TelegramBot: any, msg: any): Promise<void> {
+
+  async List(): Promise<string | boolean> {
     const list = await barberController.showBarberList();
     if (list != false)
-      TelegramBot.sendMessage(msg.chat.id, 'Barber list:' + list, menu);
+      return list;
     else
-      TelegramBot.sendMessage(
-        msg.chat.id,
-        'Somethings wrong, please try again later...',
-        menu,
-      );
+      return 'Somethings wrong, please try again later...';
   }
 
-  async SetBarber(TelegramBot: any, msg: any): Promise<any> {
+  /*async SetBarber(TelegramBot: any, msg: any): Promise<any> {
     const barber = await barberController.selectBarber(msg.text);
     TelegramBot.sendMessage(
       msg.chat.id,
@@ -26,5 +22,5 @@ export class BarberRouter {
       back,
     );
     return barber;
-  }
+  }*/
 }
