@@ -52,6 +52,10 @@ export class AppointmentController {
   async ChangeDate(user_id, msg){
     return await appointmentService.ChangeDate(user_id, msg);
   }
+  async Delete(user_id, msg){
+    return await appointmentService.Delete(user_id, msg);
+  }
+
 
 }
 

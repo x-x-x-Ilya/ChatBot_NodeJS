@@ -26,6 +26,9 @@ export class AppointmentService {
   async ChangeDate(id, msg: any): Promise<any> {
     return await appointmentRepository.ChangeDate(id, msg);
   }
+  async Delete(user_id, msg){
+    return await appointmentRepository.Delete(user_id, msg);
+  }
 
   async freeDateAppointment(date: Date): Promise<string> {
     const appointment = await appointmentRepository.freeDateAppointment(date);

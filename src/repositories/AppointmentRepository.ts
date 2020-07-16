@@ -60,7 +60,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeService(id, msg: any): Promise<any>{
+  async ChangeService(id: any, msg: any): Promise<any>{
     const data = msg.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -77,7 +77,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeDate(id, msg: any): Promise<any>{
+  async ChangeDate(id: any, msg: any): Promise<any>{
     const data = msg.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -98,6 +98,20 @@ export class AppointmentRepository {
       date: date
     });
     return 'Your appointment updated';
+  }
+
+  async Delete(user_id: any, msg: any){
+    const appointment = await appointments.findOne({
+      where: {
+        deleted: false,
+        client_id: user_id,
+        id: msg
+      }
+    });
+    appointment.update({
+      deleted: true
+    })
+    return 'Deleted successfully';
   }
 
   async Set(id, msg: any): Promise<any> {

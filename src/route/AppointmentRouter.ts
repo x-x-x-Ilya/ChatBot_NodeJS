@@ -48,6 +48,11 @@ export class AppointmentRouter {
   async ChangeDate(user_id, msg) {
     return await appointmentController.ChangeDate(user_id, msg);
   }
+  async Delete(user_id, msg) {
+    return await appointmentController.Delete(user_id, msg);
+  }
+
+
 }
   /*
   async Get(msg: any, id: number): Promise<any> {
