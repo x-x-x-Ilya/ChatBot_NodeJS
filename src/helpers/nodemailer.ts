@@ -6,11 +6,11 @@ export const mailer = ((email, subject, message) =>{
     service: 'gmail',
     secure: false,
     port: 25,
-    auth: { user: "", pass: ''},
+    auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS},
     tls: { rejectUnauthorized: false }
   });
   mailTransport.sendMail({
-    from: 'iripinskij@gmail.com',
+    from: process.env.EMAIL_ADDRESS,
     to: email,
     subject: subject,
     text: message
@@ -21,4 +21,4 @@ export const mailer = ((email, subject, message) =>{
   });
 });
 
-mailer('', 'hola mundo', 'test message :)');
+mailer('EXAMPLEMAIL@GMAIL.COM', 'hola mundo', 'test message :)');

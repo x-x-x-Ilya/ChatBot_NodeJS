@@ -2,6 +2,7 @@ import { clients } from '../database/models/clients';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('../database/sequelize');
 export class ClientRepository {
+
   async enterEmail(email: string, id: number): Promise<string> {
     const t = await Sequelize.transaction();
     try {
@@ -40,8 +41,7 @@ export class ClientRepository {
     return await clients.findOne({
       where: {
         id: id,
-      },
-      raw: true,
+      }
     });
   }
 

@@ -15,11 +15,7 @@ export class ClientService {
     return await clientRepository.enterLastName(last_name, id);
   }
 
-  async addClient(
-    id: number,
-    first_name: string,
-    last_name: string,
-  ): Promise<any> {
+  async addClient(id: number, first_name: string, last_name: string,): Promise<any> {
     return await clientRepository.addClient(id, first_name, last_name);
   }
 }

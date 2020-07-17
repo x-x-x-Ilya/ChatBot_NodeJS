@@ -1,4 +1,6 @@
 import { AppointmentRepository } from '../repositories/AppointmentRepository';
+import { ClientService } from './ClientService';
+import { mailer } from '../helpers/nodemailer';
 const appointmentRepository = new AppointmentRepository();
 
 export class AppointmentService {
@@ -16,17 +18,26 @@ export class AppointmentService {
   }
 
   async ChangeBarber(id, msg: any): Promise<any> {
+    const user : any = ClientService.prototype.MyProfile(id);
+    mailer(user.email, 'Barbershop notification', 'Your barber replaced successfully');
     return await appointmentRepository.ChangeBarber(id, msg);
   }
 
   async ChangeService(id, msg: any): Promise<any> {
+    const user : any = ClientService.prototype.MyProfile(id);
+    mailer(user.email, 'Barbershop notification', 'Your visit service replaced successfully');
     return await appointmentRepository.ChangeService(id, msg);
   }
 
-  async ChangeDate(id, msg: any): Promise<any> {
+  async ChangeDate(id: any, msg: any): Promise<any> {
+    const user : any = ClientService.prototype.MyProfile(id);
+    mailer(user.email, 'Barbershop notification', 'Your visit date replaced successfully');
     return await appointmentRepository.ChangeDate(id, msg);
   }
-  async Delete(user_id, msg){
+
+  async Delete(user_id: any, msg: any): Promise<any>{
+    const user : any = ClientService.prototype.MyProfile(user_id);
+    mailer(user.email, 'Barbershop notification', 'Your appointment canceled successfully');
     return await appointmentRepository.Delete(user_id, msg);
   }
 
@@ -67,6 +78,7 @@ export class AppointmentService {
     }
     return R;
   }
+
 }
 
 
