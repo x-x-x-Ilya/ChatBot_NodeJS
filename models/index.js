@@ -1,11 +1,7 @@
 'use strict';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('sequelize');
-
+import * as fs from 'fs';
+import * as path from 'path';
+import * as Sequelize from 'sequelize';
 const basename = path.basename(__filename);
 const env = 'development';
 const config = require('../config/config.json')[env];
