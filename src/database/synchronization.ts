@@ -1,13 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const database = require('./sequelize');
+import { log_error } from '../helpers/error-handler';
 
-export async function connect() {
+// database connect function
+export async function connect() : Promise<void> {
   try {
     await database.authenticate();
     console.log('Database connection has been established successfully.');
     await database.sync();
     console.log('Database synchronization has been established successfully.');
   } catch (error) {
-    console.log('Unable to connect or sync with the database: ', error);
+    log_error(error);
   }
 }
