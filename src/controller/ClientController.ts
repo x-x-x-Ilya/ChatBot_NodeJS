@@ -3,12 +3,12 @@ const clientService = new ClientService();
 
 export class ClientController {
 
-  async enterEmail(email: string, id: number): Promise<any> {
-    return await clientService.enterEmail(email, id);
+  async SetEmail(msg: any): Promise<any> {
+    return await clientService.enterEmail(msg.text, msg.chat.id);
   }
 
-  async MyProfile(id: number): Promise<string> {
-    const client = await clientService.MyProfile(id);
+  async MyProfile(msg: any): Promise<string> {
+    const client = await clientService.MyProfile(msg.chat.id);
     let add_mess = "";
     if (client.last_name == null) {
       client.last_name = 'not indicated';
@@ -27,15 +27,12 @@ export class ClientController {
       add_mess;
   }
 
-  async enterLastName(last_name: string, id: number): Promise<any> {
+
+  async SetLastName(last_name: string, id: number): Promise<any> {
     return await clientService.enterLastName(last_name, id);
   }
 
-  async addClient(
-    id: number,
-    first_name: string,
-    last_name: any,
-  ): Promise<any> {
-    return await clientService.addClient(id, first_name, last_name);
+  async addClient(msg: any): Promise<any> {
+    return await clientService.addClient(msg.chat.id, msg.chat.first_name, msg.chat.last_name);
   }
 }

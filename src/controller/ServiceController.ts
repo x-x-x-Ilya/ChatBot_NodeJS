@@ -2,7 +2,7 @@ import { ServiceService } from '../service/ServiceService';
 const serviceService = new ServiceService();
 
 export class ServiceController {
-  async showPriceList(): Promise<string | boolean> {
+  async List(): Promise<string | boolean> {
     const services: Array<any> = await serviceService.showPriceList();
     if (services.length != 0) {
       let Response = '\r\n';

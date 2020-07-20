@@ -4,8 +4,8 @@ const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
-  async showMyAppointments(id: number): Promise<boolean | string> {
-    const appointments = await appointmentService.showMyAppointments(id);
+  async Booked(msg: any): Promise<boolean | string> {
+    const appointments = await appointmentService.showMyAppointments(msg.chat.id);
     if (appointments.length != 0) {
       let Response = '\r\n';
       for (let i = 0; i < appointments.length; i++) {
@@ -19,8 +19,8 @@ export class AppointmentController {
     } else return false;
   }
 
-  async showMyHistory(id: number): Promise<string | boolean> {
-    const allAppointments = await appointmentService.showMyHistory(id);
+  async History(msg: any): Promise<string | boolean> {
+    const allAppointments = await appointmentService.showMyHistory(msg.chat.id);
     if (allAppointments.length != 0) {
       let Response = '\r\n';
       for (let i = 0; i < allAppointments.length; i++) {
@@ -32,12 +32,19 @@ export class AppointmentController {
     return false;
   }
 
-  async freeDateAppointment(should_be_appointment_date: Date): Promise<any> {
-    return await appointmentService.freeDateAppointment(
-      should_be_appointment_date);
+  async Free(date: any): Promise<any> {
+    const t = date.split('.'),
+      Year = t[2],
+      Month = parseInt(t[1]) - 1,
+      day = parseInt(t[0]);
+    const check_date = new Date(Year, Month, day);
+    if (check_date > new Date())
+    return await appointmentService.freeDateAppointment(check_date);
+    else
+      return 'Date should be in future';
   }
 
-  async Set(user_id, msg: any): Promise<any> {
+  async Set(user_id: any, msg: any): Promise<any> {
     return await appointmentService.Set(user_id, msg);
   }
 
@@ -52,16 +59,12 @@ export class AppointmentController {
   async ChangeDate(user_id, msg){
     return await appointmentService.ChangeDate(user_id, msg);
   }
+
   async Delete(user_id, msg){
     return await appointmentService.Delete(user_id, msg);
   }
 
-
 }
-
-
-
-
 
 
   /*

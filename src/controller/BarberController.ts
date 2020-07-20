@@ -2,7 +2,8 @@ import { BarberService } from '../service/BarberService';
 const barberService = new BarberService();
 
 export class BarberController {
-  async showBarberList(): Promise<string | boolean> {
+
+  async List(): Promise<string | boolean> {
     const barbers = await barberService.showBarberList();
     if (barbers.length != 0) {
       let Response = '\r\n';
