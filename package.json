@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "nodemon start": "nodemon src/main.ts",
+    "nodemon start": "nodemon src/index.ts",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -21,15 +21,9 @@
     "backup": "nodemon src/database/backup.ts",
     "firebase hosting": "firebase serve --only hosting --port=80",
     "firebase deploy": "firebase deploy",
-    "mongo try": "nodemon src/mongo/init.ts",
-
-    "fbuild": "tsc",
-    "fserve": "npm run build && firebase emulators:start --only functions",
-    "fshell": "npm run build && firebase functions:shell",
-    "fstart": "npm run shell",
-    "fdeploy": "firebase deploy --only functions",
-    "flogs": "firebase functions:log"
+    "mongo try": "nodemon src/mongo/init.ts"
   },
+  "main": "/functions/lib/index.js",
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
