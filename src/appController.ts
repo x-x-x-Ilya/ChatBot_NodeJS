@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { bot } from './main';
-import { menu, help, profile } from './keyboards/keyboards';
-import { isAppointment, isEdit, isMenu } from './keyboards/keyboard-buttons';
+
+import { bot } from './index';
+import { menu, profile, isProfile, isMenu } from './keyboards/keyboards';
 import { beditText, checkText, deditText, deleteText, 
   helpText, lText, mText, seditText, signText, } from './helpers/helpText';
 import { sendMessage } from './helpers/sendMessage';
@@ -11,27 +11,27 @@ import { BarberController } from './controller/BarberController';
 import { ServiceController } from './controller/ServiceController';
 import { AppointmentController } from './controller/AppointmentController';
 
+//Controller listen only request that includes "url/bot{Token}"
 @Controller('bot' + process.env.TOKEN)
 export class appController {
-
   @Post()
   async onMessage(@Body() update): Promise<void> {
     console.log(update);
     log(update);
     if (update.message.text === '/l')
-      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + lText, help);
+      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + lText, menu);
     else if (update.message.text === '/sedit')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + '\n' + await ServiceController.prototype.List() + seditText, help);
+      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + '\n' + await ServiceController.prototype.List() + seditText, menu);
     else if (update.message.text === '/m')
-      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + mText, help);
+      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + mText, menu);
     else if (update.message.text === '/check')
-      sendMessage(bot, update.message, checkText, help);
+      sendMessage(bot, update.message, checkText, menu);
     else if (update.message.text === '/sign')
-      sendMessage(bot, update.message, signText, help);
+      sendMessage(bot, update.message, signText, menu);
     else if (update.message.text === '/dedit')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + deditText, help);
+      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + deditText, menu);
     else if (update.message.text === '/delete')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + deleteText, help);
+      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + deleteText, menu);
     else if (update.message.text === '/bedit')
       sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + '\n' + await BarberController.prototype.List() + beditText, menu);
     else if (update.message.text.indexOf('/l') != -1)
@@ -54,9 +54,9 @@ export class appController {
       sendMessage(bot, update.message, helpText, menu);
     else if (update.message.text == isMenu.BarberList)
       sendMessage(bot, update.message, await BarberController.prototype.List(), menu);
-    else if (update.message.text == isAppointment.Booked)
+    else if (update.message.text == isProfile.Booked)
       sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message), menu);
-    else if (update.message.text == isAppointment.History)
+    else if (update.message.text == isProfile.History)
       sendMessage(bot, update.message, await AppointmentController.prototype.History(update.message), menu);
     else if (update.message.text == isMenu.PriceList)
       sendMessage(bot, update.message, await ServiceController.prototype.List(), menu);
@@ -66,6 +66,6 @@ export class appController {
       await ClientController.prototype.addClient(update.message);
       sendMessage(bot, update.message, 'Hello, ' + update.message.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
     } else
-      sendMessage(bot, update.message, helpText, help);
+      sendMessage(bot, update.message, helpText, menu);
   }
 }

@@ -2,8 +2,10 @@ import Sequelize from 'sequelize';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ClientDatabase = require('../sequelize');
 
+
+//export const clients = ClientDatabase.define('clients', {
 export const clients = ClientDatabase.define('clients', {
-  id: {
+id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,
