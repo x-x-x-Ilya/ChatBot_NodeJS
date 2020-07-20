@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { log_error } from '../helpers/error-handler';
+import { log_error } from '../middleware/logging';
 try {
   module.exports = new Sequelize(
     process.env.DB_NAME,

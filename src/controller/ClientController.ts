@@ -1,13 +1,14 @@
 import { ClientService } from '../service/ClientService';
+import { Message } from '../middleware/TelegramClasses';
 const clientService = new ClientService();
 
 export class ClientController {
 
-  async SetEmail(msg: any): Promise<any> {
-    return await clientService.enterEmail(msg.text, msg.chat.id);
+  async SetEmail(text: string, id: number): Promise<any> {
+    return await clientService.enterEmail(text, id);
   }
 
-  async MyProfile(msg: any): Promise<string> {
+  async MyProfile(msg: Message): Promise<string> {
     const client = await clientService.MyProfile(msg.chat.id);
     let add_mess = "";
     if (client.last_name == null) {
@@ -32,7 +33,7 @@ export class ClientController {
     return await clientService.enterLastName(last_name, id);
   }
 
-  async addClient(msg: any): Promise<any> {
+  async addClient(msg: Message): Promise<any> {
     return await clientService.addClient(msg.chat.id, msg.chat.first_name, msg.chat.last_name);
   }
 }

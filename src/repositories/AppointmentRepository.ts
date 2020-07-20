@@ -2,7 +2,7 @@ import { Op } from 'sequelize';
 import { services } from '../database/models/services';
 import { barbers } from '../database/models/barbers';
 import { appointments } from '../database/models/appointments';
-import { log_error } from '../helpers/error-handler';
+import { log_error } from '../middleware/logging';
 
 export class AppointmentRepository {
 
@@ -43,7 +43,7 @@ export class AppointmentRepository {
     });
   }
 
-  async ChangeBarber(id, msg: any): Promise<any>{
+  async ChangeBarber(id, msg): Promise<any>{
     const data = msg.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -60,8 +60,8 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeService(id: any, msg: any): Promise<any>{
-    const data = msg.split(' ');
+  async ChangeService(id: any, text): Promise<any>{
+    const data = text.split(' ');
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
@@ -77,8 +77,8 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeDate(id: any, msg: any): Promise<any>{
-    const data = msg.split(' ');
+  async ChangeDate(id: any, text: any): Promise<any>{
+    const data = text.split(' ');
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
@@ -100,12 +100,12 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async Delete(user_id: any, msg: any){
+  async Delete(user_id: any, text: any){
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
         client_id: user_id,
-        id: msg
+        id: text
       }
     });
     appointment.update({

@@ -1,10 +1,11 @@
 import { AppointmentService } from '../service/AppointmentService';
+import { Message } from '../middleware/TelegramClasses';
 
 const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
-  async Booked(msg: any): Promise<boolean | string> {
+  async Booked(msg: Message): Promise<boolean | string> {
     const appointments = await appointmentService.showMyAppointments(msg.chat.id);
     if (appointments.length != 0) {
       let Response = '\r\n';
@@ -19,7 +20,7 @@ export class AppointmentController {
     } else return false;
   }
 
-  async History(msg: any): Promise<string | boolean> {
+  async History(msg: Message): Promise<string | boolean> {
     const allAppointments = await appointmentService.showMyHistory(msg.chat.id);
     if (allAppointments.length != 0) {
       let Response = '\r\n';
@@ -44,24 +45,24 @@ export class AppointmentController {
       return 'Date should be in future';
   }
 
-  async Set(user_id: any, msg: any): Promise<any> {
-    return await appointmentService.Set(user_id, msg);
+  async Set(user_id: any, text: string): Promise<any> {
+    return await appointmentService.Set(user_id, text);
   }
 
-  async ChangeBarber(user_id, msg){
-    return await appointmentService.ChangeBarber(user_id, msg);
+  async ChangeBarber(user_id, text: string){
+    return await appointmentService.ChangeBarber(user_id, text);
   }
 
-  async ChangeService(user_id, msg){
-    return await appointmentService.ChangeService(user_id, msg);
+  async ChangeService(user_id, text: string){
+    return await appointmentService.ChangeService(user_id, text);
   }
 
-  async ChangeDate(user_id, msg){
-    return await appointmentService.ChangeDate(user_id, msg);
+  async ChangeDate(user_id, text: string){
+    return await appointmentService.ChangeDate(user_id, text);
   }
 
-  async Delete(user_id, msg){
-    return await appointmentService.Delete(user_id, msg);
+  async Delete(user_id, text: string){
+    return await appointmentService.Delete(user_id, text);
   }
 
 }

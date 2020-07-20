@@ -1,6 +1,6 @@
 import { AppointmentRepository } from '../repositories/AppointmentRepository';
 import { ClientService } from './ClientService';
-import { mailer } from '../helpers/nodemailer';
+//import { mailer } from '../helpers/nodemailer';
 const appointmentRepository = new AppointmentRepository();
 
 export class AppointmentService {
@@ -13,32 +13,32 @@ export class AppointmentService {
     return await appointmentRepository.showMyHistory(id);
   }
 
-  async Set(id, msg: any): Promise<any> {
-    return await appointmentRepository.Set(id, msg);
+  async Set(id, text: string): Promise<any> {
+    return await appointmentRepository.Set(id, text);
   }
 
-  async ChangeBarber(id, msg: any): Promise<any> {
+  async ChangeBarber(id, text: string): Promise<any> {
     const user : any = ClientService.prototype.MyProfile(id);
-    mailer(user.email, 'Barbershop notification', 'Your barber replaced successfully');
-    return await appointmentRepository.ChangeBarber(id, msg);
+   // mailer(user.email, 'Barbershop notification', 'Your barber replaced successfully');
+    return await appointmentRepository.ChangeBarber(id, text);
   }
 
-  async ChangeService(id, msg: any): Promise<any> {
+  async ChangeService(id, text: string): Promise<any> {
     const user : any = ClientService.prototype.MyProfile(id);
-    mailer(user.email, 'Barbershop notification', 'Your visit service replaced successfully');
-    return await appointmentRepository.ChangeService(id, msg);
+    //mailer(user.email, 'Barbershop notification', 'Your visit service replaced successfully');
+    return await appointmentRepository.ChangeService(id, text);
   }
 
-  async ChangeDate(id: any, msg: any): Promise<any> {
+  async ChangeDate(id: any, text: string): Promise<any> {
     const user : any = ClientService.prototype.MyProfile(id);
-    mailer(user.email, 'Barbershop notification', 'Your visit date replaced successfully');
-    return await appointmentRepository.ChangeDate(id, msg);
+    //mailer(user.email, 'Barbershop notification', 'Your visit date replaced successfully');
+    return await appointmentRepository.ChangeDate(id, text);
   }
 
-  async Delete(user_id: any, msg: any): Promise<any>{
+  async Delete(user_id: any, text: string): Promise<any>{
     const user : any = ClientService.prototype.MyProfile(user_id);
-    mailer(user.email, 'Barbershop notification', 'Your appointment canceled successfully');
-    return await appointmentRepository.Delete(user_id, msg);
+    //mailer(user.email, 'Barbershop notification', 'Your appointment canceled successfully');
+    return await appointmentRepository.Delete(user_id, text);
   }
 
   async freeDateAppointment(date: Date): Promise<string> {

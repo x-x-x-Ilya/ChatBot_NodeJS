@@ -1,23 +1,23 @@
 import { Body, Controller, Post } from '@nestjs/common';
-
 import { bot } from './index';
 import { menu, profile, isProfile, isMenu } from './keyboards/keyboards';
-import { beditText, checkText, deditText, deleteText, 
+import { beditText, checkText, deditText, deleteText,
   helpText, lText, mText, seditText, signText, } from './helpers/helpText';
-import { sendMessage } from './helpers/sendMessage';
-import { log } from './helpers/logUserMessage';
+import { sendMessage } from './middleware/sendMessage';
+import { log_user } from './middleware/logging';
 import { ClientController } from './controller/ClientController';
 import { BarberController } from './controller/BarberController';
 import { ServiceController } from './controller/ServiceController';
 import { AppointmentController } from './controller/AppointmentController';
+import {Update} from './middleware/TelegramClasses';
 
 //Controller listen only request that includes "url/bot{Token}"
 @Controller('bot' + process.env.TOKEN)
 export class appController {
   @Post()
-  async onMessage(@Body() update): Promise<void> {
+  async onMessage(@Body() update: Update): Promise<void> {
     console.log(update);
-    log(update);
+    log_user(update);
     if (update.message.text === '/l')
       sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + lText, menu);
     else if (update.message.text === '/sedit')
@@ -37,7 +37,7 @@ export class appController {
     else if (update.message.text.indexOf('/l') != -1)
       sendMessage(bot, update.message, await ClientController.prototype.SetLastName(update.message.text.substring(3), update.message.chat.id), profile);
     else if (update.message.text.indexOf('/m') != -1)
-      sendMessage(bot, update.message, await ClientController.prototype.SetEmail(update.message.text.substring(3)), profile);
+      sendMessage(bot, update.message, await ClientController.prototype.SetEmail(update.message.text.substring(3), update.message.chat.id), profile);
     else if (update.message.text.indexOf('/check') != -1)
       sendMessage(bot, update.message, await AppointmentController.prototype.Free(update.message.text.substring(7)), menu);
     else if (update.message.text.indexOf('/sign') != -1)
@@ -69,3 +69,6 @@ export class appController {
       sendMessage(bot, update.message, helpText, menu);
   }
 }
+
+
+

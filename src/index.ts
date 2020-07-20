@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 import { connect } from './database/synchronization';
-import { log_error } from './helpers/error-handler';
+import { log_error } from './middleware/logging';
 import { init } from './database/models';
 
 export const bot = new TelegramBot(process.env.TOKEN, {
