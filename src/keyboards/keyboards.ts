@@ -1,5 +1,21 @@
-import { isMenu, isAppointment, isEdit } from './keyboard-buttons';
+// keyboard buttons
+export const isMenu = {
+  PriceList: 'Price list',
+  BarberList: 'Barber list',
+  Profile: 'My profile',
+  RemoveAppointment: 'Remove my appointment',
+  Back: 'Back',
+  SignUpForAnAppointment: 'Sign up for an appointment',
+  Help: 'Help',
+};
 
+export const isProfile = {
+  History: 'Appointments history',
+  Booked: 'Booked appointments',
+  Edit: 'Edit',
+};
+
+// keyboards
 const menuKeyboard = [
   [isMenu.PriceList, isMenu.BarberList],
   [isMenu.SignUpForAnAppointment, isMenu.Help],
@@ -7,26 +23,20 @@ const menuKeyboard = [
 ];
 
 const profileKeyboard = [
-  [isAppointment.History, isAppointment.Booked],
+  [isProfile.History, isProfile.Booked],
   [isMenu.Help, isMenu.Back],
 ];
 
-const editKeyboard = [
-  [isEdit.ChangeDate, isEdit.ChangeBarber],
-  [isEdit.ChangeService, isEdit.ChangeTime],
-  [isEdit.Delete, isMenu.Back],
-];
-
+// keyboard-constructor
 function reply(arg: string[][]) {
- return  {
+  return {
     reply_markup:
       JSON.stringify({
         resize_keyboard: true,
         keyboard: arg,
-      }) }
+      })
+  }
 }
 
 export const menu = reply(menuKeyboard);
-export const help = reply(menuKeyboard);
 export const profile = reply(profileKeyboard);
-export const edit = reply(editKeyboard);
