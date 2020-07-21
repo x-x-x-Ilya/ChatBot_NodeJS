@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nodemailer = require('nodemailer');
+import * as nodemailer from 'nodemailer';
 
 export const mailer = ((email, subject, message) =>{
   const mailTransport = nodemailer.createTransport({
@@ -20,5 +19,3 @@ export const mailer = ((email, subject, message) =>{
       console.log(err);
   });
 });
-
-mailer('EXAMPLEMAIL@GMAIL.COM', 'hola mundo', 'test message :)');
