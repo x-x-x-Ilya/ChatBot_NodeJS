@@ -38,18 +38,14 @@ export class ClientRepository {
   }
 
   async MyProfile(id: number): Promise<any> {
-    return await clients.findOne({
+    return clients.findOne({
       where: {
         id: id,
       }
     });
   }
 
-  async addClient(
-    id: number,
-    first_name: string,
-    last_name: string,
-  ): Promise<any> {
+  async addClient(id: number, first_name: string, last_name: string,): Promise<any> {
     const client = await clients.findOne({
       where: { id: id },
     });

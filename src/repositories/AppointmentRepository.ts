@@ -7,7 +7,7 @@ import { log_error } from '../middleware/logging';
 export class AppointmentRepository {
 
   async showMyAppointments(id: number): Promise<Array<any>> {
-    return await appointments.findAll({
+    return appointments.findAll({
       where: {
         client_id: id, deleted: false,
         date: { [Op.gte]: new Date() },
@@ -24,7 +24,7 @@ export class AppointmentRepository {
   }
 
   async showMyHistory(id: number): Promise<Array<any>> {
-    return await appointments.findAll({
+    return appointments.findAll({
       where: {
         client_id: id, deleted: false,
         date: { [Op.lte]: new Date(), },
@@ -35,7 +35,7 @@ export class AppointmentRepository {
   async freeDateAppointment(check_date: Date): Promise<Array<any>> {
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
-    return await appointments.findAll({
+    return appointments.findAll({
       where: {
         date: { [Op.between]: [check_date, nextDay] },
         deleted: false,
@@ -52,7 +52,7 @@ export class AppointmentRepository {
         id: data[0]
       }
     });
-    if(data[1] = undefined)
+    if(data[1] == undefined)
       data[1] = 'default';
     await appointment.update({
       barber_id: data[1]
@@ -60,7 +60,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeService(id: any, text): Promise<any>{
+  async ChangeService(id: number, text: string): Promise<any>{
     const data = text.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -69,7 +69,7 @@ export class AppointmentRepository {
         id: data[0]
       }
     });
-    if(data[1] = undefined)
+    if(data[1] == undefined)
       data[1] = 'default'
     await appointment.update({
       service_id: data[1]
@@ -77,7 +77,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeDate(id: any, text: any): Promise<any>{
+  async ChangeDate(id: number, text: string): Promise<any>{
     const data = text.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -91,8 +91,8 @@ export class AppointmentRepository {
     const date = new Date(data[1]);
     if(data[2] != undefined){
     const time = data[2].split(':');
-    date.setHours(time[0]);
-    date.setMinutes(time[1]);}
+    date.setHours(parseInt(time[0]));
+    date.setMinutes(parseInt(time[1]));}
 
     await appointment.update({
       date: date
@@ -100,7 +100,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async Delete(user_id: any, text: any){
+  async Delete(user_id: number, text: string): Promise<any>{
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
@@ -114,12 +114,12 @@ export class AppointmentRepository {
     return 'Deleted successfully';
   }
 
-  async Set(id, msg: any): Promise<any> {
+  async Set(id: number, msg: string): Promise<any> {
     const data = msg.split(' ');
     const date = new Date(data[0]);
     const time = data[1].split(':');
-    date.setHours(time[0]);
-    date.setMinutes(time[1]);
+    date.setHours(parseInt(time[0]));
+    date.setMinutes(parseInt(time[1]));
     try {
       await appointments.create({
         date: date,
@@ -137,46 +137,3 @@ export class AppointmentRepository {
   }
 }
 
- /*
-  async deleteAppointment(appointment: any): Promise<boolean> {
-    //const appointment = await appointments.findOne({ where: { id: parseInt(should_be_appointment_id, 10) } });
-    if (appointment != null) {
-      await appointment.update({
-        deleted: true,
-      });
-      return appointment.deleted == true;
-    }
-    return false;
-  }
-
-
-
-  async updateAppointment(currentAppointment) {
-    const appointment = await appointments.findOne({
-      where: {
-        id: currentAppointment.id,
-        client_id: currentAppointment.client_id,
-      },
-    });
-    appointment.update({
-      id: currentAppointment.id,
-      service_id: currentAppointment.service,
-      barber_id: currentAppointment.barber_id,
-      date: currentAppointment.date,
-      deleted: currentAppointment.deleted,
-    });
-  }
-
-  async GetAppointment(
-    appointment_id: number,
-    client_id: number,
-  ): Promise<any> {
-    return await appointments.findOne({
-      where: {
-        id: appointment_id,
-        client_id: client_id,
-        deleted: false,
-      },
-    });
-  }
- */
