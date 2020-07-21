@@ -1,15 +1,12 @@
-# docker-compose up     -d (флаг для запуска в фоне)
-# docker-compose build -t 93thudfhw0lpl3l/barber:latest
-# docker-machine ip default (отсюда будет взят локальный ip)
-
 version: '3'
 
 services:
 
+  #mongo:
+  # build: ./docker-mongo
+
   db:
     image: postgres
-    #restart: no
-    #POSTGRES_HOST_AUTH_METHOD: trust
     hostname: 172.18.0.1
     ports:
       - 5432:5432
@@ -17,9 +14,6 @@ services:
       POSTGRES_DB: barbershop
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-
-  #mongo:
-  # build: ./docker-mongo
 
   adminer:
     image: adminer
