@@ -9,8 +9,20 @@ export const bot = new TelegramBot(process.env.TOKEN, { webHook: { port: 80 } })
 
 Bootstrap(bot);
 
-// init app and create connection with the database, set's webHook, and webHook error's listener
+// app launch
 async function Bootstrap(bot: TelegramBot) {
+  try {
+    await botSetup(bot)
+    await Connect();
+    new Init();
+    const app = await NestFactory.create(AppModule);
+    await app.listen(80);
+  } catch (error) {
+    LogError(error);
+  }
+}
+
+async function botSetup(bot: TelegramBot) {
   try {
     /*
      *  Whenever there is an update for the bot, sends an HTTPS POST
@@ -21,11 +33,7 @@ async function Bootstrap(bot: TelegramBot) {
     bot.on('webhook_error', (error) => {
       LogError(error.code);
     });
-    await Connect();
-    new Init();
-    const app = await NestFactory.create(AppModule);
-    await app.listen(80);
-  } catch (error) {
-    LogError(error);
+  } catch (e) {
+    LogError(e);
   }
 }
