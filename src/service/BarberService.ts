@@ -2,11 +2,7 @@ import { BarberRepository } from '../repositories/BarberRepository';
 const barberRepository = new BarberRepository();
 
 export class BarberService {
-  async showBarberList(): Promise<Array<any>> {
+  async List(): Promise<Array<any>> {
     return await barberRepository.showBarberList();
-  }
-
-  async selectBarber(id: number): Promise<any> {
-    return await barberRepository.selectBarber(id);
   }
 }
