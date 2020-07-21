@@ -1,74 +1,81 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { bot } from './index';
 import { menu, profile, isProfile, isMenu } from './keyboards/keyboards';
 import { beditText, checkText, deditText, deleteText,
   helpText, lText, mText, seditText, signText, } from './helpers/helpText';
-import { sendMessage } from './middleware/sendMessage';
+import { send } from './middleware/sendMessage';
 import { log_user } from './middleware/logging';
 import { ClientController } from './controller/ClientController';
 import { BarberController } from './controller/BarberController';
 import { ServiceController } from './controller/ServiceController';
 import { AppointmentController } from './controller/AppointmentController';
-import {Update} from './middleware/TelegramClasses';
+import { Update } from './middleware/TelegramClasses';
+
+const client = new ClientController();
+const barber = new BarberController();
+const service = new ServiceController();
+const appointment = new AppointmentController();
 
 //Controller listen only request that includes "url/bot{Token}"
 @Controller('bot' + process.env.TOKEN)
 export class appController {
   @Post()
   async onMessage(@Body() update: Update): Promise<void> {
-    console.log(update);
+
+    // for simple code
+    const message = update.message;
+    const id = update.message.chat.id;
+    const text = update.message.text;
+
     log_user(update);
-    if (update.message.text === '/l')
-      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + lText, menu);
-    else if (update.message.text === '/sedit')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + '\n' + await ServiceController.prototype.List() + seditText, menu);
-    else if (update.message.text === '/m')
-      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message) + mText, menu);
-    else if (update.message.text === '/check')
-      sendMessage(bot, update.message, checkText, menu);
-    else if (update.message.text === '/sign')
-      sendMessage(bot, update.message, signText, menu);
-    else if (update.message.text === '/dedit')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + deditText, menu);
-    else if (update.message.text === '/delete')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + deleteText, menu);
-    else if (update.message.text === '/bedit')
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message) + '\n' + await BarberController.prototype.List() + beditText, menu);
-    else if (update.message.text.indexOf('/l') != -1)
-      sendMessage(bot, update.message, await ClientController.prototype.SetLastName(update.message.text.substring(3), update.message.chat.id), profile);
-    else if (update.message.text.indexOf('/m') != -1)
-      sendMessage(bot, update.message, await ClientController.prototype.SetEmail(update.message.text.substring(3), update.message.chat.id), profile);
-    else if (update.message.text.indexOf('/check') != -1)
-      sendMessage(bot, update.message, await AppointmentController.prototype.Free(update.message.text.substring(7)), menu);
-    else if (update.message.text.indexOf('/sign') != -1)
-      sendMessage(bot, update.message, await AppointmentController.prototype.Set(update.message.chat.id, update.message.text.substring(6)), menu);
-    else if (update.message.text.indexOf('/bedit') != -1)
-      sendMessage(bot, update.message, await AppointmentController.prototype.ChangeBarber(update.message.chat.id, update.message.text.substring(7)), menu);
-    else if (update.message.text.indexOf('/sedit') != -1)
-      sendMessage(bot, update.message, await AppointmentController.prototype.ChangeService(update.message.chat.id, update.message.text.substring(7)), menu);
-    else if (update.message.text.indexOf('/dedit') != -1)
-      sendMessage(bot, update.message, await AppointmentController.prototype.ChangeDate(update.message.chat.id, update.message.text.substring(7)), menu);
-    else if (update.message.text.indexOf('/delete') != -1)
-      sendMessage(bot, update.message, await AppointmentController.prototype.Delete(update.message.chat.id, update.message.text.substring(8)), menu);
-    else if (update.message.text == isMenu.Back)
-      sendMessage(bot, update.message, helpText, menu);
-    else if (update.message.text == isMenu.BarberList)
-      sendMessage(bot, update.message, await BarberController.prototype.List(), menu);
-    else if (update.message.text == isProfile.Booked)
-      sendMessage(bot, update.message, await AppointmentController.prototype.Booked(update.message), menu);
-    else if (update.message.text == isProfile.History)
-      sendMessage(bot, update.message, await AppointmentController.prototype.History(update.message), menu);
-    else if (update.message.text == isMenu.PriceList)
-      sendMessage(bot, update.message, await ServiceController.prototype.List(), menu);
-    else if (update.message.text == isMenu.Profile)
-      sendMessage(bot, update.message, await ClientController.prototype.MyProfile(update.message), profile);
-    else if (update.message.text == '/start') {
-      await ClientController.prototype.addClient(update.message);
-      sendMessage(bot, update.message, 'Hello, ' + update.message.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
+
+    if (text === '/l')
+      send(id, await client.Profile(message) + lText, menu);
+    else if (text === '/sedit')
+      send(id, await appointment.Booked(message) + '\n' + await service.List() + seditText, menu);
+    else if (text === '/m')
+      send(id, await client.Profile(message) + mText, menu);
+    else if (text === '/check')
+      send(id, checkText, menu);
+    else if (text === '/sign')
+      send(id, signText, menu);
+    else if (text === '/dedit')
+      send(id, await appointment.Booked(message) + deditText, menu);
+    else if (text === '/delete')
+      send(id, await appointment.Booked(message) + deleteText, menu);
+    else if (text === '/bedit')
+      send(id, await appointment.Booked(message) + '\n' + await barber.List() + beditText, menu);
+    else if (text.indexOf('/l') != -1)
+      send(id, await client.SetLastName(text.substring(3), id), profile);
+    else if (text.indexOf('/m') != -1)
+      send(id, await client.SetEmail(text.substring(3), id), profile);
+    else if (text.indexOf('/check') != -1)
+      send(id, await appointment.Free(text.substring(7)), menu);
+    else if (text.indexOf('/sign') != -1)
+      send(id, await appointment.Set(id, text.substring(6)), menu);
+    else if (text.indexOf('/bedit') != -1)
+      send(id, await appointment.ChangeBarber(id, text.substring(7)), menu);
+    else if (text.indexOf('/sedit') != -1)
+      send(id, await appointment.ChangeService(id, text.substring(7)), menu);
+    else if (text.indexOf('/dedit') != -1)
+      send(id, await appointment.ChangeDate(id, text.substring(7)), menu);
+    else if (text.indexOf('/delete') != -1)
+      send(id, await appointment.Delete(id, text.substring(8)), menu);
+    else if (text === isMenu.Back)
+      send(id, helpText, menu);
+    else if (text === isMenu.BarberList)
+      send(id, await barber.List(), menu);
+    else if (text === isProfile.Booked)
+      send(id, await appointment.Booked(message), menu);
+    else if (text === isProfile.History)
+      send(id, await appointment.History(message), menu);
+    else if (text === isMenu.PriceList)
+      send(id, await service.List(), menu);
+    else if (text === isMenu.Profile)
+      send(id, await client.Profile(message), profile);
+    else if (text === '/start') {
+      await client.addClient(message);
+      send(id, 'Hello, ' + message.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
     } else
-      sendMessage(bot, update.message, helpText, menu);
+      send(id, helpText, menu);
   }
 }
-
-
-
