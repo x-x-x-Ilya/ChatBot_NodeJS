@@ -28,12 +28,11 @@ export class ClientController {
       add_mess;
   }
 
-
   async SetLastName(last_name: string, id: number): Promise<any> {
     return await clientService.SetLastName(last_name, id);
   }
 
-  async addClient(msg: Message): Promise<any> {
-    return await clientService.addClient(msg.chat.id, msg.chat.first_name, msg.chat.last_name);
+  async AddClient(msg: Message): Promise<any> {
+    return await clientService.AddClient(msg.chat.id, msg.chat.first_name, msg.chat.last_name);
   }
 }

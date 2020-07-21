@@ -2,8 +2,8 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { menu, profile, isProfile, isMenu } from './keyboards/keyboards';
 import { beditText, checkText, deditText, deleteText,
   helpText, lText, mText, seditText, signText, } from './helpers/helpText';
-import { send } from './middleware/sendMessage';
-import { log_user } from './middleware/logging';
+import { Send } from './middleware/sendMessage';
+import { LogUser } from './middleware/logging';
 import { ClientController } from './controller/ClientController';
 import { BarberController } from './controller/BarberController';
 import { ServiceController } from './controller/ServiceController';
@@ -26,56 +26,56 @@ export class appController {
     const id = update.message.chat.id;
     const text = update.message.text;
 
-    log_user(update);
+    LogUser(update);
 
     if (text === '/l')
-      send(id, await client.Profile(message) + lText, menu);
+      Send(id, await client.Profile(message) + lText, menu);
     else if (text === '/sedit')
-      send(id, await appointment.Booked(message) + '\n' + await service.List() + seditText, menu);
+      Send(id, await appointment.Booked(message) + '\n' + await service.List() + seditText, menu);
     else if (text === '/m')
-      send(id, await client.Profile(message) + mText, menu);
+      Send(id, await client.Profile(message) + mText, menu);
     else if (text === '/check')
-      send(id, checkText, menu);
+      Send(id, checkText, menu);
     else if (text === '/sign')
-      send(id, signText, menu);
+      Send(id, signText, menu);
     else if (text === '/dedit')
-      send(id, await appointment.Booked(message) + deditText, menu);
+      Send(id, await appointment.Booked(message) + deditText, menu);
     else if (text === '/delete')
-      send(id, await appointment.Booked(message) + deleteText, menu);
+      Send(id, await appointment.Booked(message) + deleteText, menu);
     else if (text === '/bedit')
-      send(id, await appointment.Booked(message) + '\n' + await barber.List() + beditText, menu);
+      Send(id, await appointment.Booked(message) + '\n' + await barber.List() + beditText, menu);
     else if (text.indexOf('/l') != -1)
-      send(id, await client.SetLastName(text.substring(3), id), profile);
+      Send(id, await client.SetLastName(text.substring(3), id), profile);
     else if (text.indexOf('/m') != -1)
-      send(id, await client.SetEmail(text.substring(3), id), profile);
+      Send(id, await client.SetEmail(text.substring(3), id), profile);
     else if (text.indexOf('/check') != -1)
-      send(id, await appointment.Free(text.substring(7)), menu);
+      Send(id, await appointment.Free(text.substring(7)), menu);
     else if (text.indexOf('/sign') != -1)
-      send(id, await appointment.Set(id, text.substring(6)), menu);
+      Send(id, await appointment.Set(id, text.substring(6)), menu);
     else if (text.indexOf('/bedit') != -1)
-      send(id, await appointment.ChangeBarber(id, text.substring(7)), menu);
+      Send(id, await appointment.ChangeBarber(id, text.substring(7)), menu);
     else if (text.indexOf('/sedit') != -1)
-      send(id, await appointment.ChangeService(id, text.substring(7)), menu);
+      Send(id, await appointment.ChangeService(id, text.substring(7)), menu);
     else if (text.indexOf('/dedit') != -1)
-      send(id, await appointment.ChangeDate(id, text.substring(7)), menu);
+      Send(id, await appointment.ChangeDate(id, text.substring(7)), menu);
     else if (text.indexOf('/delete') != -1)
-      send(id, await appointment.Delete(id, text.substring(8)), menu);
+      Send(id, await appointment.Delete(id, text.substring(8)), menu);
     else if (text === isMenu.Back)
-      send(id, helpText, menu);
+      Send(id, helpText, menu);
     else if (text === isMenu.BarberList)
-      send(id, await barber.List(), menu);
+      Send(id, await barber.List(), menu);
     else if (text === isProfile.Booked)
-      send(id, await appointment.Booked(message), menu);
+      Send(id, await appointment.Booked(message), menu);
     else if (text === isProfile.History)
-      send(id, await appointment.History(message), menu);
+      Send(id, await appointment.History(message), menu);
     else if (text === isMenu.PriceList)
-      send(id, await service.List(), menu);
+      Send(id, await service.List(), menu);
     else if (text === isMenu.Profile)
-      send(id, await client.Profile(message), profile);
+      Send(id, await client.Profile(message), profile);
     else if (text === '/start') {
-      await client.addClient(message);
-      send(id, 'Hello, ' + message.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
+      await client.AddClient(message);
+      Send(id, 'Hello, ' + message.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
     } else
-      send(id, helpText, menu);
+      Send(id, helpText, menu);
   }
 }

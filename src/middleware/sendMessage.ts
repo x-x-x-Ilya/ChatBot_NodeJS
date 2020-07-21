@@ -1,9 +1,10 @@
-import { log_bot, log_error } from './logging';
+import { LogBot, LogError } from './logging';
 import { bot } from '../main';
+import { ReplyKeyboardMarkup } from './TelegramClasses';
 
-export const send = (id : number, text : string, keyboard : any) : void => {
+export const Send = (id : number, text : string, keyboard : ReplyKeyboardMarkup) : void => {
+  LogBot(id, text);
   bot.sendMessage(id, text, keyboard).catch(error => {
-    log_bot(id, text);
-    log_error(error);
+    LogError(error);
   });
 };

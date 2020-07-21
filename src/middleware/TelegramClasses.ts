@@ -131,3 +131,17 @@ export class Update {
   poll:	any
   poll_answer:	any
 }
+
+export class ReplyKeyboardMarkup{
+  keyboard:	Array<KeyboardButton>
+  resize_keyboard:	boolean
+  one_time_keyboard:	boolean
+  selective:	boolean
+}
+
+export class KeyboardButton {
+  text: string
+  request_contact: boolean
+  request_location: boolean
+  request_poll: any
+}

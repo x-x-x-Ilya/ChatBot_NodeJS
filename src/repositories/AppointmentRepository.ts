@@ -2,11 +2,11 @@ import { Op } from 'sequelize';
 import { services } from '../database/models/services';
 import { barbers } from '../database/models/barbers';
 import { appointments } from '../database/models/appointments';
-import { log_error } from '../middleware/logging';
+import { LogError } from '../middleware/logging';
 
 export class AppointmentRepository {
 
-  async showMyAppointments(id: number): Promise<Array<any>> {
+  async Booked(id: number): Promise<Array<any>> {
     return appointments.findAll({
       where: {
         client_id: id, deleted: false,
@@ -23,7 +23,7 @@ export class AppointmentRepository {
     });
   }
 
-  async showMyHistory(id: number): Promise<Array<any>> {
+  async History(id: number): Promise<Array<any>> {
     return appointments.findAll({
       where: {
         client_id: id, deleted: false,
@@ -32,7 +32,7 @@ export class AppointmentRepository {
     });
   }
 
-  async freeDateAppointment(check_date: Date): Promise<Array<any>> {
+  async Free(check_date: Date): Promise<Array<any>> {
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
     return appointments.findAll({
@@ -130,7 +130,7 @@ export class AppointmentRepository {
       });
       return 'Your appointment created successfully';
     } catch (e) {
-      log_error(e)
+      LogError(e)
       console.log(e);
       return 'Sorry, something wrong, we are working width it';
     }

@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { log_error } from '../middleware/logging';
+import { LogError } from '../middleware/logging';
 try {
   module.exports = new Sequelize(
     process.env.DB_NAME,
@@ -25,5 +25,5 @@ try {
   );
   console.log('Sequelize connected');
 } catch (error) {
-  log_error(error);
+  LogError(error);
 }
