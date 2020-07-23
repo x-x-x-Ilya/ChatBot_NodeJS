@@ -1,24 +1,24 @@
 import * as TelegramBot from 'node-telegram-bot-api';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Connect } from './database/synchronization';
-import { LogError } from './middleware/logging';
+import { connect } from './database/synchronization';
+import { logError } from './middleware/logging';
 import { Init } from './database/models';
 
 export const bot = new TelegramBot(process.env.TOKEN, { webHook: { port: 80 } });
 
-Bootstrap(bot);
+bootstrap(bot);
 
 // app launch
-async function Bootstrap(bot: TelegramBot) {
+async function bootstrap(bot: TelegramBot) {
   try {
     await botSetup(bot)
-    await Connect();
+    await connect();
     new Init();
     const app = await NestFactory.create(AppModule);
     await app.listen(80);
   } catch (error) {
-    LogError(error);
+    logError(error);
   }
 }
 
@@ -27,13 +27,12 @@ async function botSetup(bot: TelegramBot) {
     /*
      *  Whenever there is an update for the bot, sends an HTTPS POST
      *  request to the specified url, containing a JSON-serialized Update.
-     *  start ngrok http 80 for test on local machine
      */
-    bot.setWebHook('https://51bd20435c75.ngrok.io/bot' + process.env.TOKEN);
+    bot.setWebHook('https://bf10567895c1.ngrok.io/bot' + process.env.TOKEN);
     bot.on('webhook_error', (error) => {
-      LogError(error.code);
+      logError(error);
     });
   } catch (e) {
-    LogError(e);
+    logError(e);
   }
 }

@@ -28,7 +28,7 @@ const profileKeyboard = [
 ];
 
 // keyboard-constructor
-function Reply(arg: string[][]) {
+function reply(arg: string[][]) {
   return {
     reply_markup:
       JSON.stringify({
@@ -38,5 +38,5 @@ function Reply(arg: string[][]) {
   }
 }
 
-export const menu = Reply(menuKeyboard);
-export const profile = Reply(profileKeyboard);
+export const menu = reply(menuKeyboard);
+export const profile = reply(profileKeyboard);

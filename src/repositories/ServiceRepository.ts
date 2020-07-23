@@ -1,7 +1,7 @@
 import { services } from '../database/models/services';
 
 export class ServiceRepository {
-  async List(): Promise<Array<any>> {
+  async list(): Promise<Array<any>> {
     return services.findAll({
       where: { deleted: false },
       attributes: ['name', 'time', 'price', 'id'],

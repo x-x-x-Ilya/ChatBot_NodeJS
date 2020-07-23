@@ -3,7 +3,7 @@ import { clients } from '../database/models/clients';
 const Sequelize = require('../database/sequelize');
 export class ClientRepository {
 
-  async SetEmail(email: string, id: number): Promise<string> {
+  async setEmail(email: string, id: number): Promise<string> {
     const t = await Sequelize.transaction();
     try {
       const client = await clients.findOne({
@@ -20,7 +20,7 @@ export class ClientRepository {
     }
   }
 
-  async SetLastName(last_name: string, id: number): Promise<string> {
+  async setLastName(last_name: string, id: number): Promise<string> {
     const t = await Sequelize.transaction();
     try {
       const client = await clients.findOne({
@@ -37,7 +37,7 @@ export class ClientRepository {
     }
   }
 
-  async Profile(id: number): Promise<any> {
+  async profile(id: number): Promise<any> {
     return clients.findOne({
       where: {
         id: id,
@@ -45,7 +45,7 @@ export class ClientRepository {
     });
   }
 
-  async AddClient(id: number, first_name: string, last_name: string,): Promise<any> {
+  async addClient(id: number, first_name: string, last_name: string,): Promise<any> {
     const client = await clients.findOne({
       where: { id: id },
     });

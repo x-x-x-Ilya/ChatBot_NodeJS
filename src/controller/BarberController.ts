@@ -2,8 +2,8 @@ import { BarberService } from '../service/BarberService';
 const barberService = new BarberService();
 
 export class BarberController {
-  async List(): Promise<string> {
-    const barbers = await barberService.List();
+  async list(): Promise<string> {
+    const barbers = await barberService.list();
       let Response = '\r\n';
       for (let i = 0; i < barbers.length; i++) {
         Response += '[' + barbers[i].id + '] ' + barbers[i].first_name + ' ';

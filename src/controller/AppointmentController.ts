@@ -5,8 +5,8 @@ const appointmentService = new AppointmentService();
 
 export class AppointmentController {
 
-  async Booked(msg: Message): Promise<string> {
-    const appointments = await appointmentService.Booked(msg.chat.id);
+  async booked(msg: Message): Promise<string> {
+    const appointments = await appointmentService.booked(msg.chat.id);
       let Response = '\r\n';
       for (let i = 0; i < appointments.length; i++) {
         Response += '[' + appointments[i].id + '] ' +
@@ -18,8 +18,8 @@ export class AppointmentController {
       return Response;
   }
 
-  async History(msg: Message): Promise<string> {
-    const allAppointments = await appointmentService.History(msg.chat.id);
+  async history(msg: Message): Promise<string> {
+    const allAppointments = await appointmentService.history(msg.chat.id);
       let Response = '\r\n';
       for (let i = 0; i < allAppointments.length; i++) {
         Response += '[' + allAppointments[i].id + '] ' +
@@ -28,36 +28,36 @@ export class AppointmentController {
       return Response;
   }
 
-  async Free(date: string): Promise<any> {
+  async free(date: string): Promise<any> {
     const t = date.split('.'),
       Year = parseInt(t[2]),
       Month = parseInt(t[1]) - 1,
       day = parseInt(t[0]);
     const check_date = new Date(Year, Month, day);
     if (check_date > new Date())
-    return await appointmentService.Free(check_date);
+    return await appointmentService.free(check_date);
     else
       return 'Date should be in future';
   }
 
-  async Set(user_id: number, text: string): Promise<any> {
-    return await appointmentService.Set(user_id, text);
+  async set(user_id: number, text: string): Promise<any> {
+    return await appointmentService.set(user_id, text);
   }
 
-  async ChangeBarber(user_id: number, text: string): Promise<any> {
-    return await appointmentService.ChangeBarber(user_id, text);
+  async changeBarber(user_id: number, text: string): Promise<any> {
+    return await appointmentService.changeBarber(user_id, text);
   }
 
-  async ChangeService(user_id: number, text: string): Promise<any> {
-    return await appointmentService.ChangeService(user_id, text);
+  async changeService(user_id: number, text: string): Promise<any> {
+    return await appointmentService.changeService(user_id, text);
   }
 
-  async ChangeDate(user_id: number, text: string): Promise<any> {
-    return await appointmentService.ChangeDate(user_id, text);
+  async changeDate(user_id: number, text: string): Promise<any> {
+    return await appointmentService.changeDate(user_id, text);
   }
 
-  async Delete(user_id: number, text: string): Promise<any> {
-    return await appointmentService.Delete(user_id, text);
+  async delete(user_id: number, text: string): Promise<any> {
+    return await appointmentService.delete(user_id, text);
   }
 
 }

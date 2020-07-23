@@ -2,11 +2,11 @@ import { Op } from 'sequelize';
 import { services } from '../database/models/services';
 import { barbers } from '../database/models/barbers';
 import { appointments } from '../database/models/appointments';
-import { LogError } from '../middleware/logging';
+import { logError } from '../middleware/logging';
 
 export class AppointmentRepository {
 
-  async Booked(id: number): Promise<Array<any>> {
+  async booked(id: number): Promise<Array<any>> {
     return appointments.findAll({
       where: {
         client_id: id, deleted: false,
@@ -23,7 +23,7 @@ export class AppointmentRepository {
     });
   }
 
-  async History(id: number): Promise<Array<any>> {
+  async history(id: number): Promise<Array<any>> {
     return appointments.findAll({
       where: {
         client_id: id, deleted: false,
@@ -32,7 +32,7 @@ export class AppointmentRepository {
     });
   }
 
-  async Free(check_date: Date): Promise<Array<any>> {
+  async free(check_date: Date): Promise<Array<any>> {
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
     return appointments.findAll({
@@ -43,7 +43,7 @@ export class AppointmentRepository {
     });
   }
 
-  async ChangeBarber(id, msg): Promise<any>{
+  async changeBarber(id, msg): Promise<any>{
     const data = msg.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -60,7 +60,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeService(id: number, text: string): Promise<any>{
+  async changeService(id: number, text: string): Promise<any>{
     const data = text.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -77,7 +77,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async ChangeDate(id: number, text: string): Promise<any>{
+  async changeDate(id: number, text: string): Promise<any>{
     const data = text.split(' ');
     const appointment = await appointments.findOne({
       where: {
@@ -100,7 +100,7 @@ export class AppointmentRepository {
     return 'Your appointment updated';
   }
 
-  async Delete(user_id: number, text: string): Promise<any>{
+  async delete(user_id: number, text: string): Promise<any>{
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
@@ -114,7 +114,7 @@ export class AppointmentRepository {
     return 'Deleted successfully';
   }
 
-  async Set(id: number, msg: string): Promise<any> {
+  async set(id: number, msg: string): Promise<any> {
     const data = msg.split(' ');
     const date = new Date(data[0]);
     const time = data[1].split(':');
@@ -130,7 +130,7 @@ export class AppointmentRepository {
       });
       return 'Your appointment created successfully';
     } catch (e) {
-      LogError(e)
+      logError(e)
       console.log(e);
       return 'Sorry, something wrong, we are working width it';
     }
