@@ -20,39 +20,55 @@ export class appController {
 
     logUser(update);
 
-    if (text === '/l')
-      send(id, await controller.client.profile(message) + res.onL, menu);
-    else if (text === '/sedit')
-      send(id, await controller.appointment.booked(message) + '\n' + await controller.service.list() + res.onSedit, menu);
-    else if (text === '/m')
-      send(id, await controller.client.profile(message) + res.onM, menu);
-    else if (text === '/check')
+    if (text === '/l') {
+      const profile = await controller.client.profile(message);
+      send(id, profile + res.onL, menu);
+    } else if (text === '/sedit') {
+      const booked = await controller.appointment.booked(message);
+      const list = await controller.service.list()
+      send(id, booked + '\n' + list + res.onSedit, menu);
+    } else if (text === '/m') {
+      const profile = await controller.client.profile(message);
+      send(id, profile + res.onM, menu);
+    } else if (text === '/check')
       send(id, res.onCheck, menu);
     else if (text === '/sign')
       send(id, res.onSign, menu);
-    else if (text === '/dedit')
-      send(id, await controller.appointment.booked(message) + res.onDedit, menu);
-    else if (text === '/delete')
-      send(id, await controller.appointment.booked(message) + res.onDelete, menu);
-    else if (text === '/bedit')
-      send(id, await controller.appointment.booked(message) + '\n' + await controller.barber.list() + res.onBedit, menu);
-    else if (await isCommand(text, '/l', id))      //text.indexOf('/l') != -1)
-      send(id, await controller.client.setLastName(text.substring(3), id), profile);
-    else if (text.indexOf('/m') != -1)
-      send(id, await controller.client.setEmail(text.substring(3), id), profile);
-    else if (text.indexOf('/check') != -1)
-      send(id, await controller.appointment.free(text.substring(7)), menu);
-    else if (text.indexOf('/sign') != -1)
-      send(id, await controller.appointment.set(id, text.substring(6)), menu);
-    else if (text.indexOf('/bedit') != -1)
-      send(id, await controller.appointment.changeBarber(id, text.substring(7)), menu);
-    else if (text.indexOf('/sedit') != -1)
-      send(id, await controller.appointment.changeService(id, text.substring(7)), menu);
-    else if (text.indexOf('/dedit') != -1)
-      send(id, await controller.appointment.changeDate(id, text.substring(7)), menu);
-    else if (text.indexOf('/delete') != -1)
-      send(id, await controller.appointment.delete(id, text.substring(8)), menu);
-    else if (text === isMenu.Back)
+    else if (text === '/dedit') {
+      const booked = await controller.appointment.booked(message);
+      send(id, booked + res.onDedit, menu);
+    } else if (text === '/delete') {
+      const booked = await controller.appointment.booked(message);
+      send(id, booked + res.onDelete, menu);
+    } else if (text === '/bedit') {
+      const booked = await controller.appointment.booked(message);
+      const list = await controller.barber.list();
+      send(id, booked + '\n' + list + res.onBedit, menu);
+    } else if (await isCommand(text, '/l', id)) {
+      const set = await controller.client.setLastName(text, id);
+      send(id, set, profile);
+    } else if (await isCommand(text, '/m', id)) {
+      const set = await controller.client.setEmail(text, id);
+      send(id, set, profile);
+    } else if (await isCommand(text, '/check', id)) {
+      const free = await controller.appointment.free(text);
+      send(id, free, menu);
+    } else if (await isCommand(text, '/sign', id)) {
+      const set = await controller.appointment.set(id, text);
+      send(id, set, menu);
+    } else if (await isCommand(text, '/bedit', id)) {
+      const change = await controller.appointment.changeBarber(id, text);
+      send(id, change, menu);
+    } else if (await isCommand(text, '/sedit', id)) {
+      const change = await controller.appointment.changeService(id, text);
+      send(id, change, menu);
+    } else if (await isCommand(text, '/dedit', id)) {
+      const change = await controller.appointment.changeDate(id, text);
+      send(id, change, menu);
+    } else if (await isCommand(text, '/delete', id)) {
+      const del = await controller.appointment.delete(id, text);
+      send(id, del, menu);
+    } else if (text === isMenu.Back)
       send(id, res.onHelp, menu);
     else if (text === isMenu.BarberList)
       send(id, await controller.barber.list(), menu);
@@ -65,8 +81,10 @@ export class appController {
     else if (text === isMenu.Profile)
       send(id, await controller.client.profile(message), profile);
     else if (text === '/start') {
-      await controller.client.addClient(message);
-      send(id, 'Hello, ' + message.chat.first_name + ', i am Barber Bot. Can i help you?', menu);
+      await controller.client.addClient(id, message.chat.first_name,
+        message.chat.last_name);
+      send(id, 'Hello, ' + message.chat.first_name +
+        ', i am Barber Bot. Can i help you?', menu);
     } else
       send(id, res.onHelp, menu);
   }

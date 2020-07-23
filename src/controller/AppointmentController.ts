@@ -28,7 +28,8 @@ export class AppointmentController {
       return Response;
   }
 
-  async free(date: string): Promise<any> {
+  async free(cmd: string): Promise<any> {
+    const date = cmd.substring(7);
     const t = date.split('.'),
       Year = parseInt(t[2]),
       Month = parseInt(t[1]) - 1,
@@ -40,24 +41,29 @@ export class AppointmentController {
       return 'Date should be in future';
   }
 
-  async set(user_id: number, text: string): Promise<any> {
-    return await appointmentService.set(user_id, text);
+  async set(user_id: number, cmd: string): Promise<any> {
+    const set = cmd.substring(6)
+    return await appointmentService.set(user_id, set);
   }
 
-  async changeBarber(user_id: number, text: string): Promise<any> {
-    return await appointmentService.changeBarber(user_id, text);
+  async changeBarber(user_id: number, cmd: string): Promise<any> {
+    const change = cmd.substring(7)
+    return await appointmentService.changeBarber(user_id, change);
   }
 
-  async changeService(user_id: number, text: string): Promise<any> {
-    return await appointmentService.changeService(user_id, text);
+  async changeService(user_id: number, cmd: string): Promise<any> {
+  const change = cmd.substring(7)
+    return await appointmentService.changeService(user_id, change);
   }
 
-  async changeDate(user_id: number, text: string): Promise<any> {
-    return await appointmentService.changeDate(user_id, text);
+  async changeDate(user_id: number, cmd: string): Promise<any> {
+  const change = cmd.substring(7)
+    return await appointmentService.changeDate(user_id, change);
   }
 
-  async delete(user_id: number, text: string): Promise<any> {
-    return await appointmentService.delete(user_id, text);
+  async delete(user_id: number, cmd: string): Promise<any> {
+    const del = cmd.substring(8)
+    return await appointmentService.delete(user_id, del);
   }
 
 }

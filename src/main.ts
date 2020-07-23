@@ -9,6 +9,7 @@ export const bot = new TelegramBot(process.env.TOKEN, { webHook: { port: 80 } })
 
 bootstrap(bot);
 
+
 // app launch
 async function bootstrap(bot: TelegramBot) {
   try {

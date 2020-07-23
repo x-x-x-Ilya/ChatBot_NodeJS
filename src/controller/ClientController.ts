@@ -4,12 +4,14 @@ const clientService = new ClientService();
 
 export class ClientController {
 
-  async setEmail(text: string, id: number): Promise<any> {
-    return await clientService.setEmail(text, id);
+  async setEmail(cmd: string, id: number): Promise<any> {
+    const email = cmd.substring(3)
+    return await clientService.setEmail(email, id);
   }
 
   async profile(msg: Message): Promise<string> {
     const client = await clientService.profile(msg.chat.id);
+
     let add_mess = "";
     if (client.last_name == null) {
       client.last_name = 'not indicated';
@@ -19,20 +21,19 @@ export class ClientController {
       client.email = 'not indicated';
       add_mess += '\r\nUse /m to send email.';
     }
-    return 'First name: ' +
-      client.first_name +
-      '\r\nLast name: ' +
-      client.last_name +
-      '\r\nEmail: ' +
-      client.email +
-      add_mess;
+
+    return 'First name: ' + client.first_name +
+       '\r\nLast name: ' + client.last_name +
+       '\r\nEmail: ' + client.email +
+       add_mess;
   }
 
-  async setLastName(last_name: string, id: number): Promise<any> {
+  async setLastName(cmd: string, id: number): Promise<any> {
+    const last_name = cmd.substring(3);
     return await clientService.setLastName(last_name, id);
   }
 
-  async addClient(msg: Message): Promise<any> {
-    return await clientService.addClient(msg.chat.id, msg.chat.first_name, msg.chat.last_name);
+  async addClient(id: number, first_name: string, last_name: string ): Promise<any> {
+    return await clientService.addClient(id, first_name, last_name);
   }
 }
