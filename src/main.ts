@@ -5,7 +5,8 @@ import { connect } from './database/synchronization';
 import { logError } from './middleware/logging';
 import { Init } from './database/models';
 
-export const bot = new TelegramBot(process.env.TOKEN, { webHook: { port: 80 } });
+export const bot = new TelegramBot(process.env.TOKEN,
+  { webHook: { port: 80 } });
 
 bootstrap(bot);
 
@@ -29,7 +30,7 @@ async function botSetup(bot: TelegramBot) {
      *  Whenever there is an update for the bot, sends an HTTPS POST
      *  request to the specified url, containing a JSON-serialized Update.
      */
-    bot.setWebHook('https://bf10567895c1.ngrok.io/bot' + process.env.TOKEN);
+    bot.setWebHook('https://5bf6180ef93b.ngrok.io/bot' + process.env.TOKEN);
     bot.on('webhook_error', (error) => {
       logError(error);
     });

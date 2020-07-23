@@ -5,7 +5,7 @@ export const mailer = ((email, message) =>{
     service: 'gmail',
     secure: false,
     port: 25,
-    auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS},
+    auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS },
     tls: { rejectUnauthorized: false }
   });
   mailTransport.sendMail({

@@ -18,7 +18,8 @@ export class appController {
     const id = update.message.chat.id;
     const text = update.message.text;
 
-    logUser(update);
+    console.log(update);
+    logUser(id, text);
 
     if (text === '/l') {
       const profile = await controller.client.profile(message);
@@ -45,33 +46,31 @@ export class appController {
       const list = await controller.barber.list();
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
-
-    else if (await isCommand(text, '/l', id)) {
+    else if (isCommand(text, '/l', id)) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
-    } else if (await isCommand(text, '/m', id)) {
+    } else if (isCommand(text, '/m', id)) {
       const set = await controller.client.setEmail(text, id);
       send(id, set, profile);
-    } else if (await isCommand(text, '/check', id)) {
+    } else if (isCommand(text, '/check', id)) {
       const free = await controller.appointment.free(text);
       send(id, free, menu);
-    } else if (await isCommand(text, '/sign', id)) {
+    } else if (isCommand(text, '/sign', id)) {
       const set = await controller.appointment.set(id, text);
       send(id, set, menu);
-    } else if (await isCommand(text, '/bedit', id)) {
+    } else if (isCommand(text, '/bedit', id)) {
       const change = await controller.appointment.changeBarber(id, text);
       send(id, change, menu);
-    } else if (await isCommand(text, '/sedit', id)) {
+    } else if (isCommand(text, '/sedit', id)) {
       const change = await controller.appointment.changeService(id, text);
       send(id, change, menu);
-    } else if (await isCommand(text, '/dedit', id)) {
+    } else if (isCommand(text, '/dedit', id)) {
       const change = await controller.appointment.changeDate(id, text);
       send(id, change, menu);
-    } else if (await isCommand(text, '/delete', id)) {
+    } else if (isCommand(text, '/delete', id)) {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
-
     else if (text === isMenu.Back)
       send(id, res.onHelp, menu);
     else if (text === isMenu.BarberList)

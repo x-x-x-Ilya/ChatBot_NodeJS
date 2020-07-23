@@ -45,7 +45,10 @@ export class ClientRepository {
     });
   }
 
-  async addClient(id: number, first_name: string, last_name: string,): Promise<any> {
+  async addClient(
+    id: number,
+    first_name: string,
+    last_name: string): Promise<any> {
     const client = await clients.findOne({
       where: { id: id },
     });
