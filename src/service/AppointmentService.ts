@@ -17,40 +17,21 @@ export class AppointmentService {
     return await appointmentRepository.set(id, text);
   }
 
-  async changeBarber(id: number, text: string): Promise<any> {
-    const user : any = ClientService.prototype.profile(id);
-    mailer(user.email, 'Barbershop notification', 'Your barber replaced successfully');
-    return await appointmentRepository.changeBarber(id, text);
-  }
-
-  async changeService(id: number, text: string): Promise<any> {
-    const user : any = ClientService.prototype.profile(id);
-    mailer(user.email, 'Barbershop notification', 'Your visit service replaced successfully');
-    return await appointmentRepository.changeService(id, text);
-  }
-
-  async changeDate(id: number, text: string): Promise<any> {
-    const user : any = ClientService.prototype.profile(id);
-    mailer(user.email, 'Barbershop notification', 'Your visit date replaced successfully');
-    return await appointmentRepository.changeDate(id, text);
-  }
-
-  async delete(user_id: number, text: string): Promise<any>{
-    const user : any = ClientService.prototype.profile(user_id);
-    mailer(user.email, 'Barbershop notification', 'Your appointment canceled successfully');
-    return await appointmentRepository.delete(user_id, text);
-  }
-
   async free(date: Date): Promise<string> {
-    const appointment = await appointmentRepository.free(date);
-    if (appointment.length == 0) {
-      return 'We are free from 10:00 to 22:00';
-    }
-    let found_in_sec = [];
-    found_in_sec.sort((a: number, b: number) => {
+    if (date < new Date()) return 'Date should be in future';
+
+    /*found_in_sec.sort((a: number, b: number) => {
       if (a > b) return b;
       else return a;
     });
+    */
+
+    const appointment = await appointmentRepository.curr_day_appointment(date);
+
+    if (appointment.length == 0)
+      return 'We are free from 10:00 to 22:00';
+
+    let found_in_sec = [];
     for (let i = 0; i < appointment.length; i++) {
       found_in_sec.push(
         appointment[i].date.getHours() * 3600 +
@@ -77,6 +58,40 @@ export class AppointmentService {
         ' to 22:00\r\n';
     }
     return R;
+  }
+
+  // 3 change functions && delete => 1 update function
+  async changeBarber(id: number, text: string): Promise<any> {
+    const user : any = ClientService.prototype.profile(id);
+    mailer(user.email, 'Your barber replaced successfully');
+    const data = text.split(' ');
+    return await appointmentRepository.changeBarber(
+      id,
+      parseInt(data[0]),
+      parseInt(data[1]));
+  }
+
+  async changeService(id: number, text: string): Promise<any> {
+    const data = text.split(' ');
+
+    const user : any = ClientService.prototype.profile(id);
+    mailer(user.email, 'Your visit service replaced successfully');
+    return await appointmentRepository.changeService(
+      id,
+      parseInt(data[0]),
+      parseInt(data[1]));
+  }
+
+  async changeDate(id: number, text: string): Promise<any> {
+    const user : any = ClientService.prototype.profile(id);
+    mailer(user.email, 'Your visit date replaced successfully');
+    return await appointmentRepository.changeDate(id, text);
+  }
+
+  async delete(user_id: number, text: string): Promise<any>{
+    const user : any = ClientService.prototype.profile(user_id);
+    mailer(user.email, 'Your appointment canceled successfully');
+    return await appointmentRepository.delete(user_id, text);
   }
 
 }

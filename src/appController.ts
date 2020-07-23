@@ -44,7 +44,9 @@ export class appController {
       const booked = await controller.appointment.booked(message);
       const list = await controller.barber.list();
       send(id, booked + '\n' + list + res.onBedit, menu);
-    } else if (await isCommand(text, '/l', id)) {
+    }
+
+    else if (await isCommand(text, '/l', id)) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
     } else if (await isCommand(text, '/m', id)) {
@@ -68,7 +70,9 @@ export class appController {
     } else if (await isCommand(text, '/delete', id)) {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
-    } else if (text === isMenu.Back)
+    }
+
+    else if (text === isMenu.Back)
       send(id, res.onHelp, menu);
     else if (text === isMenu.BarberList)
       send(id, await controller.barber.list(), menu);
@@ -80,6 +84,7 @@ export class appController {
       send(id, await controller.service.list(), menu);
     else if (text === isMenu.Profile)
       send(id, await controller.client.profile(message), profile);
+
     else if (text === '/start') {
       await controller.client.addClient(id, message.chat.first_name,
         message.chat.last_name);

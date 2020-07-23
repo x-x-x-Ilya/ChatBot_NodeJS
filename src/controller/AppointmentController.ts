@@ -35,10 +35,7 @@ export class AppointmentController {
       Month = parseInt(t[1]) - 1,
       day = parseInt(t[0]);
     const check_date = new Date(Year, Month, day);
-    if (check_date > new Date())
     return await appointmentService.free(check_date);
-    else
-      return 'Date should be in future';
   }
 
   async set(user_id: number, cmd: string): Promise<any> {

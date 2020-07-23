@@ -32,7 +32,7 @@ export class AppointmentRepository {
     });
   }
 
-  async free(check_date: Date): Promise<Array<any>> {
+  async curr_day_appointment(check_date: Date): Promise<Array<any>> {
     const nextDay = new Date(check_date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
     return appointments.findAll({
@@ -43,36 +43,38 @@ export class AppointmentRepository {
     });
   }
 
-  async changeBarber(id, msg): Promise<any>{
-    const data = msg.split(' ');
+  async changeBarber(id : number, appointment_id : number | undefined,
+                     barber_id: number | undefined): Promise<any> {
+
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
         client_id: id,
-        id: data[0]
+        id: appointment_id
       }
     });
-    if(data[1] == undefined)
-      data[1] = 'default';
+    if(barber_id == undefined)
+      barber_id = 1;
     await appointment.update({
-      barber_id: data[1]
+      barber_id: barber_id
     });
     return 'Your appointment updated';
   }
 
-  async changeService(id: number, text: string): Promise<any>{
-    const data = text.split(' ');
+  async changeService(id: number,
+                      appointment_id: number,
+                      service_id: number): Promise<any> {
     const appointment = await appointments.findOne({
       where: {
         deleted: false,
         client_id: id,
-        id: data[0]
+        id: appointment_id
       }
     });
-    if(data[1] == undefined)
-      data[1] = 'default'
+    if(service_id == undefined)
+      service_id = 1
     await appointment.update({
-      service_id: data[1]
+      service_id: service_id
     });
     return 'Your appointment updated';
   }

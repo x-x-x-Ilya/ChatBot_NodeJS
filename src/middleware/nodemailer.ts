@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 
-export const mailer = ((email, subject, message) =>{
+export const mailer = ((email, message) =>{
   const mailTransport = nodemailer.createTransport({
     service: 'gmail',
     secure: false,
@@ -11,7 +11,7 @@ export const mailer = ((email, subject, message) =>{
   mailTransport.sendMail({
     from: process.env.EMAIL_ADDRESS,
     to: email,
-    subject: subject,
+    subject: 'Barbershop notification',
     text: message
   }, function(err, info) {
     console.log(info);
