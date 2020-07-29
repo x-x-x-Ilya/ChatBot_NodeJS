@@ -7,7 +7,10 @@ import { Update } from './middleware/TelegramClasses';
 import { controller } from './controller';
 import { isCommand } from './middleware/commandValidator';
 
-//Controller listen only request that includes "url/bot{Token}"
+/**
+ *  Controller listen only request that includes "url/bot{Token}"
+ */
+
 @Controller('bot' + process.env.TOKEN)
 export class appController {
   @Post()
