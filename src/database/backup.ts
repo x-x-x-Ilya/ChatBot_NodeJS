@@ -1,4 +1,14 @@
-import { exec } from 'child_process';
+//import { exec } from 'child_process';
+
+/*
+exec(cmd);
+$ pg_dump -h localhost -p 5432 -d barbershop -U postgres > D:\test\test.sql
+$ Пароль:
+*/
+import { spawn } from 'child_process';
+
+const exec = require('child_process').exec;
+
 import * as fs from 'fs';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const _ = require('lodash');
@@ -12,7 +22,7 @@ const dbOptions =  {
   autoBackup: true,
   removeOldBackup: true,
   keepLastDaysBackup: 2,
-  autoBackupPath: 'D:\\test\\new.sql' // i.e. /var/database-backup/
+  autoBackupPath: 'C:\\project\\ChatBot_NodeJS\\PostgresSQL.sql'
 };
 
 //return date object;
@@ -45,33 +55,47 @@ function dbAutoBackUp() {
     const date = new Date();
     let beforeDate, oldBackupDir, oldBackupPath;
     const currentDate = stringToDate(date); // Current date
-    const newBackupDir = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    const newBackupPath = dbOptions.autoBackupPath + 'psql-' + newBackupDir + '.sql'; // New backup path for current backup process
-    // check for remove old backup after keeping # of days given in configuration
+    const newBackupDir = currentDate.getFullYear() + '-' +
+                        (currentDate.getMonth() + 1) + '-' +
+                         currentDate.getDate();
+    // New backup path for current backup process
+    const newBackupPath = dbOptions.autoBackupPath +
+                          'psql-' + newBackupDir + '.sql';
+    // check for remove old backup after keeping # of days given in conf
     if (dbOptions.removeOldBackup == true) {
       beforeDate = _.clone(currentDate);
-      beforeDate.setDate(beforeDate.getDate() - dbOptions.keepLastDaysBackup); // Substract number of days to keep backup and remove old backup
-      oldBackupDir = beforeDate.getFullYear() + '-' + (beforeDate.getMonth() + 1) + '-' + beforeDate.getDate();
-      oldBackupPath = dbOptions.autoBackupPath + 'psql-' + oldBackupDir; // old backup(after keeping # of days)
+      // Substract number of days to keep backup and remove old backup
+      beforeDate.setDate(beforeDate.getDate() - dbOptions.keepLastDaysBackup);
+      oldBackupDir = beforeDate.getFullYear() + '-' +
+                    (beforeDate.getMonth() + 1) + '-' +
+                     beforeDate.getDate();
+      // old backup(after keeping # of days)
+      oldBackupPath = dbOptions.autoBackupPath +
+                      'psql-' + oldBackupDir;
     }
-    const cmd = 'pg_dump  -h ' + dbOptions.host + ' -p ' + dbOptions.port + ' -d ' + dbOptions.database + ' -U ' + dbOptions.user + ' > ' + newBackupPath; // Command for mongodb dump process
+    // Command for mongodb dump process
+    const cmd = 'pg_dump' +
+                ' -h ' + dbOptions.host +
+                ' -p ' + dbOptions.port +
+                ' -d ' + dbOptions.database +
+                ' -U ' + dbOptions.user +
+                ' > ' + newBackupPath;
     const password = dbOptions.pass + ' \r\n';
-    //  pg_dump -h localhost -p 5432 -d barbershop -U postgres > D:\test\test.sql
-    //  C:\Program Files\PostgreSQL\12\bin\
 
-    //  SET PGPASSWORD=root  pg_dump -U postgres -d barbershop >  D:\test\database.sql
+    exec(cmd, { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' });
 
-    //  pg_dump -h localhost -p 5432 -d barbershop -U postgres -f D:\test\test.sql
+  }
+}
 
-    /*exec(password, function(error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-    });*/
 
-    // после этого запрашивается пароль, как его ввести...
-    exec(cmd,
+dbAutoBackUp();
+
+
+/*
+exec(cmd,
       { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' },
-      /*function(error, stdout, stderr) {
+      function(error, stdout, stderr) {
+      console.log('error: ' + error);
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if (error) {
@@ -88,8 +112,6 @@ function dbAutoBackUp() {
           }
         }
       }
-    }*/);
-  }
-}
+    });
 
-dbAutoBackUp();
+ */
