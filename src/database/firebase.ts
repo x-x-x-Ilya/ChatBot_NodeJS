@@ -6,14 +6,14 @@ require("firebase/database");
 
 export const firebaseDatabase = () : void => {
   const config = {
-    apiKey: "AIzaSyDqgOuudlQBI8NQRv2lt7ku8BSe8cLReSE",
-    authDomain: "barber-shop-b2a01.firebaseapp.com",
-    databaseURL: "https://barber-shop-b2a01.firebaseio.com",
-    projectId: "barber-shop-b2a01",
-    storageBucket: "barber-shop-b2a01.appspot.com",
-    messagingSenderId: "382669981438",
-    appId: "1:382669981438:web:83cfd8fcf663635a0147af",
-    measurementId: "G-Y2JLGR1C2L"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: ""
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
   };
   firebase.initializeApp(config);
   const database = firebase.database();
