@@ -6,7 +6,6 @@ require("firebase/database");
 
 export const firebaseDatabase = () : void => {
   const config = {
-<<<<<<< HEAD
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     databaseURL: process.env.FIREBASE_DATABASE_URL,
@@ -15,16 +14,6 @@ export const firebaseDatabase = () : void => {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
-=======
-    apiKey: "",
-    authDomain: "",
-    databaseURL: ""
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
->>>>>>> d2f0666abd13e3f68a25ccb5059baa07373a01a8
   };
   firebase.initializeApp(config);
   const database = firebase.database();
