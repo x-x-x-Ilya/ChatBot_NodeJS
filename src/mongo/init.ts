@@ -4,7 +4,7 @@ import { exec } from 'child_process';
 const fs = require('fs');
 
 fs.readFile(
-  "C:\\project\\ChatBot_NodeJS\\back up\\test.sql",
+  "C:\\project\\ChatBot_NodeJS\\back\\test.sql",
   "utf8",
   function(error,data) {
     if (error) throw error;
