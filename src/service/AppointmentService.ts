@@ -19,13 +19,6 @@ export class AppointmentService {
 
   async free(date: Date): Promise<string> {
     if (date < new Date()) return 'Date should be in future';
-
-    /*found_in_sec.sort((a: number, b: number) => {
-      if (a > b) return b;
-      else return a;
-    });
-    */
-
     const appointment = await appointmentRepository.curr_day_appointment(date);
 
     if (appointment.length == 0)
