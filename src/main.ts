@@ -5,7 +5,7 @@ import { connect } from './database/synchronization';
 import { logError } from './middleware/logging';
 import { Init } from './database/models';
 import { firebaseDatabase } from './database/firebase';
-import { dbAutoBackUp } from './database/backup';
+import { job } from './database/backup';
 
 export const bot = new TelegramBot(process.env.TOKEN,
   { webHook: { port: 80 } });
@@ -21,7 +21,7 @@ async function bootstrap(bot: TelegramBot) {
     const app = await NestFactory.create(AppModule);
     await app.listen(80);
     firebaseDatabase();
-    dbAutoBackUp();
+    job.start();
   } catch (error) {
     logError(error);
   }
@@ -29,11 +29,7 @@ async function bootstrap(bot: TelegramBot) {
 
 async function botSetup(bot: TelegramBot) {
   try {
-    /**
-     *  Whenever there is an update for the bot, sends an HTTPS POST
-     *  request to the specified url, containing a JSON-serialized Update.
-     */
-    bot.setWebHook('https://b4271aa7a89c.ngrok.io/bot' + process.env.TOKEN);
+    bot.setWebHook('https://1a76cf71e382.ngrok.io/bot' + process.env.TOKEN);
     bot.on('webhook_error', (error) => {
       logError(error);
     });
