@@ -13,4 +13,4 @@
 /node_modules
 logs
 back
-.firebase
+/.firebase
