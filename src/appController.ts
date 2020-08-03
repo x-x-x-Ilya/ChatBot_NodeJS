@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { menu, profile, isProfile, isMenu } from './keyboards/keyboards';
-import * as res from './helpers/helpText';
+import * as res from './keyboards/helpText';
 import { send } from './middleware/sendMessage';
 import { logUser } from './middleware/logging';
 import { Update } from './middleware/TelegramClasses';
