@@ -1,21 +1,5 @@
-# compiled output
-/dist
-/node_modules
-
 # Logs
-logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
-# OS
-.DS_Store
-
-# Tests
-/coverage
-/.nyc_output
 
 # IDEs and editors
 /.idea
@@ -24,14 +8,9 @@ lerna-debug.log*
 .c9/
 *.launch
 .settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 #my
-config/config.json
+/node_modules
+logs
+back
+.firebase
