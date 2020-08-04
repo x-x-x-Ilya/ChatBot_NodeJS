@@ -36,18 +36,11 @@ const dbAutoBackUp = (): void => {
   mongoInit(newBackupPath);
 }
 
-//export const job = new CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
+export const job = new CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
 
-
-/**
- * COPY public."SequelizeMeta" (name) FROM stdin;
- * \.
- */
 function mongoInit(path) {
 // mongoimport --db test --collection users < D:/mongotest/test.json --legacy
-  fs.readFile(
-            path,
-    "utf8",
+  fs.readFile(path, "utf8",
     function(error, data) {
     if (error) {
       logError(error);
@@ -56,25 +49,24 @@ function mongoInit(path) {
     // все объекты
     data = data.substring(data.indexOf('COPY'));
     data = data.substring(0, data.lastIndexOf('\\.') + 2);
-    const collections = [];
-    let i = 0;
+    let collections;
     while (data.indexOf('COPY') != -1) {
-      collections[i] = data.substring(  // объекты одной таблицы
+      collections = data.substring(  // объекты одной таблицы
         data.indexOf('COPY'),
         data.indexOf('\\.') + 2);
-      data = data.replace(collections[i], '');
-      const fields_str = collections[i].substring(
-        collections[i].indexOf('(') + 1,
-        collections[i].indexOf(')'));
+      data = data.replace(collections, '');
+      const fields_str = collections.substring(
+        collections.indexOf('(') + 1,
+        collections.indexOf(')'));
       const fields = fields_str.split(', ');   // поля таблицы
       // имя таблицы
-      let collection_name = collections[i].substring(
-        collections[i].indexOf('COPY public.') + 'COPY public.'.length,
-        collections[i].indexOf('(') - 1)
+      let collection_name = collections.substring(
+        collections.indexOf('COPY public.') + 'COPY public.'.length,
+        collections.indexOf('(') - 1)
       // значения таблицы
-      let values: string = collections[i].substring(
-        collections[i].indexOf('FROM stdin;') + 'FROM stdin;'.length + 2,
-        collections[i].indexOf('\\.'));
+      let values: string = collections.substring(
+        collections.indexOf('FROM stdin;') + 'FROM stdin;'.length + 2,
+        collections.indexOf('\\.'));
       let contenet = '[\n';
       while (values.indexOf('\n') != -1 && values.length != 0) {
         let line_values = values.substring(0, values.indexOf('\n') + 1);
@@ -105,8 +97,6 @@ function mongoInit(path) {
 
   });
 }
-
-mongoInit('C:\\project\\ChatBot_NodeJS\\back\\PostgresSQL.sqlpsql-2020-8-3.sql');
 
 // копирует данные из сформированного json файла
 //const cmd = "mongoimport --db test --collection users < D:/mongotest/test.json --legacy";
