@@ -13,7 +13,7 @@ export function logError(error: string | JSON) : void {
   console.log(error);
   fs.appendFileSync(
     './logs/_errors.txt',
-    JSON.stringify(error, null, '\t') + ' ' + new Date());
+    '\n' + JSON.stringify(error, null, '\t') + ' ' + new Date());
 }
 
 // for logging bot messages
