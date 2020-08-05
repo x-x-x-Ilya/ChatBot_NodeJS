@@ -11,17 +11,7 @@ const dir = 'C:\\project\\ChatBot_NodeJS\\back';
 
 const dbAutoBackUp = (): void => {
 
-  fs.readdir(dir, (err, files) => {
-    // delete old files
-    while (files.length >= 4) {
-      fs.unlink(dir + '\\' + files[0], function(err) {
-        if (err) {
-          logError(err);
-          throw err;
-        }
-      });
-    }
-  });
+  deleteOldFiles();
 
   // create new back up file
   const date = new Date();
@@ -35,7 +25,6 @@ const dbAutoBackUp = (): void => {
   exec(cmd, { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' });
 
   //copy to mongo
-
   mongoInit(newBackupPath);
 }
 
@@ -93,20 +82,20 @@ function mongoInit(path) {
             /*if(isNum(Date.parse(arr_values[j])))
               _ = '';*/
 
-            if(isNum(arr_values[j]))
+            if (isNum(arr_values[j]))
               _ = '';
 
-            if(arr_values[j] == 'f') {
+            if (arr_values[j] == 'f') {
               arr_values[j] = 'false';
               _ = '';
             }
 
-            if(arr_values[j] == 't') {
+            if (arr_values[j] == 't') {
               arr_values[j] = 'true';
               _ = '';
             }
 
-            if(arr_values[j] == '\\N') {
+            if (arr_values[j] == '\\N') {
               arr_values[j] = 'null';
               _ = '';
             }
@@ -127,53 +116,62 @@ function mongoInit(path) {
         while (collection_name.indexOf('"') != -1)
           collection_name = collection_name.replace('"', '');
 
-         fs.writeFile("D:\\mongotest\\" + collection_name + ".json", contenet,
-           function(error) {
-          if (error) {
-            logError(error);
-            throw error;
-          }
-
-             // удаляет старые данные
-             MongoClient.connect(url, function(err, db) {
-               if (err) throw err;
-               const dbo = db.db("test");
-               try {
-                 dbo.collection(collection_name).drop(function(err, delOK) {
-                   if (err) throw err;
-                   if (delOK) console.log("Collection deleted");
-                   db.close();
-                 });
-               } catch (e) {
-                 logError(e);
-               }
-             });
-
-             // копирует данные из сформированного json файла
-          const cmd = "mongoimport --db test --collection " +
-            collection_name + " < D:/mongotest/" + collection_name + ".json" +
-            " --legacy --jsonArray";
-          exec(cmd, { cwd: 'C:\\Program Files\\MongoDB\\Server\\4.2\\bin' },
-            function(error) {
+        fs.writeFile("D:\\mongotest\\" + collection_name + ".json", contenet,
+          function(error) {
             if (error) {
               logError(error);
               throw error;
             }
-          });
 
-        });
+            // удаляет старые данные
+            MongoClient.connect(url, function(err, db) {
+              if (err) throw err;
+              const dbo = db.db("test");
+              try {
+                dbo.collection(collection_name).drop(function(err, delOK) {
+                  if (err) throw err;
+                  if (delOK) console.log("Collection deleted");
+                  db.close();
+                });
+              } catch (e) {
+                logError(e);
+              }
+            });
+
+            // копирует данные из сформированного json файла
+            const cmd = "mongoimport --db test --collection " +
+              collection_name + " < D:/mongotest/" + collection_name + ".json" +
+              " --legacy --jsonArray";
+            exec(cmd, { cwd: 'C:\\Program Files\\MongoDB\\Server\\4.2\\bin' },
+              function(error) {
+                if (error) {
+                  logError(error);
+                  throw error;
+                }
+              });
+
+          });
       }
     });
 }
 
-function isNum(num){
+function isNum(num) {
   return !isNaN(num)
 }
 
-dbAutoBackUp();
-//export const job = new CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
+function deleteOldFiles() {
+  fs.readdir(dir, (err, files) => {
+    // delete old files
+    while (files.length >= 4) {
+      fs.unlink(dir + '\\' + files[0], function(err) {
+        if (err) {
+          logError(err);
+          throw err;
+        }
+      });
+    }
+  });
+}
 
-
-
-
-
+//dbAutoBackUp();
+export const job = new CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
