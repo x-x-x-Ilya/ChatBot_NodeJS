@@ -125,17 +125,19 @@ function mongoInit(path) {
 
             // удаляет старые данные
             MongoClient.connect(url, function(err, db) {
-              if (err) throw err;
               const dbo = db.db("test");
-              try {
-                dbo.collection(collection_name).drop(function(err, delOK) {
-                  if (err) throw err;
-                  if (delOK) console.log("Collection deleted");
-                  db.close();
+              dbo.listCollections().toArray().then((docs) => {
+                console.log('Available collections:');
+                docs.forEach((doc, idx, array) => {
+                  dbo.collection(doc.name).drop(function(err, delOK) {
+                    if (err) throw err;
+                    if (delOK) console.log("Collection deleted");
+                    db.close();
+                  });
+                }).catch((err) => {
+                  logError(err);
                 });
-              } catch (e) {
-                logError(e);
-              }
+              });
             });
 
             // копирует данные из сформированного json файла
@@ -173,5 +175,4 @@ function deleteOldFiles() {
   });
 }
 
-//dbAutoBackUp();
 export const job = new CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
