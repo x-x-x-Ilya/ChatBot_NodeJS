@@ -2,7 +2,7 @@ import { clients } from '../database/models/clients';
 
 export class ClientRepository {
 
-  async set(client: any,
+  async set(client: string | any,
             update: {email: string} | {last_name: string}): Promise<any> {
       return await client.update(
         update,
@@ -13,14 +13,16 @@ export class ClientRepository {
 
   }
 
-  async setEmail(client: any, email: string): Promise<boolean> {
+  async setEmail(client:  string | any,
+                 email: string): Promise<boolean> {
     const update = { email: email };
     const result = await this.set(client, update);
     if(result === false) return false;
     return result.dataValues.email === email;
   };
 
-  async setLastName(client: any, last_name: string): Promise<boolean> {
+  async setLastName(client: string | any,
+                    last_name: string): Promise<boolean> {
     const update = { last_name: last_name };
     const result = await this.set(client, update);
     if(result === false) return false;

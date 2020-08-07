@@ -47,7 +47,11 @@ export class AppointmentService {
     const time = data[1].split(':');
     date.setHours(parseInt(time[0]));
     date.setMinutes(parseInt(time[1]));
-    return await appointmentRepository.set(id, date, parseInt(data[2]), parseInt(data[3]));
+    await appointmentRepository.set(id,
+                                           date,
+                                           parseInt(data[2]),
+                                           parseInt(data[3]));
+    return 'Appointment created successfully';
   }
 
   async free(date: Date): Promise<string> {
@@ -60,7 +64,6 @@ export class AppointmentService {
       date: {[Op.between]: [date, nextDay]}
     }
     const appointment = await appointmentRepository.getAll(option);
-    //const appointment = await appointmentRepository.curr_day_appointment(date);
 
     if (appointment.length == 0)
       return 'We are free from 10:00 to 22:00';
@@ -137,6 +140,8 @@ export class AppointmentService {
     }
     await appointmentRepository.changeDate(appointment, date);
     mailer(user.email, 'Your visit date replaced successfully');
+    return 'Your visit date replaced successfully';
+
   }
 
 }
