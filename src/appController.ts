@@ -2,9 +2,9 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { menu, profile, isProfile, isMenu } from './keyboards/keyboards';
 import * as res from './keyboards/helpText';
 import { send } from './middleware/sendMessage';
-import { logUser } from './middleware/logging';
 import { Update } from './middleware/TelegramClasses';
 import { controller } from './controller';
+import { log } from './middleware/logging';
 
 /**
  *  Controller listening only request that includes "url/bot{Token}"
@@ -21,7 +21,7 @@ export class appController {
     const id = update.message.chat.id;
     const text = update.message.text;
 
-    logUser(id, text);
+    log('./logs/' + id + '.txt', text, 'user');
 
     // commands description
     if (text === '/l') {

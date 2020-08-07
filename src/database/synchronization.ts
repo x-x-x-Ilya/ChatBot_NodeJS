@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const database = require('./sequelize');
-import { logError } from '../middleware/logging';
+import { log } from '../middleware/logging';
 
 // database connect function
 export async function connect() : Promise<void> {
@@ -10,6 +10,6 @@ export async function connect() : Promise<void> {
     await database.sync();
     console.log('Database synchronization has been established successfully.');
   } catch (error) {
-    logError(error);
+    log('./logs/_errors.txt', error, ' ');
   }
 }

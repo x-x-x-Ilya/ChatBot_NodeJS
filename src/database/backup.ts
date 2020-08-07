@@ -1,4 +1,4 @@
-import { logError } from '../middleware/logging';
+import { log } from '../middleware/logging';
 const exec = require('child_process').exec;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CronJob = require('cron').CronJob;
@@ -32,7 +32,7 @@ function mongoInit(path) {
   fs.readFile(path, "utf8",
     function(error, data) {
       if (error) {
-        logError(error);
+        log('./logs/_errors.txt', error, ' ');
         throw error;
       }
 
@@ -119,7 +119,7 @@ function mongoInit(path) {
         fs.writeFile("D:\\mongotest\\" + collection_name + ".json", contenet,
           function(error) {
             if (error) {
-              logError(error);
+              log('./logs/_errors.txt', error, ' ');
               throw error;
             }
             // удаляет старые данные
@@ -127,7 +127,7 @@ function mongoInit(path) {
               const dbo = db.db("test");
               dbo.collection(collection_name).drop(function(err, delOK) {
                 if (err){
-                  logError(err);
+                  log('./logs/_errors.txt', err, ' ');
                   throw err;
                 }
                 if (delOK) //console.log(collection_name + " deleted");
@@ -141,7 +141,7 @@ function mongoInit(path) {
             exec(cmd, { cwd: 'C:\\Program Files\\MongoDB\\Server\\4.2\\bin' },
               function(error) {
                 if (error) {
-                  logError(error);
+                  log('./logs/_errors.txt', error, ' ');
                   throw error;
                 }
               });
@@ -161,7 +161,7 @@ function deleteOldFiles() {
     while (files.length >= 4) {
       fs.unlink(dir + '\\' + files[0], function(err) {
         if (err) {
-          logError(err);
+          log('./logs/_errors.txt', err, ' ');
           throw err;
         }
       });
@@ -176,9 +176,8 @@ function execShellCommand(cmd) {
     exec(cmd,
       { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' },
       (error, stdout, stderr) => {
-      if (error) {
-        logError(error);
-      }
+      if (error)
+        log('./logs/_errors.txt', error, ' ');
       resolve(stdout? stdout : stderr);
     });
   });

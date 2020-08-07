@@ -1,4 +1,4 @@
-import { logError } from '../middleware/logging';
+import { log } from '../middleware/logging';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const firebase = require("firebase/app");
 // Add the Firebase products that you want to use
@@ -27,7 +27,7 @@ export const writeClientData = (id: number, first_name: string, email: string, l
       deleted: false
     },function(e) {
       if (e) {
-        logError(e);
+        log('./logs/_errors.txt', e, ' ');
       } else {
         // Data saved successfully!
       }
@@ -39,7 +39,7 @@ export const updateClientEmail = (id: number, email: string): void => {
     email: email
   }, function(e) {
     if (e) {
-      logError(e);
+      log('./logs/_errors.txt', e, ' ');
     } else {
       // Data saved successfully!
     }
@@ -51,7 +51,7 @@ export const updateClientLastName = (id: number, last_name: string): void  => {
     last_name: last_name
   }, function(e) {
     if (e) {
-      logError(e);
+      log('./logs/_errors.txt', e, ' ');
     } else {
       // Data saved successfully!
     }
