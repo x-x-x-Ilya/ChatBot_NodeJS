@@ -6,29 +6,17 @@ import { logError } from '../middleware/logging';
 
 export class AppointmentRepository {
 
-  async booked(id: number): Promise<Array<any>> {
+  getAll(id: number, option: any) {
     return appointments.findAll({
       where: {
         client_id: id, deleted: false,
-        date: { [Op.gte]: new Date() },
+        date: option,
       },
       attributes: ['date', 'id'],
-      include: [{
-          model: barbers, attributes: ['first_name', 'last_name'],
-      },
-        {
-          model: services, attributes: ['name'],
-        },
+      include: [
+        { model: barbers, attributes: ['first_name', 'last_name'] },
+        { model: services, attributes: ['name'] },
       ],
-    });
-  }
-
-  async history(id: number): Promise<Array<any>> {
-    return appointments.findAll({
-      where: {
-        client_id: id, deleted: false,
-        date: { [Op.lte]: new Date(), },
-      }
     });
   }
 

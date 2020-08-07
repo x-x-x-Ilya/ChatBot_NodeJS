@@ -1,16 +1,34 @@
 import { AppointmentRepository } from '../repositories/AppointmentRepository';
 import { ClientService } from './ClientService';
 import { mailer } from '../middleware/nodemailer';
+import { Op } from 'sequelize';
 const appointmentRepository = new AppointmentRepository();
 
 export class AppointmentService {
 
-  async booked(id: number): Promise<Array<any>> {
-    return await appointmentRepository.booked(id);
+  async booked(id: number): Promise<string> {
+    const option = { [Op.gte]: new Date() };
+    const appointments = await appointmentRepository.getAll(id, option);
+    let Response = '\r\n';
+    for (let i = 0; i < appointments.length; i++) {
+      Response += '[' + appointments[i].id + '] ' +
+        appointments[i].date + ' ' +
+        appointments[i].service.name + ' ' +
+        appointments[i].barber.first_name + ' ' +
+        appointments[i].barber.last_name + '\r\n';
+    }
+    return Response;
   }
 
-  async history(id: number): Promise<Array<any>> {
-    return await appointmentRepository.history(id);
+  async history(id: number): Promise<string> {
+    const option = { [Op.lte]: new Date() };
+    const allAppointments = await appointmentRepository.getAll(id, option);
+    let Response = '\r\n';
+    for (let i = 0; i < allAppointments.length; i++) {
+      Response += '[' + allAppointments[i].id + '] ' +
+        allAppointments[i].date + '\r\n';
+    }
+    return Response;
   }
 
   async set(id: number, text: string): Promise<any> {

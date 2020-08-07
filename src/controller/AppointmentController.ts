@@ -6,26 +6,11 @@ const appointmentService = new AppointmentService();
 export class AppointmentController {
 
   async booked(msg: Message): Promise<string> {
-    const appointments = await appointmentService.booked(msg.chat.id);
-      let Response = '\r\n';
-      for (let i = 0; i < appointments.length; i++) {
-        Response += '[' + appointments[i].id + '] ' +
-          appointments[i].date + ' ' +
-          appointments[i].service.name + ' ' +
-          appointments[i].barber.first_name + ' ' +
-          appointments[i].barber.last_name + '\r\n';
-      }
-      return Response;
+    return await appointmentService.booked(msg.chat.id);
   }
 
   async history(msg: Message): Promise<string> {
-    const allAppointments = await appointmentService.history(msg.chat.id);
-      let Response = '\r\n';
-      for (let i = 0; i < allAppointments.length; i++) {
-        Response += '[' + allAppointments[i].id + '] ' +
-          allAppointments[i].date + '\r\n';
-      }
-      return Response;
+    return await appointmentService.history(msg.chat.id);
   }
 
   async free(cmd: string): Promise<any> {
