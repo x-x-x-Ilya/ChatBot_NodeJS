@@ -4,13 +4,11 @@ export class ClientRepository {
 
   async set(client: string | any,
             update: {email: string} | {last_name: string}): Promise<any> {
-      return await client.update(
-        update,
+      return await client.update(update,
         {
           returning: true,
           plain: true
         });
-
   }
 
   async setEmail(client:  string | any,
@@ -43,4 +41,5 @@ export class ClientRepository {
         deleted: false,
       });
   }
+
 }

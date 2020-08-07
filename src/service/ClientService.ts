@@ -68,4 +68,5 @@ export class ClientService {
     if (client == null)
        await clientRepository.addClient(id, first_name, last_name);
   }
+
 }

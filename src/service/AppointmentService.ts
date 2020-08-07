@@ -11,18 +11,18 @@ export class AppointmentService {
       {
         client_id: id,
         deleted: false,
-        date: {[Op.gte]: new Date()}
+        date: { [Op.gte]: new Date() }
       }
     const appointments = await appointmentRepository.getAll(option);
-    let Response = '\r\n';
+    let response = '\r\n';
     for (let i = 0; i < appointments.length; i++) {
-      Response += '[' + appointments[i].id + '] ' +
+      response += '[' + appointments[i].id + '] ' +
         appointments[i].date + ' ' +
         appointments[i].service.name + ' ' +
         appointments[i].barber.first_name + ' ' +
         appointments[i].barber.last_name + '\r\n';
     }
-    return Response;
+    return response;
   }
 
   async history(id: number): Promise<string> {
@@ -48,9 +48,9 @@ export class AppointmentService {
     date.setHours(parseInt(time[0]));
     date.setMinutes(parseInt(time[1]));
     await appointmentRepository.set(id,
-                                           date,
-                                           parseInt(data[2]),
-                                           parseInt(data[3]));
+      date,
+      parseInt(data[2]),
+      parseInt(data[3]));
     return 'Appointment created successfully';
   }
 
@@ -61,7 +61,7 @@ export class AppointmentService {
     nextDay.setDate(nextDay.getDate() + 1);
     const option = {
       deleted: false,
-      date: {[Op.between]: [date, nextDay]}
+      date: { [Op.between]: [date, nextDay] }
     }
     const appointment = await appointmentRepository.getAll(option);
 
@@ -112,11 +112,11 @@ export class AppointmentService {
     const appointment = await this.findOne(id, parseInt(data[0]));
 
     let update_id = parseInt(data[1]);
-    if(update_id == undefined) update_id = 1;
+    if (update_id == undefined) update_id = 1;
     let update;
-    if(update_field === 'barber_id')
+    if (update_field === 'barber_id')
       update = { barber_id: update_id }
-    else if(update_field === 'service_id')
+    else if (update_field === 'service_id')
       update = { service_id: update_id }
     else if (update_field === 'deleted')
       update = { deleted: true };
@@ -126,14 +126,14 @@ export class AppointmentService {
   }
 
   async changeDate(id: number, text: string): Promise<any> {
-    const user : any = ClientService.prototype.profile(id);
+    const user: any = ClientService.prototype.profile(id);
     const data = text.split(' ');
     const appointment = await this.findOne(id, parseInt(data[0]));
 
     if (data[1] == undefined)
       data[1] = appointment.date;
     const date = new Date(data[1]);
-    if(data[2] != undefined) {
+    if (data[2] != undefined) {
       const time = data[2].split(':');
       date.setHours(parseInt(time[0]));
       date.setMinutes(parseInt(time[1]));
@@ -141,7 +141,6 @@ export class AppointmentService {
     await appointmentRepository.changeDate(appointment, date);
     mailer(user.email, 'Your visit date replaced successfully');
     return 'Your visit date replaced successfully';
-
   }
 
 }
