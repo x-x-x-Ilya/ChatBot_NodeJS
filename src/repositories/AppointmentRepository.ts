@@ -1,4 +1,3 @@
-import { Op } from 'sequelize';
 import { services } from '../database/models/services';
 import { barbers } from '../database/models/barbers';
 import { appointments } from '../database/models/appointments';
@@ -6,28 +5,14 @@ import { logError } from '../middleware/logging';
 
 export class AppointmentRepository {
 
-  getAll(id: number, option: any) {
+  getAll(option: any) {
     return appointments.findAll({
-      where: {
-        client_id: id, deleted: false,
-        date: option,
-      },
+      where: option,
       attributes: ['date', 'id'],
       include: [
         { model: barbers, attributes: ['first_name', 'last_name'] },
         { model: services, attributes: ['name'] },
       ],
-    });
-  }
-
-  async curr_day_appointment(check_date: Date): Promise<Array<any>> {
-    const nextDay = new Date(check_date.getTime());
-    nextDay.setDate(nextDay.getDate() + 1);
-    return appointments.findAll({
-      where: {
-        date: { [Op.between]: [check_date, nextDay] },
-        deleted: false,
-      },
     });
   }
 

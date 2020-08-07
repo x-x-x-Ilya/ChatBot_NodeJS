@@ -7,8 +7,13 @@ const appointmentRepository = new AppointmentRepository();
 export class AppointmentService {
 
   async booked(id: number): Promise<string> {
-    const option = { [Op.gte]: new Date() };
-    const appointments = await appointmentRepository.getAll(id, option);
+    const option =
+      {
+        client_id: id,
+        deleted: false,
+        date: {[Op.gte]: new Date()}
+      }
+    const appointments = await appointmentRepository.getAll(option);
     let Response = '\r\n';
     for (let i = 0; i < appointments.length; i++) {
       Response += '[' + appointments[i].id + '] ' +
@@ -21,8 +26,13 @@ export class AppointmentService {
   }
 
   async history(id: number): Promise<string> {
-    const option = { [Op.lte]: new Date() };
-    const allAppointments = await appointmentRepository.getAll(id, option);
+    const option =
+      {
+        client_id: id,
+        deleted: false,
+        date: { [Op.lte]: new Date() }
+      }
+    const allAppointments = await appointmentRepository.getAll(option);
     let Response = '\r\n';
     for (let i = 0; i < allAppointments.length; i++) {
       Response += '[' + allAppointments[i].id + '] ' +
@@ -37,7 +47,15 @@ export class AppointmentService {
 
   async free(date: Date): Promise<string> {
     if (date < new Date()) return 'Date should be in future';
-    const appointment = await appointmentRepository.curr_day_appointment(date);
+
+    const nextDay = new Date(date.getTime());
+    nextDay.setDate(nextDay.getDate() + 1);
+    const option = {
+      deleted: false,
+      date: {[Op.between]: [date, nextDay]}
+    }
+    const appointment = await appointmentRepository.getAll(option);
+    //const appointment = await appointmentRepository.curr_day_appointment(date);
 
     if (appointment.length == 0)
       return 'We are free from 10:00 to 22:00';
