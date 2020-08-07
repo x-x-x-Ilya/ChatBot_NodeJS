@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 
-export const log = (file: string, text: any, author: string): void => {
+export const log = (file: string,
+                    text: string | any,
+                    author: string): void => {
   if(author === ' ') console.log(text);
   fs.appendFileSync(file,
     '\n' + author + ': ' +

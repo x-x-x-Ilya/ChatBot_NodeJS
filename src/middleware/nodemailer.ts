@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 
-export const mailer = ((email, message) =>{
+export const mailer = ((email: string, message: string): void => {
   const mailTransport = nodemailer.createTransport({
     service: 'gmail',
     secure: false,

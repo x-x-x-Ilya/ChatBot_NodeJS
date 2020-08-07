@@ -24,54 +24,54 @@ export class appController {
     log('./logs/' + id + '.txt', text, 'user');
 
     // commands description
-    if (text === '/l') {
+    if (text === res.l) {
       const profile = await controller.client.profile(message);
       send(id, profile + res.onL, menu);
-    } else if (text === '/sedit') {
+    } else if (text === res.sedit) {
       const booked = await controller.appointment.booked(message);
       const list = await controller.service.amenitiesList();
       send(id, booked + '\n' + list + res.onSedit, menu);
-    } else if (text === '/m') {
+    } else if (text === res.m) {
       const profile = await controller.client.profile(message);
       send(id, profile + res.onM, menu);
-    } else if (text === '/check')
+    } else if (text === res.check)
       send(id, res.onCheck, menu);
-    else if (text === '/sign')
+    else if (text === res.sign)
       send(id, res.onSign, menu);
-    else if (text === '/dedit') {
+    else if (text === res.dedit) {
       const booked = await controller.appointment.booked(message);
       send(id, booked + res.onDedit, menu);
-    } else if (text === '/delete') {
+    } else if (text === res.del) {
       const booked = await controller.appointment.booked(message);
       send(id, booked + res.onDelete, menu);
-    } else if (text === '/bedit') {
+    } else if (text === res.bedit) {
       const booked = await controller.appointment.booked(message);
       const list = await controller.service.barberList();
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
     // commands
-    else if (text.indexOf('/l') !== -1) {
+    else if (text.indexOf(res.l) !== -1) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
-    } else if (text.indexOf('/m') !== -1) {
+    } else if (text.indexOf(res.m) !== -1) {
       const set = await controller.client.setEmail(text, id);
       send(id, set, profile);
-    } else if (text.indexOf('/check') !== -1) {
+    } else if (text.indexOf(res.check) !== -1) {
       const free = await controller.appointment.free(text);
       send(id, free, menu);
-    } else if (text.indexOf('/sign') !== -1) {
+    } else if (text.indexOf(res.sign) !== -1) {
       const set = await controller.appointment.set(id, text);
       send(id, set, menu);
-    } else if (text.indexOf('/bedit') !== -1) {
+    } else if (text.indexOf(res.bedit) !== -1) {
       const change = await controller.appointment.changeBarber(id, text);
       send(id, change, menu);
-    } else if (text.indexOf('/sedit') !== -1) {
+    } else if (text.indexOf(res.sedit) !== -1) {
       const change = await controller.appointment.changeService(id, text);
       send(id, change, menu);
-    } else if ((text.indexOf('/dedit') !== -1)) {
+    } else if ((text.indexOf(res.dedit) !== -1)) {
       const change = await controller.appointment.changeDate(id, text);
       send(id, change, menu);
-    } else if ((text.indexOf('/delete') !== -1)) {
+    } else if ((text.indexOf(res.del) !== -1)) {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
