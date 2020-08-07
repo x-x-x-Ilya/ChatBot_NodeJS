@@ -1,63 +1,59 @@
 import { clients } from '../database/models/clients';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('../database/sequelize');
+import { logError } from '../middleware/logging';
+
 export class ClientRepository {
 
-  async setEmail(email: string, id: number): Promise<string> {
-    const t = await Sequelize.transaction();
+  async set(client: any,
+            update: {email: string} | {last_name: string}): Promise<any> {
     try {
-      const client = await clients.findOne({
-        where: { id: id },
-      });
-      await client.update({
-        email: email,
-      });
-      await t.commit();
-      return 'Your email updated';
-    } catch (e) {
-      await t.rollback();
-      return 'Sorry. something wrong, please, try again later...';
+      return await client.update(
+        update,
+        {
+          returning: true,
+          plain: true
+        });
+    } catch (error) {
+      logError(error);
+      return false;
     }
   }
 
-  async setLastName(last_name: string, id: number): Promise<string> {
-    const t = await Sequelize.transaction();
-    try {
-      const client = await clients.findOne({
-        where: { id: id },
-      });
-      await client.update({
-        last_name: last_name,
-      });
-      await t.commit();
-      return 'Your last_name updated';
-    } catch (e) {
-      await t.rollback();
-      return 'Sorry. something wrong, please, try again later...';
-    }
+  async setEmail(client: any, email: string): Promise<boolean> {
+    const update = { email: email };
+    const result = await this.set(client, update);
+    if(result === false) return false;
+    return result.dataValues.email === email;
+  };
+
+  async setLastName(client: any, last_name: string): Promise<boolean> {
+    const update = { last_name: last_name };
+    const result = await this.set(client, update);
+    if(result === false) return false;
+    return result.dataValues.last_name === last_name;
   }
+
 
   async profile(id: number): Promise<any> {
-    return clients.findOne({
-      where: {
-        id: id,
-      }
-    });
+    try {
+      return clients.findOne({ where: { id: id } });
+    } catch (e) {
+      logError(e);
+      return null;
+    }
   }
 
-  async addClient(
-    id: number,
-    first_name: string,
-    last_name: string): Promise<any> {
-    const client = await clients.findOne({
-      where: { id: id },
-    });
-    if (client == null)
-      return clients.create({
+  async addClient(id: number, first_name: string,
+                  last_name: string | undefined | null): Promise<any> {
+    try {
+       return await clients.create({
         id: id,
         first_name: first_name,
         last_name: last_name,
         deleted: false,
       });
+    } catch (e) {
+      logError(e);
+      return null;
+    }
   }
 }

@@ -10,22 +10,7 @@ export class ClientController {
   }
 
   async profile(msg: Message): Promise<string> {
-    const client = await clientService.profile(msg.chat.id);
-
-    let add_mess = "";
-    if (client.last_name == null) {
-      client.last_name = 'not indicated';
-      add_mess += '\r\nUse /l to send last name.';
-    }
-    if (client.email == null) {
-      client.email = 'not indicated';
-      add_mess += '\r\nUse /m to send email.';
-    }
-
-    return 'First name: ' + client.first_name +
-       '\r\nLast name: ' + client.last_name +
-       '\r\nEmail: ' + client.email +
-       add_mess;
+    return await clientService.profile(msg.chat.id);
   }
 
   async setLastName(cmd: string, id: number): Promise<any> {
@@ -33,9 +18,8 @@ export class ClientController {
     return await clientService.setLastName(last_name, id);
   }
 
-  async addClient(id: number,
-                  first_name: string,
-                  last_name: string ): Promise<any> {
+  async addClient(id: number, first_name: string,
+                  last_name: string | undefined | null ): Promise<any> {
     return await clientService.addClient(id, first_name, last_name);
   }
 }
