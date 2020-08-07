@@ -12,7 +12,6 @@ const dir = 'C:\\project\\ChatBot_NodeJS\\back';
 const dbAutoBackUp = (): void => {
 
   deleteOldFiles();
-
   // create new back up file
   const date = new Date();
   const newBackup =
@@ -22,10 +21,11 @@ const dbAutoBackUp = (): void => {
   const cmd = 'pg_dump --no-password -U' + process.env.USER_NAME + ' ' +
     process.env.DB_NAME + ' > ' + newBackupPath;
 
-  exec(cmd, { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' });
+  execShellCommand(cmd).then(() => {
+    //copy to mongo
+    mongoInit(newBackupPath);
+  });
 
-  //copy to mongo
-  mongoInit(newBackupPath);
 }
 
 function mongoInit(path) {
@@ -122,24 +122,18 @@ function mongoInit(path) {
               logError(error);
               throw error;
             }
-
             // удаляет старые данные
             MongoClient.connect(url, function(err, db) {
               const dbo = db.db("test");
-              dbo.listCollections().toArray().then((docs) => {
-                console.log('Available collections:');
-                docs.forEach((doc, idx, array) => {
-                  dbo.collection(doc.name).drop(function(err, delOK) {
-                    if (err) throw err;
-                    if (delOK) console.log("Collection deleted");
-                    db.close();
-                  });
-                }).catch((err) => {
+              dbo.collection(collection_name).drop(function(err, delOK) {
+                if (err){
                   logError(err);
-                });
+                  throw err;
+                }
+                if (delOK) //console.log(collection_name + " deleted");
+                db.close();
               });
             });
-
             // копирует данные из сформированного json файла
             const cmd = "mongoimport --db test --collection " +
               collection_name + " < D:/mongotest/" + collection_name + ".json" +
@@ -172,6 +166,21 @@ function deleteOldFiles() {
         }
       });
     }
+  });
+}
+
+// to use Promise with exec
+function execShellCommand(cmd) {
+  const exec = require('child_process').exec;
+  return new Promise((resolve, reject) => {
+    exec(cmd,
+      { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' },
+      (error, stdout, stderr) => {
+      if (error) {
+        logError(error);
+      }
+      resolve(stdout? stdout : stderr);
+    });
   });
 }
 
