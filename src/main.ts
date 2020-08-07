@@ -6,34 +6,32 @@ import { logError } from './middleware/logging';
 import { Init } from './database/models';
 import { firebaseDatabase } from './database/firebase';
 import { job } from './database/backup';
+import { onError} from './middleware/errorHandler';
+
+const port = 80;
+const address = '';   // use "ngrok http 80" to get address
 
 export const bot = new TelegramBot(process.env.TOKEN,
-  { webHook: { port: 80 } });
+  { webHook: { port: port } });
 
-bootstrap(bot);
+bootstrap(bot).then(() => {
+ console.log('bot has been started');
+});
 
-// app launch
-async function bootstrap(bot: TelegramBot) {
+async function bootstrap(bot: TelegramBot): Promise<void> {
   try {
-    await botSetup(bot);
+    // bot
+    await bot.setWebHook(address + '/bot' + process.env.TOKEN);
+    await onError(bot);
+    // database
     await connect();
-    new Init();
+    await new Init();
+    await firebaseDatabase();
+    await job.start();
+    // app
     const app = await NestFactory.create(AppModule);
-    await app.listen(80);
-    firebaseDatabase();
-    job.start();
+    await app.listen(port);
   } catch (error) {
     logError(error);
-  }
-}
-
-async function botSetup(bot: TelegramBot) {
-  try {
-    bot.setWebHook('https://1a76cf71e382.ngrok.io/bot' + process.env.TOKEN);
-    bot.on('webhook_error', (error) => {
-      logError(error);
-    });
-  } catch (e) {
-    logError(e);
   }
 }
