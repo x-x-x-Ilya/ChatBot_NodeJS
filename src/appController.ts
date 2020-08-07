@@ -8,11 +8,12 @@ import { controller } from './controller';
 import { isCommand } from './middleware/commandValidator';
 
 /**
- *  Controller listen only request that includes "url/bot{Token}"
+ *  Controller listening only request that includes "url/bot{Token}"
  */
 
 @Controller('bot' + process.env.TOKEN)
 export class appController {
+
   @Post()
   async onMessage(@Body() update: Update): Promise<void> {
 
@@ -21,15 +22,15 @@ export class appController {
     const id = update.message.chat.id;
     const text = update.message.text;
 
-    console.log(update);
     logUser(id, text);
 
+    // commands description
     if (text === '/l') {
       const profile = await controller.client.profile(message);
       send(id, profile + res.onL, menu);
     } else if (text === '/sedit') {
       const booked = await controller.appointment.booked(message);
-      const list = await controller.service.list()
+      const list = await controller.service.amenitiesList();
       send(id, booked + '\n' + list + res.onSedit, menu);
     } else if (text === '/m') {
       const profile = await controller.client.profile(message);
@@ -46,9 +47,10 @@ export class appController {
       send(id, booked + res.onDelete, menu);
     } else if (text === '/bedit') {
       const booked = await controller.appointment.booked(message);
-      const list = await controller.barber.list();
+      const list = await controller.service.barberList();
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
+    // commands
     else if (isCommand(text, '/l', id)) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
@@ -74,25 +76,27 @@ export class appController {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
+    // buttons
     else if (text === isMenu.Back)
       send(id, res.onHelp, menu);
     else if (text === isMenu.BarberList)
-      send(id, await controller.barber.list(), menu);
+      send(id, await controller.service.barberList(), menu);
     else if (text === isProfile.Booked)
       send(id, await controller.appointment.booked(message), menu);
     else if (text === isProfile.History)
       send(id, await controller.appointment.history(message), menu);
     else if (text === isMenu.PriceList)
-      send(id, await controller.service.list(), menu);
+      send(id, await controller.service.amenitiesList(), menu);
     else if (text === isMenu.Profile)
       send(id, await controller.client.profile(message), profile);
-
+    // on start message
     else if (text === '/start') {
-      await controller.client.addClient(id, message.chat.first_name,
-        message.chat.last_name);
-      send(id, 'Hello, ' + message.chat.first_name +
-        ', i am Barber Bot. Can i help you?', menu);
-    } else
+      const firstName = message.chat.first_name;
+      await controller.client.addClient(id, firstName, message.chat.last_name);
+      send(id, 'Hello, ' + firstName + '. Can i help you?', menu);
+    }
+    // if unknown message
+    else
       send(id, res.onHelp, menu);
   }
 }
