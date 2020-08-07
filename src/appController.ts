@@ -51,28 +51,28 @@ export class appController {
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
     // commands
-    else if (isCommand(text, '/l', id)) {
+    else if (isCommand(text, '/l')) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
-    } else if (isCommand(text, '/m', id)) {
+    } else if (isCommand(text, '/m')) {
       const set = await controller.client.setEmail(text, id);
       send(id, set, profile);
-    } else if (isCommand(text, '/check', id)) {
+    } else if (isCommand(text, '/check')) {
       const free = await controller.appointment.free(text);
       send(id, free, menu);
-    } else if (isCommand(text, '/sign', id)) {
+    } else if (isCommand(text, '/sign')) {
       const set = await controller.appointment.set(id, text);
       send(id, set, menu);
-    } else if (isCommand(text, '/bedit', id)) {
+    } else if (isCommand(text, '/bedit')) {
       const change = await controller.appointment.changeBarber(id, text);
       send(id, change, menu);
-    } else if (isCommand(text, '/sedit', id)) {
+    } else if (isCommand(text, '/sedit')) {
       const change = await controller.appointment.changeService(id, text);
       send(id, change, menu);
-    } else if (isCommand(text, '/dedit', id)) {
+    } else if (isCommand(text, '/dedit')) {
       const change = await controller.appointment.changeDate(id, text);
       send(id, change, menu);
-    } else if (isCommand(text, '/delete', id)) {
+    } else if (isCommand(text, '/delete')) {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
