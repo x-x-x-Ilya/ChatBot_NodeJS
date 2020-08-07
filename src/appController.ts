@@ -5,7 +5,6 @@ import { send } from './middleware/sendMessage';
 import { logUser } from './middleware/logging';
 import { Update } from './middleware/TelegramClasses';
 import { controller } from './controller';
-import { isCommand } from './middleware/commandValidator';
 
 /**
  *  Controller listening only request that includes "url/bot{Token}"
@@ -51,28 +50,28 @@ export class appController {
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
     // commands
-    else if (isCommand(text, '/l')) {
+    else if (text.indexOf('/l') !== -1) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
-    } else if (isCommand(text, '/m')) {
+    } else if (text.indexOf('/m') !== -1) {
       const set = await controller.client.setEmail(text, id);
       send(id, set, profile);
-    } else if (isCommand(text, '/check')) {
+    } else if (text.indexOf('/check') !== -1) {
       const free = await controller.appointment.free(text);
       send(id, free, menu);
-    } else if (isCommand(text, '/sign')) {
+    } else if (text.indexOf('/sign') !== -1) {
       const set = await controller.appointment.set(id, text);
       send(id, set, menu);
-    } else if (isCommand(text, '/bedit')) {
+    } else if (text.indexOf('/bedit') !== -1) {
       const change = await controller.appointment.changeBarber(id, text);
       send(id, change, menu);
-    } else if (isCommand(text, '/sedit')) {
+    } else if (text.indexOf('/sedit') !== -1) {
       const change = await controller.appointment.changeService(id, text);
       send(id, change, menu);
-    } else if (isCommand(text, '/dedit')) {
+    } else if ((text.indexOf('/dedit') !== -1)) {
       const change = await controller.appointment.changeDate(id, text);
       send(id, change, menu);
-    } else if (isCommand(text, '/delete')) {
+    } else if ((text.indexOf('/delete') !== -1)) {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
