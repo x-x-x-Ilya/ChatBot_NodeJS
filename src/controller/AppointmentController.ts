@@ -30,12 +30,12 @@ export class AppointmentController {
 
   async changeBarber(user_id: number, cmd: string): Promise<any> {
     const change = cmd.substring(7)
-    return await appointmentService.changeBarber(user_id, change);
+    return await appointmentService.change(user_id, change, 'barber_id');
   }
 
   async changeService(user_id: number, cmd: string): Promise<any> {
   const change = cmd.substring(7)
-    return await appointmentService.changeService(user_id, change);
+    return await appointmentService.change(user_id, change, 'service_id');
   }
 
   async changeDate(user_id: number, cmd: string): Promise<any> {
@@ -45,7 +45,7 @@ export class AppointmentController {
 
   async delete(user_id: number, cmd: string): Promise<any> {
     const del = cmd.substring(8)
-    return await appointmentService.delete(user_id, del);
+    return await appointmentService.change(user_id, del,'deleted');
   }
 
 }

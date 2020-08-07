@@ -42,7 +42,12 @@ export class AppointmentService {
   }
 
   async set(id: number, text: string): Promise<any> {
-    return await appointmentRepository.set(id, text);
+    const data = text.split(' ');
+    const date = new Date(data[0]);
+    const time = data[1].split(':');
+    date.setHours(parseInt(time[0]));
+    date.setMinutes(parseInt(time[1]));
+    return await appointmentRepository.set(id, date, parseInt(data[2]), parseInt(data[3]));
   }
 
   async free(date: Date): Promise<string> {
@@ -89,38 +94,49 @@ export class AppointmentService {
     return R;
   }
 
-  // 3 change functions && delete => 1 update function
-  async changeBarber(id: number, text: string): Promise<any> {
-    const user : any = ClientService.prototype.profile(id);
-    mailer(user.email, 'Your barber replaced successfully');
-    const data = text.split(' ');
-    return await appointmentRepository.changeBarber(
-      id,
-      parseInt(data[0]),
-      parseInt(data[1]));
+  async findOne(id: number, appointment_id: number): Promise<any> {
+    const options = {
+      deleted: false,
+      client_id: id,
+      id: appointment_id
+    }
+    return appointmentRepository.findOne(options);
   }
 
-  async changeService(id: number, text: string): Promise<any> {
+  async change(id: number, text: string, update_field: string): Promise<any> {
+    const user: any = ClientService.prototype.profile(id);
     const data = text.split(' ');
+    const appointment = await this.findOne(id, parseInt(data[0]));
 
-    const user : any = ClientService.prototype.profile(id);
-    mailer(user.email, 'Your visit service replaced successfully');
-    return await appointmentRepository.changeService(
-      id,
-      parseInt(data[0]),
-      parseInt(data[1]));
+    let update_id = parseInt(data[1]);
+    if(update_id == undefined) update_id = 1;
+    let update;
+    if(update_field === 'barber_id')
+      update = { barber_id: update_id }
+    else if(update_field === 'service_id')
+      update = { service_id: update_id }
+    else if (update_field === 'deleted')
+      update = { deleted: true };
+    await appointmentRepository.update(appointment, update);
+    mailer(user.email, 'Your appointment updated successfully');
+    return 'Operation end\'s successfully';
   }
 
   async changeDate(id: number, text: string): Promise<any> {
     const user : any = ClientService.prototype.profile(id);
-    mailer(user.email, 'Your visit date replaced successfully');
-    return await appointmentRepository.changeDate(id, text);
-  }
+    const data = text.split(' ');
+    const appointment = await this.findOne(id, parseInt(data[0]));
 
-  async delete(user_id: number, text: string): Promise<any>{
-    const user : any = ClientService.prototype.profile(user_id);
-    mailer(user.email, 'Your appointment canceled successfully');
-    return await appointmentRepository.delete(user_id, text);
+    if (data[1] == undefined)
+      data[1] = appointment.date;
+    const date = new Date(data[1]);
+    if(data[2] != undefined) {
+      const time = data[2].split(':');
+      date.setHours(parseInt(time[0]));
+      date.setMinutes(parseInt(time[1]));
+    }
+    await appointmentRepository.changeDate(appointment, date);
+    mailer(user.email, 'Your visit date replaced successfully');
   }
 
 }
