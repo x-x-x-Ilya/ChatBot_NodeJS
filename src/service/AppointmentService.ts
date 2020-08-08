@@ -64,7 +64,6 @@ export class AppointmentService {
 
   async free(date: Date): Promise<string> {
     if (date < new Date()) return 'Date should be in future';
-
     const nextDay = new Date(date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
     const option = {
@@ -72,37 +71,19 @@ export class AppointmentService {
       date: { [Op.between]: [date, nextDay] }
     }
     const appointment = await appointmentRepository.getAll(option);
-
-    if (appointment.length == 0)
-      return 'We are free from 10:00 to 22:00';
-
-    let found_in_sec = [];
-    for (let i = 0; i < appointment.length; i++) {
-      found_in_sec.push(
-        appointment[i].date.getHours() * 3600 +
-        appointment[i].date.getMinutes() * 60,
-      );
+    if (appointment.length === 0) return 'We are free from 10:00 to 22:00';
+      let response = 'Appointments that day:\n';
+    let _, __;
+    for(let i = 0; i < appointment.length; i++) {
+      _ = '';
+      __ = '';
+      if(appointment[i].date.getMinutes().toString().length === 1)
+        _ = '0';
+      if(appointment[i].date.getHours().toString().length === 1)
+        __ = '0';
+        response += __ + appointment[i].date.getHours() + ':' + _ + appointment[i].date.getMinutes() + '\n';
     }
-    found_in_sec = found_in_sec.sort();
-    let R = 'We are free:\r\n';
-    if (found_in_sec[0] != 36000)
-      R += 'from 10:00 to ' +
-        found_in_sec[0] / 3600 + ':' +
-        (found_in_sec[0] % 3600) / 60 + '\r\n';
-    for (let i = 0; i < found_in_sec.length - 1; i++) {
-      R += 'from ' +
-        (found_in_sec[i] + 3600) / 3600 + ':' +
-        ((found_in_sec[i] + 3600) % 3600) / 60 + ' to ' +
-        found_in_sec[i + 1] / 3600 + ':' +
-        (found_in_sec[i + 1] % 3600) / 60 + '\r\n';
-    }
-    if (found_in_sec[found_in_sec.length - 1] != 79200) {
-      R += 'from ' +
-        found_in_sec[found_in_sec.length - 1] / 3600 + ':' +
-        (found_in_sec[found_in_sec.length - 1] % 3600) / 60 +
-        ' to 22:00\r\n';
-    }
-    return R;
+    return response;
   }
 
   async findOne(id: number, appointment_id: number): Promise<any> {

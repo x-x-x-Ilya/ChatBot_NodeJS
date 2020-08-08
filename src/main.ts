@@ -6,7 +6,7 @@ import { onError} from './middleware/errorHandler';
 import { database } from './database';
 
 // use "ngrok http 80" to get address
-const address = 'https://6b7a1664a1f2.ngrok.io';
+const address = 'https://f439ff27178c.ngrok.io';
 const port = 80;
 
 export const bot = new TelegramBot(process.env.TOKEN,
