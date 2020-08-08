@@ -47,11 +47,19 @@ export class AppointmentService {
     const time = data[1].split(':');
     date.setHours(parseInt(time[0]));
     date.setMinutes(parseInt(time[1]));
-    await appointmentRepository.set(id,
-      date,
-      parseInt(data[2]),
-      parseInt(data[3]));
-    return 'Appointment created successfully';
+    const date_before = new Date(date.getTime() - 3600000);
+    const date_after = new Date(date.getTime() + 3600000);
+    const options = { date: { [Op.between]: [date_before, date_after] } };
+    const appointments = await appointmentRepository.getAll(options);
+    if (appointments.length === 0) {
+      await appointmentRepository.set(id,
+        date,
+        parseInt(data[2]),
+        parseInt(data[3]));
+      return 'Appointment created successfully';
+    } else {
+      return 'Sorry, we are busy at that time, please choice another';
+    }
   }
 
   async free(date: Date): Promise<string> {

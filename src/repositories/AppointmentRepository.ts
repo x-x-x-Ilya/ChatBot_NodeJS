@@ -1,6 +1,7 @@
 import { services } from '../database/models/services';
 import { barbers } from '../database/models/barbers';
 import { appointments } from '../database/models/appointments';
+import { Op, where } from 'sequelize';
 
 export class AppointmentRepository {
 
@@ -30,7 +31,7 @@ export class AppointmentRepository {
         returning: true,
         plain: true
       });
-    if(result === false) return false;
+    if (result === false) return false;
     return result.dataValues.date === date;
   }
 
@@ -44,4 +45,5 @@ export class AppointmentRepository {
         deleted: false,
       });
   }
+
 }
