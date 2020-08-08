@@ -16,20 +16,17 @@ export const firebaseDatabase = () : void => {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
   };
   firebase.initializeApp(config);
-  const database = firebase.database();
 };
 
 export const writeClientData = (id: number, first_name: string, email: string, last_name: string) : void => {
     firebase.database().ref('clients/' + id).set({
       first_name: first_name,
       email: email,
-      profile_picture: last_name,
+      last_name: last_name,
       deleted: false
     },function(e) {
       if (e) {
         log('./logs/_errors.txt', e, ' ');
-      } else {
-        // Data saved successfully!
       }
     })
 };
@@ -40,8 +37,6 @@ export const updateClientEmail = (id: number, email: string): void => {
   }, function(e) {
     if (e) {
       log('./logs/_errors.txt', e, ' ');
-    } else {
-      // Data saved successfully!
     }
   })
 };
@@ -52,8 +47,6 @@ export const updateClientLastName = (id: number, last_name: string): void  => {
   }, function(e) {
     if (e) {
       log('./logs/_errors.txt', e, ' ');
-    } else {
-      // Data saved successfully!
     }
   })
 };

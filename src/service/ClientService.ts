@@ -63,6 +63,8 @@ export class ClientService {
 
   async addClient(id: number, first_name: string,
                   last_name: string | undefined | null): Promise<void> {
+    if(last_name === undefined)
+      last_name = null;
     writeClientData(id, first_name, null, last_name);
     const client = await clientRepository.profile(id);
     if (client == null)
