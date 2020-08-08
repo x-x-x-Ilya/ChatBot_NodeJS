@@ -1,5 +1,5 @@
-import { connect } from './synchronization';
-import { Init } from './models';
+import { connect } from './sequelize/synchronization';
+import { Init } from './sequelize/models';
 import { firebaseDatabase } from './firebase';
 import { job } from './backup';
 

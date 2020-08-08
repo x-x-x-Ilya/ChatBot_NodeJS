@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import { log } from '../middleware/logging';
+import { log } from '../../middleware/logging';
 try {
   module.exports = new Sequelize(
     process.env.DB_NAME,

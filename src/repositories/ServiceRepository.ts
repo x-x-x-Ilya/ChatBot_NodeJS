@@ -1,5 +1,5 @@
-import { services } from '../database/models/services';
-import { barbers } from '../database/models/barbers';
+import { services } from '../database/sequelize/models/services';
+import { barbers } from '../database/sequelize/models/barbers';
 
 export class ServiceRepository {
 

@@ -1,4 +1,4 @@
-import { clients } from '../database/models/clients';
+import { clients } from '../database/sequelize/models/clients';
 
 export class ClientRepository {
 

@@ -7,13 +7,13 @@ const env = 'development';
 const config = require('../config/config.json')[env];
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const clients = require('../src/database/models/clients');
+const clients = require('../src/database/sequelize/models/clients');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const services = require('../src/database/models/services');
+const services = require('../src/database/sequelize/models/services');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const barbers = require( '../src/database/models/barbers');
+const barbers = require( '../src/database/sequelize/models/barbers');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const appointments = require( '../src/database/models/appointments');
+const appointments = require( '../src/database/sequelize/models/appointments');
 
 const db = {clients, services, barbers, appointments};
 

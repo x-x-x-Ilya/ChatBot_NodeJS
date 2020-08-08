@@ -2,7 +2,7 @@ import { ClientRepository } from '../repositories/ClientRepository';
 import { updateClientEmail, updateClientLastName, writeClientData }
 from '../database/firebase';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('../database/sequelize');
+const Sequelize = require('../database/sequelize/sequelize');
 
 const clientRepository = new ClientRepository();
 
