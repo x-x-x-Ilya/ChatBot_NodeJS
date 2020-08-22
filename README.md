@@ -13,7 +13,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript
+Chatbot for Telegram example.
 
 ## Installation
 
