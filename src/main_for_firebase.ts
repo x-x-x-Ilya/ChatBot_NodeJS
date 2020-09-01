@@ -52,7 +52,7 @@ app.post('/', async (req, res) => {
             const list = await controller.service.barberList();
             sendMessage(res, chat_id, booked + '\n' + list + response.onBedit, menu);
         }
-        // Listener forcommands
+        // Listener for commands
         else if (text.indexOf(response.l) !== -1) {
             const set = await controller.client.setLastName(text, chat_id);
             sendMessage(res, chat_id, set, menu);
@@ -78,7 +78,7 @@ app.post('/', async (req, res) => {
             const del = await controller.appointment.delete(chat_id, text);
             sendMessage(res, chat_id, del, menu);
         }
-// buttons
+        // Listener for buttons
         else if (text === isMenu.Back)
             sendMessage(res, chat_id, response.onHelp, menu);
         else if (text === isMenu.BarberList)
@@ -91,7 +91,7 @@ app.post('/', async (req, res) => {
             sendMessage(res, chat_id, await controller.service.amenitiesList(), menu);
         else if (text === isMenu.Profile)
             sendMessage(res, chat_id, await controller.client.profile(message), menu);
-// on start message
+        // Listener for start message
         else if (text === '/start') {
             const firstName = message.chat.first_name;
             await controller.client.addClient(chat_id, firstName, message.chat.last_name);
