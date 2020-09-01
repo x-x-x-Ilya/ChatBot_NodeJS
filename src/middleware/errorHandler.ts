@@ -1,7 +1,7 @@
 import * as TelegramBot from 'node-telegram-bot-api';
 import { log } from './logging';
 
-// Логирование ошибок бота
+// Logging for bot errors
 export async function onError(bot: TelegramBot): Promise<void> {
   try {
     bot.on('webhook_error', (e) => {

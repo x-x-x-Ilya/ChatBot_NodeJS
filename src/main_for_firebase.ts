@@ -16,17 +16,18 @@ function sendMessage(res, chat_id, text, keyboard) {
 }
 
 app.post('/', async (req, res) => {
+    // Variables for simple code
+    const body = req.body;
+    const chat_id = req.body.message.chat.id
+    const message = req.body.message
+    const text = req.body.message.text
     // Check is it a telegram message
-    const isTelegramMessage = req.body
-      && req.body.message
-      && req.body.message.chat
-      && req.body.message.chat.id
-      && req.body.message.from
-      && req.body.message.from.first_name
+    const isTelegramMessage = body && req.body.message &&
+                              req.body.message.chat && chat_id &&
+                              req.body.message.from &&
+                              req.body.message.from.first_name
+
     if (isTelegramMessage) {
-        const chat_id = req.body.message.chat.id
-        const message = req.body.message
-        const text = req.body.message.text
         if (text === response.l) {
             const profile = await controller.client.profile(message);
             sendMessage(res, chat_id, profile + response.onL, menu);

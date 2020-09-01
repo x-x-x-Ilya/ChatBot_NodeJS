@@ -11,7 +11,7 @@ import { log } from './middleware/logging';
  */
 
 @Controller('bot' + process.env.TOKEN)
-export class appController {
+export class AppController {
 
   @Post()
   async onMessage(@Body() update: Update): Promise<void> {

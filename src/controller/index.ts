@@ -6,5 +6,5 @@ const client = new ClientController();
 const service = new ServiceController();
 const appointment = new AppointmentController();
 
-// for simple controllers export
+// For simple controllers export
 export const controller = {client, service, appointment};
