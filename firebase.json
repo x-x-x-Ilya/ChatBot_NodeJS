@@ -6,9 +6,11 @@
       "**/.*",
       "**/node_modules/**"
     ],
-      "rewrites": [{
+    "rewrites": [
+      {
         "source": "**",
         "public": "/index.html"
-      }]
+      }
+    ]
   }
 }

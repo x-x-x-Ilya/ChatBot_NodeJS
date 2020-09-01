@@ -15,15 +15,14 @@ export class appController {
 
   @Post()
   async onMessage(@Body() update: Update): Promise<void> {
-
-    // for simple code
+    // Variables for simple code
     const message = update.message;
     const id = update.message.chat.id;
     const text = update.message.text;
 
     log('./logs/' + id + '.txt', text, 'user');
 
-    // commands description
+    // Listener for commands description
     if (text === res.l) {
       const profile = await controller.client.profile(message);
       send(id, profile + res.onL, menu);
@@ -49,7 +48,7 @@ export class appController {
       const list = await controller.service.barberList();
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
-    // commands
+    // Listener for commands
     else if (text.indexOf(res.l) !== -1) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
@@ -75,7 +74,7 @@ export class appController {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
-    // buttons
+    // Listener for buttons
     else if (text === isMenu.Back)
       send(id, res.onHelp, menu);
     else if (text === isMenu.BarberList)
@@ -88,13 +87,13 @@ export class appController {
       send(id, await controller.service.amenitiesList(), menu);
     else if (text === isMenu.Profile)
       send(id, await controller.client.profile(message), profile);
-    // on start message
+    // Listener for start message
     else if (text === '/start') {
       const firstName = message.chat.first_name;
       await controller.client.addClient(id, firstName, message.chat.last_name);
       send(id, 'Hello, ' + firstName + '. Can i help you?', menu);
     }
-    // if unknown message
+    // Listener for other messages
     else
       send(id, res.onHelp, menu);
   }

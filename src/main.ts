@@ -5,28 +5,27 @@ import { log } from './middleware/logging';
 import { onError} from './middleware/errorHandler';
 import { database } from './database';
 
-// use "ngrok http 80" to get address
-const address = 'https://f439ff27178c.ngrok.io';
+// use "ngrok http 80" to get address for local work
+const address = 'https://us-central1-barber-shop-b2a01.cloudfunctions.net/helloWorld';
 const port = 80;
 
+// Bot exemplar
 export const bot = new TelegramBot(process.env.TOKEN,
   { webHook: { port: port } });
 
-bootstrap(bot).then(() => {
- console.log('Bot has been started.');
-});
-
+// Main function
 async function bootstrap(bot: TelegramBot): Promise<void> {
   try {
-    // bot
     await bot.setWebHook(address + '/bot' + process.env.TOKEN);
     await onError(bot);
-    // database
     await database();
-    // app
     const app = await NestFactory.create(AppModule);
     await app.listen(port);
   } catch (error) {
     log('./logs/_errors.txt', error, ' ');
   }
 }
+
+bootstrap(bot).then(() => {
+  console.log('Bot has been started.');
+});
