@@ -2,7 +2,7 @@ import { AppointmentRepository } from '../repositories/AppointmentRepository';
 import { ClientService } from './ClientService';
 import { mailer } from '../middleware/nodemailer';
 import { Op } from 'sequelize';
-const appointmentRepository = new AppointmentRepository();
+const repository = new AppointmentRepository();
 
 export class AppointmentService {
 
@@ -13,7 +13,7 @@ export class AppointmentService {
         deleted: false,
         date: { [Op.gte]: new Date() }
       }
-    const appointments = await appointmentRepository.getAll(option);
+    const appointments = await repository.getAll(option);
     let response = '\r\n';
     for (let i = 0; i < appointments.length; i++) {
       response += '[' + appointments[i].id + '] ' +
@@ -32,7 +32,7 @@ export class AppointmentService {
         deleted: false,
         date: { [Op.lte]: new Date() }
       }
-    const allAppointments = await appointmentRepository.getAll(option);
+    const allAppointments = await repository.getAll(option);
     let Response = '\r\n';
     for (let i = 0; i < allAppointments.length; i++) {
       Response += '[' + allAppointments[i].id + '] ' +
@@ -50,12 +50,9 @@ export class AppointmentService {
     const date_before = new Date(date.getTime() - 3600000);
     const date_after = new Date(date.getTime() + 3600000);
     const options = { date: { [Op.between]: [date_before, date_after] } };
-    const appointments = await appointmentRepository.getAll(options);
+    const appointments = await repository.getAll(options);
     if (appointments.length === 0) {
-      await appointmentRepository.set(id,
-        date,
-        parseInt(data[2]),
-        parseInt(data[3]));
+      await repository.set(id, date, parseInt(data[2]), parseInt(data[3]));
       return 'Appointment created successfully';
     } else {
       return 'Sorry, we are busy at that time, please choice another';
@@ -70,7 +67,7 @@ export class AppointmentService {
       deleted: false,
       date: { [Op.between]: [date, nextDay] }
     }
-    const appointment = await appointmentRepository.getAll(option);
+    const appointment = await repository.getAll(option);
     if (appointment.length === 0) return 'We are free from 10:00 to 22:00';
       let response = 'Appointments that day:\n';
     let _, __;
@@ -81,7 +78,8 @@ export class AppointmentService {
         _ = '0';
       if(appointment[i].date.getHours().toString().length === 1)
         __ = '0';
-        response += __ + appointment[i].date.getHours() + ':' + _ + appointment[i].date.getMinutes() + '\n';
+        response += __ + appointment[i].date.getHours() + ':'
+                   + _ + appointment[i].date.getMinutes() + '\n';
     }
     return response;
   }
@@ -92,7 +90,7 @@ export class AppointmentService {
       client_id: id,
       id: appointment_id
     }
-    return appointmentRepository.findOne(options);
+    return repository.findOne(options);
   }
 
   async change(id: number, text: string, update_field: string): Promise<any> {
@@ -109,7 +107,7 @@ export class AppointmentService {
       update = { service_id: update_id }
     else if (update_field === 'deleted')
       update = { deleted: true };
-    await appointmentRepository.update(appointment, update);
+    await repository.update(appointment, update);
     mailer(user.email, 'Your appointment updated successfully');
     return 'Operation end\'s successfully';
   }
@@ -127,7 +125,7 @@ export class AppointmentService {
       date.setHours(parseInt(time[0]));
       date.setMinutes(parseInt(time[1]));
     }
-    await appointmentRepository.changeDate(appointment, date);
+    await repository.changeDate(appointment, date);
     mailer(user.email, 'Your visit date replaced successfully');
     return 'Your visit date replaced successfully';
   }

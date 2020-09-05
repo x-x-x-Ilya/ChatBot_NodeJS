@@ -4,15 +4,15 @@ from '../database/firebase';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('../database/sequelize/sequelize');
 
-const clientRepository = new ClientRepository();
+const repository = new ClientRepository();
 
 export class ClientService {
 
   async setEmail(email: string, id: number): Promise<string> {
     const t = await Sequelize.transaction();
     try {
-      const client = await clientRepository.profile(id);
-      if(await clientRepository.setEmail(client, email)) {
+      const client = await repository.profile(id);
+      if(await repository.setEmail(client, email)) {
         updateClientEmail(id, email);
         await t.commit();
         return 'Your email updated';
@@ -26,7 +26,7 @@ export class ClientService {
 
   async profile(id: number): Promise<string> {
 
-    const client = await clientRepository.profile(id);
+    const client = await repository.profile(id);
     if (client != false) {
       let add_mess = "";
       if (client.last_name == null) {
@@ -48,8 +48,8 @@ export class ClientService {
   async setLastName(last_name: string, id: number): Promise<string> {
     const t = await Sequelize.transaction();
     try {
-      const client = await clientRepository.profile(id);
-      if (await clientRepository.setLastName(client, last_name)) {
+      const client = await repository.profile(id);
+      if (await repository.setLastName(client, last_name)) {
         updateClientLastName(id, last_name);
         await t.commit();
         return 'Your last name updated';
@@ -66,9 +66,9 @@ export class ClientService {
     if(last_name === undefined)
       last_name = null;
     writeClientData(id, first_name, null, last_name);
-    const client = await clientRepository.profile(id);
+    const client = await repository.profile(id);
     if (client == null)
-       await clientRepository.addClient(id, first_name, last_name);
+       await repository.addClient(id, first_name, last_name);
   }
 
 }

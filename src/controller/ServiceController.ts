@@ -1,14 +1,14 @@
 import { ServiceService } from '../service/ServiceService';
-const serviceService = new ServiceService();
+const service = new ServiceService();
 
 export class ServiceController {
 
   async amenitiesList(): Promise<string> {
-    return  await serviceService.amenitiesList();
+    return  await service.amenitiesList();
   }
 
   async barberList(): Promise<string> {
-    return await serviceService.barberList();
+    return await service.barberList();
   }
 
 

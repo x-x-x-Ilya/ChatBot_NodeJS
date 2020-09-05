@@ -1,10 +1,10 @@
 import { ServiceRepository } from '../repositories/ServiceRepository';
-const serviceRepository = new ServiceRepository();
+const repository = new ServiceRepository();
 
 export class ServiceService {
 
   async amenitiesList(): Promise<string> {
-    const services: Array<any> = await serviceRepository.amenitiesList();
+    const services: Array<any> = await repository.amenitiesList();
     if (services.length == 0)
       return 'There are no services, write me later';
     let response = '\r\n';
@@ -16,7 +16,7 @@ export class ServiceService {
   }
 
   async barberList(): Promise<string> {
-    const barbers: Array<any> = await serviceRepository.barberList();
+    const barbers: Array<any> = await repository.barberList();
     if(barbers.length == 0)
       return 'There are no barbers, please write me later';
     let response = '\r\n';
