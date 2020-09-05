@@ -24,17 +24,17 @@ export class AppointmentController {
   }
 
   async set(user_id: number, cmd: string): Promise<any> {
-    const set = cmd.substring(6)
+    const set = cmd.substring(6);
     return await appointmentService.set(user_id, set);
   }
 
   async changeBarber(user_id: number, cmd: string): Promise<any> {
-    const change = cmd.substring(7)
+    const change = cmd.substring(7);
     return await appointmentService.change(user_id, change, 'barber_id');
   }
 
   async changeService(user_id: number, cmd: string): Promise<any> {
-  const change = cmd.substring(7)
+    const change = cmd.substring(7);
     return await appointmentService.change(user_id, change, 'service_id');
   }
 

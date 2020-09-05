@@ -12,7 +12,7 @@ const dir = 'C:\\project\\ChatBot_NodeJS\\back';
 const dbAutoBackUp = (): void => {
 
   deleteOldFiles();
-  // create new back up file
+  // Create new back up file
   const date = new Date();
   const newBackup =
     date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -22,7 +22,7 @@ const dbAutoBackUp = (): void => {
     process.env.DB_NAME + ' > ' + newBackupPath;
 
   execShellCommand(cmd).then(() => {
-    //copy to mongo
+    // Copy to mongo
     mongoInit(newBackupPath);
   });
 
@@ -36,14 +36,14 @@ function mongoInit(path) {
         throw error;
       }
 
-      // все объекты
+      // All objects
       data = data.substring(data.indexOf('COPY'));
       data = data.substring(0, data.lastIndexOf('\\.') + 2);
 
       let collections;
       while (data.indexOf('COPY') != -1) {
 
-        collections = data.substring(  // объекты одной таблицы
+        collections = data.substring(  // All table objects
           data.indexOf('COPY'),
           data.indexOf('\\.') + 2);
 
@@ -53,14 +53,14 @@ function mongoInit(path) {
           collections.indexOf('(') + 1,
           collections.indexOf(')'));
 
-        const fields = fields_str.split(', ');   // поля таблицы
+        const fields = fields_str.split(', ');   // Table fields
 
-        // имя таблицы
+        // Table name
         let collection_name = collections.substring(
           collections.indexOf('COPY public.') + 'COPY public.'.length,
           collections.indexOf('(') - 1)
 
-        // значения таблицы
+        // Table values
         let values: string = collections.substring(
           collections.indexOf('FROM stdin;') + 'FROM stdin;'.length + 2,
           collections.indexOf('\\.'));
@@ -78,9 +78,6 @@ function mongoInit(path) {
           let _;
           for (let j = 0; j < arr_values.length; j++) {
             _ = '"';
-
-            /*if(isNum(Date.parse(arr_values[j])))
-              _ = '';*/
 
             if (isNum(arr_values[j]))
               _ = '';
@@ -122,7 +119,7 @@ function mongoInit(path) {
               log('./logs/_errors.txt', error, ' ');
               throw error;
             }
-            // удаляет старые данные
+            // Delete all data
             MongoClient.connect(url, function(err, db) {
               const dbo = db.db("test");
               dbo.collection(collection_name).drop(function(err, delOK) {
@@ -130,11 +127,11 @@ function mongoInit(path) {
                   log('./logs/_errors.txt', err, ' ');
                   throw err;
                 }
-                if (delOK) //console.log(collection_name + " deleted");
+                if (delOK)
                 db.close();
               });
             });
-            // копирует данные из сформированного json файла
+            // Copy data from json file
             const cmd = "mongoimport --db test --collection " +
               collection_name + " < D:/mongotest/" + collection_name + ".json" +
               " --legacy --jsonArray";
@@ -157,7 +154,7 @@ function isNum(num) {
 
 function deleteOldFiles() {
   fs.readdir(dir, (err, files) => {
-    // delete old files
+    // Delete old files
     while (files.length >= 4) {
       fs.unlink(dir + '\\' + files[0], function(err) {
         if (err) {
@@ -169,10 +166,10 @@ function deleteOldFiles() {
   });
 }
 
-// to use Promise with exec
+// To use promise with exec
 function execShellCommand(cmd) {
   const exec = require('child_process').exec;
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     exec(cmd,
       { cwd: 'C:\\Program Files\\PostgreSQL\\12\\bin\\' },
       (error, stdout, stderr) => {

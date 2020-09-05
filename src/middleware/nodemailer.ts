@@ -1,6 +1,7 @@
 import * as nodemailer from 'nodemailer';
 import { log } from './logging';
 
+// Function for sending messages that uses nodemailer module
 export const mailer = ((email: string, message: string): void => {
   try {
     const mailTransport = nodemailer.createTransport({
