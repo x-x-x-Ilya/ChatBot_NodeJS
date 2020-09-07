@@ -1,10 +1,10 @@
 -- Database creating
-/*
-DROP TABLE barbers CASCADE;
-DROP TABLE appointments CASCADE;
-DROP TABLE clients CASCADE;
-DROP TABLE services CASCADE;
-*/
+
+DROP TABLE IF EXISTS barbers CASCADE;
+DROP TABLE IF EXISTS appointments CASCADE;
+DROP TABLE IF EXISTS clients CASCADE;
+DROP TABLE IF EXISTS services CASCADE;
+
 CREATE TABLE barbers (
 	id         SERIAL       NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
@@ -31,11 +31,23 @@ CREATE TABLE clients (
 CREATE TABLE appointments (
     id 	       SERIAL    NOT NULL PRIMARY KEY,
 	date       TIMESTAMP NOT NULL,
-	client_id  INT       NOT NULL REFERENCES "clients"  ("id") ON DELETE CASCADE ON UPDATE CASCADE,
-	barber_id  INT       NOT NULL REFERENCES "barbers"  ("id") ON DELETE CASCADE ON UPDATE CASCADE,
-	service_id INT       NOT NULL REFERENCES "services" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	client_id  INT       NOT NULL,
+	barber_id  INT       NOT NULL,
+	service_id INT       NOT NULL,
     deleted    BOOLEAN   NOT NULL DEFAULT FALSE
 );
+
+ALTER TABLE `appointments` ADD CONSTRAINT `appointments_clients`
+FOREIGN KEY (`client_id`) REFERENCES `clients`(`id`)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `appointments` ADD CONSTRAINT `appointments_barbers`
+FOREIGN KEY (`barber_id`) REFERENCES `barbers`(`id`)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `appointments` ADD CONSTRAINT `appointments_services`
+FOREIGN KEY (`service_id`) REFERENCES `services`(`id`)
+ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 insert into barbers(1, 'Leha', 'Moroz', false);
@@ -45,7 +57,6 @@ insert into barbers(4, 'Ilya', 'Bobr', false);
 
 insert into services(1, 'haircut', 1:00, 15, false);
 insert into services(2, 'shaving', 1:00, 10, false);
-
 
 -- View creating
 
