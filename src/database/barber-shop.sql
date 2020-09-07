@@ -15,8 +15,8 @@ CREATE TABLE barbers (
 CREATE TABLE services (
     id 	     SERIAL       NOT NULL PRIMARY KEY,
 	name     VARCHAR(255) NOT NULL,
-	time     TIME         NOT NULL,
-	price    INT          NOT NULL,
+	time     TIME         NOT NULL DEFAULT '1:00',
+	price    INT          NOT NULL DEFAULT 1,
     deleted  BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
