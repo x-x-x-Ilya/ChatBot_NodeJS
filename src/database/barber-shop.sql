@@ -1,9 +1,9 @@
 -- Database creating
 
-DROP TABLE IF EXISTS barbers CASCADE;
+DROP TABLE IF EXISTS barbers      CASCADE;
 DROP TABLE IF EXISTS appointments CASCADE;
-DROP TABLE IF EXISTS clients CASCADE;
-DROP TABLE IF EXISTS services CASCADE;
+DROP TABLE IF EXISTS clients      CASCADE;
+DROP TABLE IF EXISTS services     CASCADE;
 
 CREATE TABLE barbers (
 	id         SERIAL       NOT NULL PRIMARY KEY,
@@ -24,7 +24,7 @@ CREATE TABLE clients (
 	id         SERIAL       NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255) NOT NULL,
 	last_name  VARCHAR(255) NULL,
-    email      VARCHAR(255) NULL UNIQUE,
+    email      VARCHAR(255) NULL     UNIQUE,
     deleted    BOOLEAN      NOT NULL DEFAULT FALSE
 );
 
