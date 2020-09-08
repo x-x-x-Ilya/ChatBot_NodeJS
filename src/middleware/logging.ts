@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-// Universal function for logging all type errors
+// universal function for logging all type errors
 export const log = (file: string, text: any, author: string): void => {
   if(author === ' ') console.log(text);
   fs.appendFileSync(file,

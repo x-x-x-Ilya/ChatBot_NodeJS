@@ -2,7 +2,7 @@
 const database = require('./sequelize');
 import { log } from '../../middleware/logging';
 
-// Database connect function
+// database connect function
 export async function connect() : Promise<void> {
   try {
     await database.authenticate();

@@ -1,7 +1,7 @@
 import { log } from '../middleware/logging';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const firebase = require("firebase/app");
-// Add the Firebase products that you want to use
+// add the Firebase products that you want to use
 require("firebase/database");
 
 export const firebaseDatabase = () : void => {

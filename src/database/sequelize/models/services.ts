@@ -8,7 +8,7 @@ export const services = ServiceDatabase.define('services', {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-  }, // serial not INTEGER
+  },
   name: { type: Sequelize.STRING, allowNull: false },
   time: { type: Sequelize.TIME, allowNull: false },
   price: { type: Sequelize.INTEGER, allowNull: false },

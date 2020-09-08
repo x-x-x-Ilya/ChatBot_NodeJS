@@ -1,4 +1,4 @@
-// Keyboard buttons
+// keyboard buttons
 export const isMenu = {
   PriceList: 'Price list',
   BarberList: 'Barber list',
@@ -15,7 +15,7 @@ export const isProfile = {
   Edit: 'Edit',
 };
 
-// Keyboards
+// keyboards
 const menuKeyboard = [
   [isMenu.PriceList, isMenu.BarberList],
   [isMenu.SignUpForAnAppointment, isMenu.Help],
@@ -27,7 +27,7 @@ const profileKeyboard = [
   [isMenu.Help, isMenu.Back],
 ];
 
-// Keyboard-constructor
+// keyboard-constructor
 function reply(arg: string[][]) {
   return {
     reply_markup:

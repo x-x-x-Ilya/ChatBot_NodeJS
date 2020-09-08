@@ -12,7 +12,7 @@ const dir = 'C:\\project\\ChatBot_NodeJS\\back';
 const dbAutoBackUp = (): void => {
 
   deleteOldFiles();
-  // Create new back up file
+  // create new back up file
   const date = new Date();
   const newBackup =
     date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -22,7 +22,7 @@ const dbAutoBackUp = (): void => {
     process.env.DB_NAME + ' > ' + newBackupPath;
 
   execShellCommand(cmd).then(() => {
-    // Copy to mongo
+    // copy to mongo
     mongoInit(newBackupPath);
   });
 
@@ -36,7 +36,7 @@ function mongoInit(path) {
         throw error;
       }
 
-      // All objects
+      // all objects
       data = data.substring(data.indexOf('COPY'));
       data = data.substring(0, data.lastIndexOf('\\.') + 2);
 
@@ -55,12 +55,12 @@ function mongoInit(path) {
 
         const fields = fields_str.split(', ');   // Table fields
 
-        // Table name
+        // table name
         let collection_name = collections.substring(
           collections.indexOf('COPY public.') + 'COPY public.'.length,
           collections.indexOf('(') - 1)
 
-        // Table values
+        // table values
         let values: string = collections.substring(
           collections.indexOf('FROM stdin;') + 'FROM stdin;'.length + 2,
           collections.indexOf('\\.'));
@@ -119,7 +119,7 @@ function mongoInit(path) {
               log('./logs/_errors.txt', error, ' ');
               throw error;
             }
-            // Delete all data
+            // delete all data
             MongoClient.connect(url, function(err, db) {
               const dbo = db.db("test");
               dbo.collection(collection_name).drop(function(err, delOK) {
@@ -154,7 +154,7 @@ function isNum(num) {
 
 function deleteOldFiles() {
   fs.readdir(dir, (err, files) => {
-    // Delete old files
+    // delete old files
     while (files.length >= 4) {
       fs.unlink(dir + '\\' + files[0], function(err) {
         if (err) {
@@ -166,7 +166,7 @@ function deleteOldFiles() {
   });
 }
 
-// To use promise with exec
+// to use promise with exec
 function execShellCommand(cmd) {
   const exec = require('child_process').exec;
   return new Promise((resolve) => {

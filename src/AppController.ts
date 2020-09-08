@@ -7,7 +7,7 @@ import { controller } from './controller';
 import { log } from './middleware/logging';
 
 /**
- *  Controller listening only request that includes "url/bot{Token}"
+ *  controller listening only request that includes "url/bot{Token}"
  */
 
 @Controller('bot' + process.env.TOKEN)
@@ -15,14 +15,14 @@ export class AppController {
 
   @Post()
   async onMessage(@Body() update: Update): Promise<void> {
-    // Variables for simple code
+    // variables for simple code
     const message = update.message;
     const id = update.message.chat.id;
     const text = update.message.text;
 
     log('./logs/' + id + '.txt', text, 'user');
 
-    // Listener for commands description
+    // listener for commands description
     if (text === res.l) {
       const profile = await controller.client.profile(message);
       send(id, profile + res.onL, menu);
@@ -48,7 +48,7 @@ export class AppController {
       const list = await controller.service.barberList();
       send(id, booked + '\n' + list + res.onBedit, menu);
     }
-    // Listener for commands
+    // listener for commands
     else if (text.indexOf(res.l) !== -1) {
       const set = await controller.client.setLastName(text, id);
       send(id, set, profile);
@@ -74,7 +74,7 @@ export class AppController {
       const del = await controller.appointment.delete(id, text);
       send(id, del, menu);
     }
-    // Listener for buttons
+    // listener for buttons
     else if (text === isMenu.Back)
       send(id, res.onHelp, menu);
     else if (text === isMenu.BarberList)
@@ -87,13 +87,13 @@ export class AppController {
       send(id, await controller.service.amenitiesList(), menu);
     else if (text === isMenu.Profile)
       send(id, await controller.client.profile(message), profile);
-    // Listener for start message
+    // listener for start message
     else if (text === '/start') {
       const firstName = message.chat.first_name;
       await controller.client.addClient(id, firstName, message.chat.last_name);
       send(id, 'Hello, ' + firstName + '. Can i help you?', menu);
     }
-    // Listener for other messages
+    // listener for other messages
     else
       send(id, res.onHelp, menu);
   }

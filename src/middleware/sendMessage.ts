@@ -1,7 +1,7 @@
 import { log } from './logging';
 import { bot } from '../main';
 
-// Function for sending message
+// function for sending message
 export const send = (id: number,
                      text: string,
                      keyboard: {reply_markup: string}): void => {

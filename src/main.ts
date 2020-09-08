@@ -5,17 +5,17 @@ import { log } from './middleware/logging';
 import { onError} from './middleware/errorHandler';
 import { database } from './database';
 
-// Use "ngrok http 80" to get address for local work
+// use "ngrok http 80" to get address for local work
 const address = 'https://' +
                 'us-central1-barber-shop-b2a01.cloudfunctions.net/' +
                 'helloWorld';
 const port = 80;
 
-// Bot exemplar
+// bot exemplar
 export const bot = new TelegramBot(process.env.TOKEN,
   { webHook: { port: port } });
 
-// Main function
+// main function
 async function bootstrap(bot: TelegramBot): Promise<void> {
   try {
     await bot.setWebHook(address + '/bot' + process.env.TOKEN);

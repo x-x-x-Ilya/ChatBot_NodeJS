@@ -5,7 +5,7 @@ import { ClientController} from './controller/ClientController';
 import { AppointmentController} from './controller/AppointmentController';
 import { ServiceController} from './controller/ServiceController';
 
-// Root module, starting point that Nest uses to build the application graph
+// root module, starting point that Nest uses to build the application graph
 @Module({
   imports: [],
   controllers: [AppController],

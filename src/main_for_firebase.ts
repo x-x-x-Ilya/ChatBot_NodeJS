@@ -7,7 +7,7 @@ import {isMenu, isProfile, menu, profile} from "./keyboards/keyboards";
 import {firebaseDatabase} from "./database/firebase";
 import { Request, Response } from 'express';
 
-// Database initialization
+// database initialization
 firebaseDatabase();
 const app = express();
 app.use(cors({ origin: true }));
@@ -23,12 +23,12 @@ function sendMessage(res: Response, chat_id: number, text: string, keyboard) {
 }
 
 app.post('/', async (req: Request, res: Response) => {
-    // Variables for simple code
+    // variables for simple code
     const body = req.body;
     const chat_id = req.body.message.chat.id
     const message = req.body.message
     const text = req.body.message.text
-    // Check is it a telegram message
+    // check is it a telegram message
     const isTelegramMessage = body && req.body.message &&
                               req.body.message.chat && chat_id &&
                               req.body.message.from &&
@@ -65,7 +65,7 @@ app.post('/', async (req: Request, res: Response) => {
                     booked + '\n' + list + res_text.onBedit,
                         menu);
         }
-        // Listener for commands
+        // listener for commands
         else if (text.indexOf(res_text.l) !== -1) {
             const set = await controller.client.setLastName(text, chat_id);
             sendMessage(res, chat_id, set, menu);
@@ -94,7 +94,7 @@ app.post('/', async (req: Request, res: Response) => {
             const del = await controller.appointment.delete(chat_id, text);
             sendMessage(res, chat_id, del, menu);
         }
-        // Listener for buttons
+        // listener for buttons
         else if (text === isMenu.Back)
             sendMessage(res, chat_id, res_text.onHelp, menu);
         else if (text === isMenu.BarberList)
@@ -122,7 +122,7 @@ app.post('/', async (req: Request, res: Response) => {
                         chat_id,
                         await controller.client.profile(message),
                         menu);
-        // Listener for start message
+        // listener for start message
         else if (text === '/start') {
             const firstName = message.chat.first_name;
             await controller.client.addClient(chat_id,

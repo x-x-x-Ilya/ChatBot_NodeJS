@@ -1,7 +1,6 @@
 import { services } from '../database/sequelize/models/services';
 import { barbers } from '../database/sequelize/models/barbers';
 import { appointments } from '../database/sequelize/models/appointments';
-import { Op, where } from 'sequelize';
 
 export class AppointmentRepository {
 

@@ -1,5 +1,5 @@
 /**
- *  Format:
+ *  format:
  *  command
  *  description
  */
