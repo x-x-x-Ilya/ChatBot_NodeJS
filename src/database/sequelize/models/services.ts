@@ -10,7 +10,7 @@ export const services = ServiceDatabase.define('services', {
     primaryKey: true,
   },
   name: { type: Sequelize.STRING, allowNull: false },
-  time: { type: Sequelize.TIME, allowNull: false },
+  duration: { type: Sequelize.TIME, allowNull: false },
   price: { type: Sequelize.INTEGER, allowNull: false },
   deleted: { type: Sequelize.BOOLEAN, allowNull: false },
 });

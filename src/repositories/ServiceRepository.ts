@@ -6,7 +6,7 @@ export class ServiceRepository {
   async amenitiesList(): Promise<Array<any>> {
     return services.findAll({
       where: { deleted: false },
-      attributes: ['name', 'time', 'price', 'id'],
+      attributes: ['name', 'duration', 'price', 'id'],
       raw: true,
     });
   }

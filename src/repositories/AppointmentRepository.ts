@@ -7,7 +7,7 @@ export class AppointmentRepository {
   getAll(option: any): Promise<any[]> {
     return appointments.findAll({
       where: option,
-      attributes: ['date', 'id'],
+      attributes: ['appointment_date', 'id'],
       include: [
         { model: barbers, attributes: ['first_name', 'last_name'] },
         { model: services, attributes: ['name'] },
@@ -25,19 +25,19 @@ export class AppointmentRepository {
 
   async changeDate(appointment: any, date: Date): Promise<boolean> {
     const result = await appointment.update(
-      { date: date },
+      { appointment_date: date },
       {
         returning: true,
         plain: true
       });
     if (result === false) return false;
-    return result.dataValues.date === date;
+    return result.dataValues.appointment_date === date;
   }
 
   async set(id: number, date: Date,
             barber_id: number, service_id: number): Promise<any> {
       return appointments.create({
-        date: date,
+        appointment_date: date,
         barber_id: barber_id,
         service_id: service_id,
         client_id: id,

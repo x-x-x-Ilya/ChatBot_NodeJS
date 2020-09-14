@@ -9,7 +9,7 @@ export const appointments = AppointmentDatabase.define('appointments', {
     autoIncrement: true,
     primaryKey: true,
   },
-  date: { type: Sequelize.DATE, allowNull: false },
+  appointment_date: { type: Sequelize.DATE, allowNull: false },
   client_id: { type: Sequelize.INTEGER, allowNull: false },
   service_id: { type: Sequelize.INTEGER, allowNull: false },
   barber_id: { type: Sequelize.INTEGER, allowNull: false },

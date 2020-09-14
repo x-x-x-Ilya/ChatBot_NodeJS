@@ -15,7 +15,7 @@ CREATE TABLE barbers (
 CREATE TABLE services (
     id 	     SERIAL       NOT NULL PRIMARY KEY,
 	name     VARCHAR(255) NOT NULL,
-	time     TIME         NOT NULL DEFAULT '1:00',
+	duration TIME         NOT NULL DEFAULT '1:00',
 	price    INT          NOT NULL DEFAULT 1,
     deleted  BOOLEAN      NOT NULL DEFAULT FALSE
 );
@@ -30,7 +30,7 @@ CREATE TABLE clients (
 
 CREATE TABLE appointments (
     id 	       SERIAL    NOT NULL PRIMARY KEY,
-	date       TIMESTAMP NOT NULL,
+	appointment_date       TIMESTAMP NOT NULL,
 	client_id  INT       NOT NULL,
 	barber_id  INT       NOT NULL,
 	service_id INT       NOT NULL,
