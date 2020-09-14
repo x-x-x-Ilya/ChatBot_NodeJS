@@ -62,15 +62,15 @@ insert into services(2, 'shaving', 1:00, 10, false);
 
 CREATE OR REPLACE VIEW current_day AS
    SELECT
-	appointments.date,
-	clients.first_name,
-	services.name,
-	services.price
-	FROM appointments
-	JOIN clients ON appointments.client_id = clients.id
-	JOIN services ON appointments.service_id = services.id
+	a.date,
+	c.first_name,
+	s.name,
+	s.price
+	FROM appointments a
+	JOIN clients c  ON a.client_id = c.id
+	JOIN services s ON a.service_id = s.id
     WHERE
-	date >= CURRENT_DATE AND date <= CURRENT_DATE+1 AND appointments.deleted = false;
+	date >= CURRENT_DATE AND date <= CURRENT_DATE+1 AND a.deleted = false;
 
 
 -- Procedure creating
@@ -83,7 +83,7 @@ DECLARE
     shavings int := 0;
 
 BEGIN
-	FOR r IN SELECT *
+	FOR r IN SELECT appointments.service_id
 	FROM appointments
 	WHERE date >= current_date-30 AND date <= current_date+1 AND deleted = false
     LOOP
@@ -111,8 +111,8 @@ DECLARE
     shavings int := 0;
 
 BEGIN
-	FOR r IN SELECT *
-	FROM appointments
+	FOR r IN SELECT a.service_id
+	FROM a
 	WHERE date >= current_date-30 AND date <= current_date+1 AND deleted = false
     LOOP
 	IF r.service_id = 1 THEN
