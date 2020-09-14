@@ -26,58 +26,58 @@ app.post('/', async (req: Request, res: Response) => {
     // variables for simple code
     const body = req.body;
     const chat_id = req.body.message.chat.id
-    const message = req.body.message
+    const msg = req.body.message
     const text = req.body.message.text
     // check is it a telegram message
     const isTelegramMessage = body && req.body.message &&
-                              req.body.message.chat && chat_id &&
-                              req.body.message.from &&
-                              req.body.message.from.first_name
+      req.body.message.chat && chat_id &&
+      req.body.message.from &&
+      req.body.message.from.first_name
     if (isTelegramMessage) {
         if (text === res_text.l)
             sendMessage(res, chat_id,
-              await c.client.profile(message) + res_text.onL, menu);
-         else if (text === res_text.sedit)
-            sendMessage(res, chat_id, await c.appointment.booked(message) +
+              await c.client.profile(msg) + res_text.onL, menu);
+        else if (text === res_text.sedit)
+            sendMessage(res, chat_id, await c.appointment.booked(msg) +
               '\n' + await c.service.amenitiesList() + res_text.onSedit, profile);
-         else if (text === res_text.m)
-            sendMessage(res, chat_id, await c.client.profile(message) +
+        else if (text === res_text.m)
+            sendMessage(res, chat_id, await c.client.profile(msg) +
               res_text.onM, profile);
         else if (text === res_text.check)
             sendMessage(res, chat_id, res_text.onCheck, profile);
         else if (text === res_text.sign)
             sendMessage(res, chat_id, res_text.onSign, profile);
         else if (text === res_text.dedit)
-            sendMessage(res, chat_id, await c.appointment.booked(message)
+            sendMessage(res, chat_id, await c.appointment.booked(msg)
               + res_text.onDedit, profile);
-         else if (text === res_text.del)
-            sendMessage(res, chat_id, await c.appointment.booked(message)
+        else if (text === res_text.del)
+            sendMessage(res, chat_id, await c.appointment.booked(msg)
               + res_text.onDelete, profile);
-         else if (text === res_text.bedit)
+        else if (text === res_text.bedit)
             sendMessage(res,
-                        chat_id,
-              await c.appointment.booked(message) + '\n' +
+              chat_id,
+              await c.appointment.booked(msg) + '\n' +
               await c.service.barberList() + res_text.onBedit,
-                        menu);
+              menu);
         // listener for commands
         else if (text.indexOf(res_text.l) !== -1)
             sendMessage(res, chat_id,
               await c.client.setLastName(text, chat_id), menu);
-         else if (text.indexOf(res_text.m) !== -1)
+        else if (text.indexOf(res_text.m) !== -1)
             sendMessage(res, chat_id,
               await c.client.setEmail(text, chat_id), menu);
-         else if (text.indexOf(res_text.check) !== -1)
+        else if (text.indexOf(res_text.check) !== -1)
             sendMessage(res, chat_id, await c.appointment.free(text), menu);
-         else if (text.indexOf(res_text.sign) !== -1)
+        else if (text.indexOf(res_text.sign) !== -1)
             sendMessage(res, chat_id,
               await c.appointment.set(chat_id, text), menu);
-         else if (text.indexOf(res_text.bedit) !== -1)
+        else if (text.indexOf(res_text.bedit) !== -1)
             sendMessage(res, chat_id,
               await c.appointment.changeBarber(chat_id, text), menu);
-         else if (text.indexOf(res_text.sedit) !== -1)
+        else if (text.indexOf(res_text.sedit) !== -1)
             sendMessage(res, chat_id,
               await c.appointment.changeService(chat_id, text), menu);
-         else if ((text.indexOf(res_text.dedit) !== -1))
+        else if ((text.indexOf(res_text.dedit) !== -1))
             sendMessage(res, chat_id,
               await c.appointment.changeDate(chat_id, text), menu);
         else if ((text.indexOf(res_text.del) !== -1))
@@ -89,18 +89,18 @@ app.post('/', async (req: Request, res: Response) => {
         else if (text === isMenu.BarberList)
             sendMessage(res, chat_id, await c.service.barberList(), menu);
         else if (text === isProfile.Booked)
-            sendMessage(res, chat_id,await c.appointment.booked(message),menu);
+            sendMessage(res, chat_id, await c.appointment.booked(msg), menu);
         else if (text === isProfile.History)
-            sendMessage(res, chat_id, await c.appointment.history(message), menu);
+            sendMessage(res, chat_id, await c.appointment.history(msg), menu);
         else if (text === isMenu.PriceList)
             sendMessage(res, chat_id, await c.service.amenitiesList(), menu);
         else if (text === isMenu.Profile)
-            sendMessage(res, chat_id, await c.client.profile(message), menu);
+            sendMessage(res, chat_id, await c.client.profile(msg), menu);
         // listener for start message
         else if (text === '/start') {
-            await c.client.addClient(chat_id, message.chat.first_name,
-              message.chat.last_name);
-            sendMessage(res, chat_id, 'Hello, ' + message.chat.first_name +
+            await c.client.addClient(chat_id, msg.chat.first_name,
+              msg.chat.last_name);
+            sendMessage(res, chat_id, 'Hello, ' + msg.chat.first_name +
               '. Can i help you?', menu);
         }
         sendMessage(res, chat_id, res_text.onHelp, menu);
