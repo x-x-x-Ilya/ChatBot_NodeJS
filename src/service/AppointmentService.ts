@@ -2,6 +2,7 @@ import { AppointmentRepository } from '../repositories/AppointmentRepository';
 import { ClientService } from './ClientService';
 import { mailer } from '../middleware/nodemailer';
 import { Op } from 'sequelize';
+import { Appointment } from './BotResponse';
 const repository = new AppointmentRepository();
 
 export class AppointmentService {
@@ -53,14 +54,14 @@ export class AppointmentService {
     const appointments = await repository.getAll(options);
     if (appointments.length === 0) {
       await repository.set(id, date, parseInt(data[2]), parseInt(data[3]));
-      return 'Appointment created successfully';
+      return Appointment.created;
     } else {
-      return 'Sorry, we are busy at that time, please choice another';
+      return Appointment.busy;
     }
   }
 
   async free(date: Date): Promise<string> {
-    if (date < new Date()) return 'Date should be in future';
+    if (date < new Date()) return Appointment.not_future;
     const nextDay = new Date(date.getTime());
     nextDay.setDate(nextDay.getDate() + 1);
     const option = {
@@ -68,7 +69,7 @@ export class AppointmentService {
       date: { [Op.between]: [date, nextDay] }
     }
     const appointment = await repository.getAll(option);
-    if (appointment.length === 0) return 'We are free from 10:00 to 22:00';
+    if (appointment.length === 0) return Appointment.free;
       let response = 'Appointments that day:\n';
     let _, __;
     for(let i = 0; i < appointment.length; i++) {
@@ -109,7 +110,7 @@ export class AppointmentService {
       update = { deleted: true };
     await repository.update(appointment, update);
     mailer(user.email, 'Your appointment updated successfully');
-    return 'Operation end\'s successfully';
+    return Appointment.success;
   }
 
   async changeDate(id: number, text: string): Promise<any> {
@@ -127,7 +128,7 @@ export class AppointmentService {
     }
     await repository.changeDate(appointment, date);
     mailer(user.email, 'Your visit date replaced successfully');
-    return 'Your visit date replaced successfully';
+    return Appointment.replaced;
   }
 
 }

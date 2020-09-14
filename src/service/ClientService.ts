@@ -1,6 +1,7 @@
 import { ClientRepository } from '../repositories/ClientRepository';
 import { updateClientEmail, updateClientLastName, writeClientData }
 from '../database/firebase';
+import { Client } from './BotResponse';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('../database/sequelize/sequelize');
 
@@ -15,12 +16,12 @@ export class ClientService {
       if(await repository.setEmail(client, email)) {
         updateClientEmail(id, email);
         await t.commit();
-        return 'Your email updated';
+        return Client.mail_update;
       } else
-        return 'Somethings wrong, we are working to solve it';
+        return Client.wrong;
     } catch (e) {
       await t.rollback();
-      return 'Somethings wrong, we are working to solve it';
+      return Client.wrong;
     }
   }
 
@@ -42,7 +43,7 @@ export class ClientService {
         '\r\nLast name: ' + client.last_name +
         '\r\nEmail: ' + client.email + add_mess;
     } else
-      return 'Somethings wrong, we are working to solve it';
+      return Client.wrong;
   }
 
   async setLastName(last_name: string, id: number): Promise<string> {
@@ -52,12 +53,12 @@ export class ClientService {
       if (await repository.setLastName(client, last_name)) {
         updateClientLastName(id, last_name);
         await t.commit();
-        return 'Your last name updated';
+        return Client.last_name_update;
       } else
-        return 'Somethings wrong, we are working to solve it';
+        return Client.wrong;
     } catch (e) {
       await t.rollback();
-      return 'Somethings wrong, we are working to solve it';
+      return Client.wrong;
     }
   }
 
