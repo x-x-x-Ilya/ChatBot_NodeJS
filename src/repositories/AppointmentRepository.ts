@@ -5,7 +5,8 @@ import { appointments } from '../database/sequelize/models/appointments';
 export class AppointmentRepository {
 
   getAll(option: any): Promise<any[]> {
-    return appointments.findAll({
+    return appointments
+    .findAll({
       where: option,
       attributes: ['appointment_date', 'id'],
       include: [

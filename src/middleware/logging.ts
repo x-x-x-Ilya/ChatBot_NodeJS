@@ -7,7 +7,9 @@ export const log = (file: string, text: any, author: string): void => {
   fs.appendFileSync(file,
     '\n' + author + ': ' +
     JSON.stringify(text, null, '\t') + ' ' + new Date());
-  functions.logger.log(JSON.stringify(text, null, '\t'));
+  functions
+  .logger
+  .log(JSON.stringify(text, null, '\t'));
 }
 /** For logging:
   * User messages: log('./logs/' + id + '.txt', text, 'user');

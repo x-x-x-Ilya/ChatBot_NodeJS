@@ -18,7 +18,10 @@ function sendMessage(res: Response, id: number, msg: string, keyboard) {
       .send({ method: 'sendMessage', id, text: msg, reply_markup: keyboard });
 }
 
-app.post('/', async (req: Request, res: Response) => {
+app.post('/', 
+    async () => {
+        
+    }, async (req: Request, res: Response) => {
     // variables for simple code
     const body = req.body;
     const chat = req.body.message.chat;

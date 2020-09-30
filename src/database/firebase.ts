@@ -4,22 +4,27 @@ const firebase = require("firebase/app");
 // add the Firebase products that you want to use
 require("firebase/database");
 
+const proc = process.env;
+
 export const firebaseDatabase = () : void => {
   const config = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.FIREBASE_DATABASE_URL,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID
+    apiKey: proc.FIREBASE_API_KEY,
+    authDomain: proc.FIREBASE_AUTH_DOMAIN,
+    databaseURL: proc.FIREBASE_DATABASE_URL,
+    projectId: proc.FIREBASE_PROJECT_ID,
+    storageBucket: proc.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: proc.FIREBASE_MESSAGING_SENDER_ID,
+    appId: proc.FIREBASE_APP_ID,
+    measurementId: proc.FIREBASE_MEASUREMENT_ID,
   };
   firebase.initializeApp(config);
 };
 
 export const writeClientData = (id: number, first_name: string, email: string, last_name: string) : void => {
-    firebase.database().ref('clients/' + id).set({
+    firebase
+    .database()
+    .ref('clients/' + id)
+    .set({
       first_name: first_name,
       email: email,
       last_name: last_name,
@@ -32,7 +37,10 @@ export const writeClientData = (id: number, first_name: string, email: string, l
 };
 
 export const updateClientEmail = (id: number, email: string): void => {
-  firebase.database().ref('clients/' + id).update({
+  firebase
+  .database()
+  .ref('clients/' + id)
+  .update({
     email: email
   }, function(e) {
     if (e) {
@@ -42,7 +50,10 @@ export const updateClientEmail = (id: number, email: string): void => {
 };
 
 export const updateClientLastName = (id: number, last_name: string): void  => {
-  firebase.database().ref('clients/' + id).update({
+  firebase
+  .database()
+  .ref('clients/' + id)
+  .update({
     last_name: last_name
   }, function(e) {
     if (e) {

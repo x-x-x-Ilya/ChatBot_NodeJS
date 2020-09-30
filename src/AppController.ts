@@ -9,16 +9,27 @@ import { log } from './middleware/logging';
  *  controller listening only request that includes "url/bot{Token}"
  */
 
+  async function get_variables(update) {
+        const message = update.message;
+        const id = update.message.chat.id;
+        const text = update.message.text;
+        return [message, id, text];
+      }
+
+
 @Controller('bot' + process.env.TOKEN)
 export class AppController {
+
+
 
   @Post()
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async onMessage(@Body() update): Promise<void> {
     // variables for simple code
-    const message = update.message;
-    const id = update.message.chat.id;
-    const text = update.message.text;
+    const v = get_variables(update);
+    const message = v[0];
+    const id = v[1];
+    const text = v[2];
 
     log('./logs/' + id + '.txt', text, 'user');
 

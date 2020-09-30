@@ -4,14 +4,16 @@ import { log } from './logging';
 // function for sending messages that uses nodemailer module
 export const mailer = ((email: string, message: string): void => {
   try {
-    const mailTransport = nodemailer.createTransport({
+    const mailTransport = nodemailer
+    .createTransport({
       service: 'gmail',
       secure: false,
       port: 25,
       auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS },
       tls: { rejectUnauthorized: false }
     });
-    mailTransport.sendMail({
+    mailTransport
+    .sendMail({
       from: process.env.EMAIL_ADDRESS,
       to: email,
       subject: 'Barbershop notification',
