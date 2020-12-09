@@ -12,9 +12,9 @@ appointments.belongsTo(services, { foreignKey: 'service_id' });
 const db = { barbers, appointments, clients, services };
 
 export class Init {
-  constructor() {
-    Object.keys(db).forEach(modelName => {
-      db[modelName].associate && db[modelName].associate(db);
-    });
-  }
+    constructor() {
+        Object.keys(db).forEach(modelName => {
+            db[modelName].associate && db[modelName].associate(db);
+        });
+    }
 }

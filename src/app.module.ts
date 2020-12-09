@@ -7,9 +7,8 @@ import { ServiceController } from './controller/ServiceController';
 
 // root module, starting point that Nest uses to build the application graph
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [ServiceController, AppointmentController, ClientController]
+    imports: [],
+    controllers: [AppController],
+    providers: [ServiceController, AppointmentController, ClientController],
 })
-
-export class AppModule { }
+export class AppModule {}
