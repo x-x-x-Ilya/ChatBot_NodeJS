@@ -35,7 +35,7 @@ function reply(arg: string[][]) {
         resize_keyboard: true,
         keyboard: arg,
       })
-  }
+  };
 }
 
 export const menu = reply(menuKeyboard);

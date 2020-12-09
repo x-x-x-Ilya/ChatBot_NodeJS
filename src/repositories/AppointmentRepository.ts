@@ -6,14 +6,14 @@ export class AppointmentRepository {
 
   getAll(option: any): Promise<any[]> {
     return appointments
-    .findAll({
-      where: option,
-      attributes: ['appointment_date', 'id'],
-      include: [
-        { model: barbers, attributes: ['first_name', 'last_name'] },
-        { model: services, attributes: ['name'] },
-      ],
-    });
+      .findAll({
+        where: option,
+        attributes: ['appointment_date', 'id'],
+        include: [
+          { model: barbers, attributes: ['first_name', 'last_name'] },
+          { model: services, attributes: ['name'] },
+        ],
+      });
   }
 
   findOne(option: any): Promise<any> {
@@ -36,14 +36,14 @@ export class AppointmentRepository {
   }
 
   async set(id: number, date: Date,
-            barber_id: number, service_id: number): Promise<any> {
-      return appointments.create({
-        appointment_date: date,
-        barber_id: barber_id,
-        service_id: service_id,
-        client_id: id,
-        deleted: false,
-      });
+    barber_id: number, service_id: number): Promise<any> {
+    return appointments.create({
+      appointment_date: date,
+      barber_id: barber_id,
+      service_id: service_id,
+      client_id: id,
+      deleted: false,
+    });
   }
 
 }

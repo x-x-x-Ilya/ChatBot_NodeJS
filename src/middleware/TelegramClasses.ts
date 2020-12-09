@@ -1555,19 +1555,19 @@ export interface TelegramEncryptedPassportElement {
    * “phone_number”, “email”.
    */
   type:
-    | 'personal_details'
-    | 'passport'
-    | 'driver_license'
-    | 'identity_card'
-    | 'internal_passport'
-    | 'address'
-    | 'utility_bill'
-    | 'bank_statement'
-    | 'rental_agreement'
-    | 'passport_registration'
-    | 'temporary_registration'
-    | '[hone_number'
-    | 'email';
+  | 'personal_details'
+  | 'passport'
+  | 'driver_license'
+  | 'identity_card'
+  | 'internal_passport'
+  | 'address'
+  | 'utility_bill'
+  | 'bank_statement'
+  | 'rental_agreement'
+  | 'passport_registration'
+  | 'temporary_registration'
+  | '[hone_number'
+  | 'email';
   /**
    * _Optional._ Base64-encoded encrypted  Passport element data provided by the user, available for “personal_details”,
    * “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types.
@@ -1687,7 +1687,7 @@ export interface TelegramGame {
  */
 // tslint:disable-next-line
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface TelegramCallbackGame {}
+export interface TelegramCallbackGame { }
 
 /**
  * This object represents one row of the high scores table for a game.
@@ -1774,10 +1774,10 @@ export interface TelegramSendMessageParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramForwardMessageParams extends TelegramChatId {
@@ -1827,10 +1827,10 @@ export interface TelegramSendPhotoParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendAudioParams extends TelegramChatId {
@@ -1885,10 +1885,10 @@ export interface TelegramSendAudioParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendDocumentParams extends TelegramChatId {
@@ -1931,10 +1931,10 @@ export interface TelegramSendDocumentParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendVideoParams extends TelegramChatId {
@@ -1993,10 +1993,10 @@ export interface TelegramSendVideoParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendVideoNoteParams extends TelegramChatId {
@@ -2041,10 +2041,10 @@ export interface TelegramSendVideoNoteParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendAnimationParams extends TelegramChatId {
@@ -2099,10 +2099,10 @@ export interface TelegramSendAnimationParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendVoiceParams extends TelegramChatId {
@@ -2157,10 +2157,10 @@ export interface TelegramSendVoiceParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendVoiceParams extends TelegramChatId {
@@ -2207,10 +2207,10 @@ export interface TelegramSendVoiceParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendMediaGroupParams extends TelegramChatId {
@@ -2253,10 +2253,10 @@ export interface TelegramSendLocationParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramEditMessageLiveLocationParams {
@@ -2351,10 +2351,10 @@ export interface TelegramSendVenueParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendContactParams extends TelegramChatId {
@@ -2389,10 +2389,10 @@ export interface TelegramSendContactParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendPollParams extends TelegramChatId {
@@ -2419,10 +2419,10 @@ export interface TelegramSendPollParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramSendChatActionParams extends TelegramChatId {
@@ -2740,10 +2740,10 @@ export interface TelegramSendStickerParams extends TelegramChatId {
    * , instructions to remove reply keyboard or to force a reply from the user.
    */
   reply_markup?:
-    | TelegramInlineKeyboardMarkup
-    | TelegramReplyKeyboardMarkup
-    | TelegramReplyKeyboardRemove
-    | TelegramForceReply;
+  | TelegramInlineKeyboardMarkup
+  | TelegramReplyKeyboardMarkup
+  | TelegramReplyKeyboardRemove
+  | TelegramForceReply;
 }
 
 export interface TelegramGetStickerSetParams {

@@ -1,0 +1,49 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "root": true,
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-var": "warn",
+    "semi": "error",
+    "indent": "off",
+    "no-multi-spaces": "error",
+    "space-in-parens": "error",
+    "no-multiple-empty-lines": "error",
+    "prefer-const": "warn",
+    "no-use-before-define": "error",
+    "unicorn/prevent-abbreviations": "off",
+    "camelcase": "off",
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "no-plusplus": "off",
+    "unicorn/filename-case": [
+      "off",
+      {
+        "case": "kebabCase"
+      }
+    ],
+    "max-classes-per-file": [
+      "off",
+      1
+    ]
+  }
+}

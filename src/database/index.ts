@@ -9,4 +9,4 @@ export const database = async (): Promise<void> => {
   await new Init();
   await firebaseDatabase();
   await job.start();
-}
+};

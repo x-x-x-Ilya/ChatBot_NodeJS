@@ -1,12 +1,10 @@
 import { log } from '../middleware/logging';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const firebase = require("firebase/app");
-// add the Firebase products that you want to use
+import firebase from "firebase/app";
 require("firebase/database");
 
 const proc = process.env;
 
-export const firebaseDatabase = () : void => {
+export const firebaseDatabase = (): void => {
   const config = {
     apiKey: proc.FIREBASE_API_KEY,
     authDomain: proc.FIREBASE_AUTH_DOMAIN,
@@ -20,8 +18,8 @@ export const firebaseDatabase = () : void => {
   firebase.initializeApp(config);
 };
 
-export const writeClientData = (id: number, first_name: string, email: string, last_name: string) : void => {
-    firebase
+export const writeClientData = (id: number, first_name: string, email: string, last_name: string): void => {
+  firebase
     .database()
     .ref('clients/' + id)
     .set({
@@ -29,35 +27,35 @@ export const writeClientData = (id: number, first_name: string, email: string, l
       email: email,
       last_name: last_name,
       deleted: false
-    },function(e) {
+    }, function (e) {
       if (e) {
         log('./logs/_errors.txt', e, ' ');
       }
-    })
+    });
 };
 
 export const updateClientEmail = (id: number, email: string): void => {
   firebase
-  .database()
-  .ref('clients/' + id)
-  .update({
-    email: email
-  }, function(e) {
-    if (e) {
-      log('./logs/_errors.txt', e, ' ');
-    }
-  })
+    .database()
+    .ref('clients/' + id)
+    .update({
+      email: email
+    }, function (e) {
+      if (e) {
+        log('./logs/_errors.txt', e, ' ');
+      }
+    });
 };
 
-export const updateClientLastName = (id: number, last_name: string): void  => {
+export const updateClientLastName = (id: number, last_name: string): void => {
   firebase
-  .database()
-  .ref('clients/' + id)
-  .update({
-    last_name: last_name
-  }, function(e) {
-    if (e) {
-      log('./logs/_errors.txt', e, ' ');
-    }
-  })
+    .database()
+    .ref('clients/' + id)
+    .update({
+      last_name: last_name
+    }, function (e) {
+      if (e) {
+        log('./logs/_errors.txt', e, ' ');
+      }
+    });
 };

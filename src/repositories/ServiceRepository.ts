@@ -12,7 +12,7 @@ export class ServiceRepository {
   }
 
   async barberList(): Promise<Array<any>> {
-    return  barbers.findAll({
+    return barbers.findAll({
       attributes: ['first_name', 'last_name', 'id'],
       raw: true,
     });

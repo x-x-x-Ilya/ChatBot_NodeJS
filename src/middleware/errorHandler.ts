@@ -5,15 +5,15 @@ import { log } from './logging';
 export async function onError(bot: TelegramBot): Promise<void> {
   try {
     bot
-    .on('webhook_error', 
-    (e) => {
-      log('./logs/_errors.txt', e + '\n code: ' + e.code, ' ');
-    });
+      .on('webhook_error',
+        (error) => {
+          log('./logs/_errors.txt', error + '\n code: ' + error.code, ' ');
+        });
     bot
-    .on('error', 
-    (e) => {
-      log('./logs/_errors.txt', e, ' ');
-    });
+      .on('error',
+        (e) => {
+          log('./logs/_errors.txt', e, ' ');
+        });
 
   } catch (e) {
     log('./logs/_errors.txt', e, ' ');

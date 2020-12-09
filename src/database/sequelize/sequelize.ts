@@ -1,7 +1,9 @@
 import { Sequelize } from 'sequelize';
 import { log } from '../../middleware/logging';
+
+let sequelize;
 try {
-  module.exports = new Sequelize(
+  sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.USER_NAME,
     process.env.DB_PASS,
@@ -27,3 +29,5 @@ try {
 } catch (error) {
   log('./logs/_errors.txt', error, ' ');
 }
+
+export default sequelize;

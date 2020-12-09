@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const BarberDatabase = require('../sequelize');
+import BarberDatabase from '../sequelize';
 
 export const barbers = BarberDatabase.define('barbers', {
   id: {

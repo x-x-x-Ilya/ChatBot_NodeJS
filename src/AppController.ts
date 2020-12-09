@@ -9,22 +9,21 @@ import { log } from './middleware/logging';
  *  controller listening only request that includes "url/bot{Token}"
  */
 
-  async function get_variables(update) {
-        const message = update.message;
-        const id = update.message.chat.id;
-        const text = update.message.text;
-        return [message, id, text];
-      }
+async function get_variables(update: { message: { chat: { id: any; }; text: any; }; }) {
+  const message = update.message;
+  const id = update.message.chat.id;
+  const text = update.message.text;
+  return [message, id, text];
+}
 
 
 @Controller('bot' + process.env.TOKEN)
 export class AppController {
 
 
-
   @Post()
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async onMessage(@Body() update): Promise<void> {
+  async onMessage(@Body() update: { message: { chat: { id: any; }; text: any; }; }): Promise<void> {
     // variables for simple code
     const v = get_variables(update);
     const message = v[0];
@@ -36,38 +35,38 @@ export class AppController {
     // listener for commands description
     if (text === res.l)
       send(id, await c.client.profile(message) + res.onL, menu);
-     else if (text === res.sedit)
+    else if (text === res.sedit)
       send(id, await c.appointment.booked(message) + '\n' +
         await c.service.amenitiesList() + res.onSedit, menu);
-     else if (text === res.m)
+    else if (text === res.m)
       send(id, await c.client.profile(message) + res.onM, menu);
-     else if (text === res.check)
+    else if (text === res.check)
       send(id, res.onCheck, menu);
     else if (text === res.sign)
       send(id, res.onSign, menu);
     else if (text === res.dedit)
       send(id, await c.appointment.booked(message) + res.onDedit, menu);
-     else if (text === res.del)
+    else if (text === res.del)
       send(id, await c.appointment.booked(message) + res.onDelete, menu);
-     else if (text === res.bedit)
+    else if (text === res.bedit)
       send(id, await c.appointment.booked(message) + '\n' +
         await c.service.barberList() + res.onBedit, menu);
     // listener for commands
     else if (text.indexOf(res.l) !== -1)
       send(id, await c.client.setLastName(text, id), profile);
-     else if (text.indexOf(res.m) !== -1)
+    else if (text.indexOf(res.m) !== -1)
       send(id, await c.client.setEmail(text, id), profile);
-     else if (text.indexOf(res.check) !== -1)
+    else if (text.indexOf(res.check) !== -1)
       send(id, await c.appointment.free(text), menu);
-     else if (text.indexOf(res.sign) !== -1)
+    else if (text.indexOf(res.sign) !== -1)
       send(id, await c.appointment.set(id, text), menu);
-     else if (text.indexOf(res.bedit) !== -1)
+    else if (text.indexOf(res.bedit) !== -1)
       send(id, await c.appointment.changeBarber(id, text), menu);
-     else if (text.indexOf(res.sedit) !== -1)
+    else if (text.indexOf(res.sedit) !== -1)
       send(id, await c.appointment.changeService(id, text), menu);
-     else if ((text.indexOf(res.dedit) !== -1))
+    else if ((text.indexOf(res.dedit) !== -1))
       send(id, await c.appointment.changeDate(id, text), menu);
-     else if ((text.indexOf(res.del) !== -1))
+    else if ((text.indexOf(res.del) !== -1))
       send(id, await c.appointment.delete(id, text), menu);
     // listener for buttons
     else if (text === isMenu.Back)

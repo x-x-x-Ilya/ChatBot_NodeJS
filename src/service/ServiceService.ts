@@ -1,5 +1,6 @@
 import { ServiceRepository } from '../repositories/ServiceRepository';
 import { Service } from './BotResponse';
+
 const repository = new ServiceRepository();
 
 export class ServiceService {
@@ -18,7 +19,7 @@ export class ServiceService {
 
   async barberList(): Promise<string> {
     const barbers: Array<any> = await repository.barberList();
-    if(barbers.length == 0)
+    if (barbers.length == 0)
       return Service.no_barber;
     let response = '\r\n';
     for (let i = 0; i < barbers.length; i++) {

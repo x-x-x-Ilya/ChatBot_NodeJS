@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ServiceDatabase = require('../sequelize');
+import ServiceDatabase from '../sequelize';
 
 export const services = ServiceDatabase.define('services', {
   id: {

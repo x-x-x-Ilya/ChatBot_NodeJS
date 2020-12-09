@@ -1,9 +1,8 @@
 import { ClientRepository } from '../repositories/ClientRepository';
 import { updateClientEmail, updateClientLastName, writeClientData }
-from '../database/firebase';
+  from '../database/firebase';
 import { Client } from './BotResponse';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sequelize = require('../database/sequelize/sequelize');
+import Sequelize from '../database/sequelize/sequelize';
 
 const repository = new ClientRepository();
 
@@ -13,7 +12,7 @@ export class ClientService {
     const t = await Sequelize.transaction();
     try {
       const client = await repository.profile(id);
-      if(await repository.setEmail(client, email)) {
+      if (await repository.setEmail(client, email)) {
         updateClientEmail(id, email);
         await t.commit();
         return Client.mail_update;
@@ -63,13 +62,13 @@ export class ClientService {
   }
 
   async addClient(id: number, first_name: string,
-                  last_name: string | undefined | null): Promise<void> {
-    if(last_name === undefined)
+    last_name: string | undefined | null): Promise<void> {
+    if (last_name === undefined)
       last_name = null;
     writeClientData(id, first_name, null, last_name);
     const client = await repository.profile(id);
     if (client == null)
-       await repository.addClient(id, first_name, last_name);
+      await repository.addClient(id, first_name, last_name);
   }
 
 }

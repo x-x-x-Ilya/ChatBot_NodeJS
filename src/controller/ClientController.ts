@@ -17,7 +17,7 @@ export class ClientController {
   }
 
   async addClient(id: number, first_name: string,
-                  last_name: string | undefined | null ): Promise<void> {
+    last_name: string | undefined | null): Promise<void> {
     return await service.addClient(id, first_name, last_name);
   }
 }
