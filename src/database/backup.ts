@@ -1,8 +1,14 @@
 import { log } from '../middleware/logging';
-import child_process from 'child_process';
-import cron, { CronCommand } from 'cron';
-import fs from 'fs';
-import mongodb from 'mongodb';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const child_process = require('child_process');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const CronJob = require('cron').CronJob;
+import { CronCommand } from 'cron';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fs = require('fs');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const mongodb = require('mongodb');
+
 const url = "mongodb://localhost:27017/";
 const autoBackupPath = 'C:\\project\\ChatBot_NodeJS\\back\\PostgresSQL.sql';
 const dir = 'C:\\project\\ChatBot_NodeJS\\back';
@@ -53,21 +59,21 @@ function mongoInit(path) {
 
 const dbAutoBackUp = (): CronCommand => {
 
-  deleteOldFiles();
-  // create new back up file
-  const date = new Date();
-  const newBackup =
-    date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-  const newBackupPath = autoBackupPath + 'psql-' + newBackup + '.sql';
-
-  const cmd = 'pg_dump --no-password -U' + process.env.USER_NAME + ' ' +
-    process.env.DB_NAME + ' > ' + newBackupPath;
-
-  execShellCommand(cmd).then(() => {
-    mongoInit(newBackupPath);
-  });
+  /* deleteOldFiles();
+   // create new back up file
+   const date = new Date();
+   const newBackup =
+     date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+   const newBackupPath = autoBackupPath + 'psql-' + newBackup + '.sql';
+ 
+   const cmd = 'pg_dump --no-password -U' + process.env.USER_NAME + ' ' +
+     process.env.DB_NAME + ' > ' + newBackupPath;
+ 
+   execShellCommand(cmd).then(() => {
+     mongoInit(newBackupPath);
+   });*/
   return null;
 };
 
 
-export const job = new cron.CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
+export const job = new CronJob('0 0 0 * * 0', dbAutoBackUp(), null, true);
