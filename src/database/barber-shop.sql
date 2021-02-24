@@ -1,4 +1,5 @@
--- Database creating
+DROP DATABASE IF EXISTS barbershop;
+CREATE DATABASE barbershop;
 
 DROP TABLE IF EXISTS barbers      CASCADE;
 DROP TABLE IF EXISTS appointments CASCADE;
