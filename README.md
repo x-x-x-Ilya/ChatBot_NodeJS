@@ -2,8 +2,6 @@
 
 [ChatBot_NodeJS](https://barber-shop-b2a01.web.app/)
 
-## Description
-
 ## Installation
 
 For work you should install:
@@ -45,9 +43,3 @@ $ \i \path\${DIR}\ChatBot_NodeJS\src\database\barber-shop.sql
 - HOST: PostgresSQL host
 - EMAIL_ADDRESS: email addres for mailing
 - EMAIL_PASS: password this email
-
-
-## Code
-
-There are two start points in app.<br>
-For local work <a href = "https://github.com/x-x-x-Ilya/ChatBot_NodeJS/blob/master/src/main.ts">'main.ts'</a>.<br>
