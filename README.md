@@ -30,7 +30,7 @@ $ CREATE DATABASE ${DB_NAME};
 ```bash
 $ \c ${DB_NAME}
 ```
-5) 
+5) To install db script enter the command
 ```bash
 $ \i \path\${DIR}\ChatBot_NodeJS\src\database\barber-shop.sql
 ```
