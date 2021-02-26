@@ -1,7 +1,5 @@
 ## NodeJS Telegram Bot API
 
-[ChatBot_NodeJS](https://barber-shop-b2a01.web.app/)
-
 ## Installation
 
 For work you should install:
@@ -43,3 +41,6 @@ $ \i \path\${DIR}\ChatBot_NodeJS\src\database\barber-shop.sql
 - HOST: PostgresSQL host
 - EMAIL_ADDRESS: email addres for mailing
 - EMAIL_PASS: password this email
+
+
+## [Contacts](https://barber-shop-b2a01.web.app/)
