@@ -1,9 +1,4 @@
 import { ClientRepository } from '../repositories/ClientRepository';
-import {
-    updateClientEmail,
-    updateClientLastName,
-    writeClientData,
-} from '../database/firebase';
 import { Client } from './BotResponse';
 import Sequelize from '../database/sequelize/sequelize';
 
@@ -15,7 +10,6 @@ export class ClientService {
         try {
             const client = await repository.profile(id);
             if (await repository.setEmail(client, email)) {
-                updateClientEmail(id, email);
                 await t.commit();
                 return Client.mail_update;
             } else return Client.wrong;
@@ -55,7 +49,6 @@ export class ClientService {
         try {
             const client = await repository.profile(id);
             if (await repository.setLastName(client, last_name)) {
-                updateClientLastName(id, last_name);
                 await t.commit();
                 return Client.last_name_update;
             } else return Client.wrong;
@@ -71,7 +64,6 @@ export class ClientService {
         last_name: string | undefined | null,
     ): Promise<void> {
         if (last_name === undefined) last_name = null;
-        writeClientData(id, first_name, null, last_name);
         const client = await repository.profile(id);
         if (client == null)
             await repository.addClient(id, first_name, last_name);
