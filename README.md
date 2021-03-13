@@ -32,6 +32,9 @@ $ \c ${DB_NAME}
 ```bash
 $ \i \path\${DIR}\ChatBot_NodeJS\src\database\barber-shop.sql
 ```
+## TOKEN
+You should create your own bot. To do that send message to [BotFather](https://t.me/botfather)
+![image](https://sun9-29.userapi.com/impg/YJ6YjlQRLoGADTSV0X3K5Igqip5HBuHVeQ9zOQ/8Bhc2Hz_ch0.jpg?size=483x950&quality=96&sign=adef421860d475a22cd6b5233b631656&type=album)
 
 ## .env
 - TOKEN: [bot token](https://core.telegram.org/bots#6-botfather) required from [BotFather](https://t.me/botfather) in [Telegram](https://telegram.org/)
