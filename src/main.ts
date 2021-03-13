@@ -6,10 +6,7 @@ import { onError } from './middleware/errorHandler';
 import { database } from './database';
 
 // use "ngrok http 80" to get address for local work
-const address =
-    'https://' +
-    'us-central1-barber-shop-b2a01.cloudfunctions.net/' +
-    'helloWorld';
+const address = "paste here";
 const port = 80;
 
 // bot exemplar
