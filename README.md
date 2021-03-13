@@ -45,5 +45,11 @@ $ \i \path\${DIR}\ChatBot_NodeJS\src\database\barber-shop.sql
 ## Ngrok preview
 ![image](https://sun9-41.userapi.com/impg/IXflsZlku-paVhMo4CThVqpdcfyyhf3vcwvw6w/dywWLelbTnI.jpg?size=566x292&quality=96&sign=f08baa3638d8f20b815f764ca894b2eb&type=album)
 ![image](https://sun9-66.userapi.com/impg/ZlLAFk6cZ6BnxuGcBLniM9CGQbnnq6YOB5gfPg/HaZ4L_4Zr7o.jpg?size=1082x635&quality=96&sign=16b4782c73f4ecad514c36e90d7bd853&type=album)
+And paste into variable addres in main.ts
+------------
+```bash
+$ npm run start
+```
+------------
 ## Telegram preview
 ![image](https://sun9-63.userapi.com/impg/8PjgF_nJNpxHTrQo7ax5wvYg8qXJpXAF_7sRcw/n8-Cq9lWMYA.jpg?size=1920x1030&quality=96&sign=6e0553b4c5307caba83c44cd642c88bd&type=album)
