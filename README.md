@@ -42,5 +42,5 @@ $ \i \path\${DIR}\ChatBot_NodeJS\src\database\barber-shop.sql
 - EMAIL_ADDRESS: email addres for mailing
 - EMAIL_PASS: password this email
 
-## bot preview
+## Preview
 ![image](https://sun9-63.userapi.com/impg/8PjgF_nJNpxHTrQo7ax5wvYg8qXJpXAF_7sRcw/n8-Cq9lWMYA.jpg?size=1920x1030&quality=96&sign=6e0553b4c5307caba83c44cd642c88bd&type=album)
