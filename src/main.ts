@@ -4,17 +4,12 @@ import { AppModule } from './app.module';
 import { log } from './middleware/logging';
 import { onError } from './middleware/errorHandler';
 import { database } from './database';
+import { address, errLogPath, port } from './constants';
 
-// use "ngrok http 80" to get address for local work
-const address = "paste here";
-const port = 80;
-
-// bot exemplar
 export const bot = new TelegramBot(process.env.TOKEN, {
     webHook: { port: port },
 });
 
-// main function
 async function bootstrap(bot: TelegramBot): Promise<void> {
     try {
         await bot.setWebHook(address + '/bot' + process.env.TOKEN);
@@ -23,7 +18,7 @@ async function bootstrap(bot: TelegramBot): Promise<void> {
         const app = await NestFactory.create(AppModule);
         await app.listen(port);
     } catch (error) {
-        log('./logs/_errors.txt', error, ' ');
+        log(errLogPath, error, ' ');
     }
 }
 
@@ -32,5 +27,5 @@ bootstrap(bot)
         console.log('Bot has been started.');
     })
     .catch((error: Error) => {
-        console.log(error);
+        log(errLogPath, error, ' ');
     });
