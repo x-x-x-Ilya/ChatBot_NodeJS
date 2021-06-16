@@ -4,7 +4,7 @@ import * as res from './keyboards/helpText';
 import { send } from './middleware/sendMessage';
 import { c } from './controller';
 import { log } from './middleware/logging';
-import { get_variables } from './helpers';
+import { getVariables } from './helpers';
 
 /**
  *  controller listening only request that includes "url/bot{Token}"
@@ -16,10 +16,10 @@ export class AppController {
     async onMessage(
         @Body() update: { message: { chat: { id: any }; text: any } },
     ): Promise<void> {
-        const claims = get_variables(update);
-        const message = claims[0];
-        const id = claims[1];
-        const text = claims[2];
+        const claims = await getVariables(update);
+        const message = claims.message;
+        const id = claims.id;
+        const text = claims.text;
 
         log('./logs/' + id + '.txt', text, 'user');
 
